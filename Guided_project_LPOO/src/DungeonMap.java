@@ -371,6 +371,9 @@ public class DungeonMap {
 				Hero2_i --;
 
 				r.ogreMovement();
+				
+				if(Hero2_i != Key_i && Hero2_j != Key_j && Ogre_i != Key_i && Ogre_j != Key_j)
+					walls2[Key_i][Key_j]='k';
 
 				if (!r.nearOgre())
 				{			
@@ -396,6 +399,9 @@ public class DungeonMap {
 				Hero2_i++;
 
 				r.ogreMovement();
+				
+				if(Hero2_i != Key_i && Hero2_j != Key_j && Ogre_i != Key_i && Ogre_j != Key_j)
+					walls2[Key_i][Key_j]='k';
 
 				if (!r.nearOgre())
 				{			
@@ -433,6 +439,9 @@ public class DungeonMap {
 				Hero2_j --;
 
 				r.ogreMovement();
+				
+				if(Hero2_i != Key_i && Hero2_j != Key_j && Ogre_i != Key_i && Ogre_j != Key_j)
+					walls2[Key_i][Key_j]='k';
 
 				if (!r.nearOgre())
 				{			
@@ -458,6 +467,9 @@ public class DungeonMap {
 				Hero2_j++;
 
 				r.ogreMovement();
+				
+				if(Hero2_i != Key_i && Hero2_j != Key_j && Ogre_i != Key_i && Ogre_j != Key_j)
+					walls2[Key_i][Key_j]='k';
 
 				if (!r.nearOgre())
 				{			
