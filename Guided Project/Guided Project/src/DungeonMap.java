@@ -591,7 +591,7 @@ public class DungeonMap {
 		if(!secondStage)
 			System.out.println("You died !");
 		else
-			System.out.println("WIN !");
+			System.out.println("You won !");
 	}
 
 }
