@@ -586,6 +586,7 @@ public class DungeonMap {
 				}
 			}
 			r.print(walls2);
+			
 		}
 
 		if(!secondStage)
