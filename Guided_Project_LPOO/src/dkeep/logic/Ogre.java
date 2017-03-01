@@ -1,0 +1,188 @@
+package dkeep.logic;
+
+import dkeep.logic.Hero;
+/*
+ * public void addClub(Club c)
+ * if i do this ,there will be a club associated to the ogre
+ * 
+ * also have to return those coordenates in order to print it
+ * 
+ * maybe the movement can be done here inside this class
+ */
+public class Ogre implements Character{
+
+	private char OgreSprite;
+	private int Ogre_i;
+	private int Ogre_j;
+	private Club c; //1,5
+	private int turnStun = 0;
+
+	public Ogre(){
+		this.Ogre_i=-4;
+		this.Ogre_j=-4;
+	}
+
+	public Ogre(int i,int j,char s){
+		this.Ogre_i=i;
+		this.Ogre_j=j;
+		this.OgreSprite=s;
+	}
+	//ogre functions
+
+	public void setClub(int i,int j,char s){
+		this.c = new Club(i,j,s);
+	}
+
+	public void setStun(int x){	this.turnStun = x;}
+	public int getStun(){return turnStun;}
+	public Club getClub(){return c;}
+
+	public void move(){
+
+		boolean valid=false;
+
+		while(!valid){
+
+			if (turnStun == 0)
+			{
+				double randomno = Math.floor(Math.random()*4);
+
+				switch((int)randomno){
+				case 0: //go down
+					Ogre_i++;
+					if(Ogre_i>7)
+						Ogre_i--;
+					else
+					{
+						clubMovement();
+						valid=true;
+					}
+					break;
+				case 1: //go up
+					Ogre_i--;
+					if(Ogre_i <1)
+						Ogre_i++;
+					else
+					{
+						clubMovement();
+						valid=true;
+					}
+					break;
+				case 2: //go right
+					Ogre_j++;
+					if(Ogre_j >7)
+						Ogre_j--;
+					else
+					{
+						clubMovement();
+						valid=true;
+					}
+					break;
+				case 3: //go left
+					Ogre_j--;
+					if(Ogre_j<1)
+						Ogre_j++;
+					else
+					{
+						clubMovement();
+						valid=true;
+					}
+					break;		
+				}
+			}
+			else if (turnStun == 1)
+			{
+				turnStun = 2;
+				clubMovement();
+			}
+			else if (turnStun == 2)
+			{
+				turnStun = 0;
+				clubMovement();
+			}
+		}
+	}
+
+	//club function for movement
+	public void clubMovement(){
+
+		boolean valid=false;
+
+		while(!valid){
+
+			double randomno = Math.floor(Math.random()*4);
+
+			switch((int)randomno){
+			case 0: //go down				
+				if(Ogre_i == 7)
+					break;
+				else
+				{
+					c.setCoordenateI(Ogre_i+1);
+					c.setCoordenateJ(Ogre_j);
+					valid = true;
+				}
+				break;
+			case 1: //go up
+				if(Ogre_i == 1)
+					break;
+				else
+				{
+					c.setCoordenateI(Ogre_i-1);
+					c.setCoordenateJ(Ogre_j);
+					valid = true;
+				}
+				break;
+			case 2: //go right
+				if(Ogre_j == 7)
+					break;
+				else
+				{
+					c.setCoordenateI(Ogre_i);
+					c.setCoordenateJ(Ogre_j+1);
+					valid = true;
+				}
+				break;
+			case 3: //go left
+				if(Ogre_j == 1)
+					break;
+				else
+				{
+					c.setCoordenateI(Ogre_i);
+					c.setCoordenateJ(Ogre_j-1);
+					valid = true;
+				}
+				break;
+			}
+
+		}
+		/*if(c.getCoordenateI() == Key_i && c.getCoordenateJ() == Key_j)
+			walls2[c.getCoordenateI()][c.getCoordenateJ()] = '$';
+		else
+			walls2[c.getCoordenateI()][c.getCoordenateJ()] = '*';
+		 */
+	}
+
+	public int getCoordenateI(){return Ogre_i;}
+
+	public int getCoordenateJ(){return Ogre_j;}
+
+	public char getSprite(){return OgreSprite;}
+
+	public void setCoordenateI(int i){this.Ogre_i = i;}
+
+	public void setCoordenateJ(int j){this.Ogre_j = j;}
+
+	public void setSprite(char s){this.OgreSprite = s;}
+
+	public boolean hasClub(){
+		if(c.getCoordenateI() >= 0 && c.getCoordenateJ()>=0)
+			return true;
+
+		return false;
+	}
+
+	public boolean isStunned(boolean stun){
+		return stun;
+	}
+}
