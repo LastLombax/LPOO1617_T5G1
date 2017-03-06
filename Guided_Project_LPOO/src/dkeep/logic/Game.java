@@ -16,6 +16,7 @@ public class Game {
 	private Vector<Character> nonMovingCharacters = new Vector<Character>();
 	private GameMap map;
 	private boolean hasKey;
+	private boolean hasClub;
 
 	//returns a copy of a char[][]
 	public char[][] copyMap() {
@@ -170,14 +171,23 @@ public class Game {
 
 	public boolean nearOgreX(int x) {
 
-		if (enemies.get(x).getSprite() == 'O') //it means it's an ogre
-			if ((((H.getCoordenateI() == enemies.get(x).getCoordenateI() - 1) || (H.getCoordenateI() == enemies.get(x).getCoordenateI() + 1))
-					&& (H.getCoordenateJ() == enemies.get(x).getCoordenateJ()))
-					|| ((enemies.get(x).getCoordenateI() == H.getCoordenateI()) && ((H.getCoordenateJ() == enemies.get(x).getCoordenateJ() - 1)
-							|| (H.getCoordenateJ() == enemies.get(x).getCoordenateJ() + 1))))
-				return true;
+		if (Math.abs(enemies.get(x).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(x).getCoordenateJ() - H.getCoordenateJ()) <=1)
+			return true;
 		return false;
+
 	}
+
+	/*	public boolean nearOgreX(int x){
+
+	//	if (enemies.get(x).getSprite() == 'O' || enemies.get(x).getSprite() == '$'){			
+			if (H.getCoordenateJ() == enemies.get(x).getCoordenateJ() && H.getCoordenateI() + 1 == enemies.get(x).getCoordenateI() 
+					|| H.getCoordenateJ() == enemies.get(x).getCoordenateJ() && H.getCoordenateI() - 1 == enemies.get(x).getCoordenateI()
+					|| H.getCoordenateI() == enemies.get(x).getCoordenateI() && H.getCoordenateJ() + 1 == enemies.get(x).getCoordenateJ() 
+					|| H.getCoordenateI() == enemies.get(x).getCoordenateI() && H.getCoordenateJ() - 1 == enemies.get(x).getCoordenateJ())
+				return true;			
+		//}
+		return false;
+	}*/
 
 	public boolean nearClub(Character c){
 
@@ -197,6 +207,7 @@ public class Game {
 	//deals with the input and does most of the game logic
 	public int movement(String s) {
 
+		//   UP
 		if (s.charAt(0) == 'w') { 
 
 			//if you can pass a level,change map/level or finish and win
@@ -217,28 +228,51 @@ public class Game {
 			H.move2(-1, 0); //moves hero
 
 			//checks if the hero picks up the club
-			if(map.hasHeroClub() && H.getSprite() == 'H')
-			{
-				if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+			if(!hasClub){
+				if(map.hasHeroClub() && H.getSprite() == 'H')
 				{
-					H.setSprite('A');
-					H_C.setCoordenateI(0);
-					H_C.setCoordenateJ(0);
+					if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+					{
+						H.setSprite('A');
+						H_C.setCoordenateI(0);
+						H_C.setCoordenateJ(0);
+						hasClub = true;
+					}
 				}
 			}
 
 			//checks if the hero was captured or killed
 			for (int i = 0; i < enemies.size(); i++) {
-				if (H.getSprite() == 'A' && nearOgre()) //if the hero is close to an ogre and is armed
+
+				switch(enemies.get(i).getStun()){
+
+				//first turn of stun
+				case 1: 
+					enemies.get(i).setStun(2);
+					break;
+					
+				//second turn of stun
+				case 2:
+
+					enemies.get(i).setStun(0);
+					enemies.get(i).setSprite('O');
+					break;
+
+				default:
+					enemies.get(i).move();
+					break;
+				}
+				//if the hero is close to an ogre and is armed 
+				if (nearOgreX(i) && hasClub && enemies.get(i).getStun() == 0)
 				{
-					System.out.println("coiso");
 					enemies.get(i).setSprite('8');
 					enemies.get(i).setStun(1);
+
 				}
-				enemies.get(i).move();
 				if ((map.hasGuard() && nearGuard() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 					return 2;
 			}
+
 
 			//if the hero catch the key 
 			if (map.hasKey() && H.getCoordenateI() == K.getCoordenateI() && H.getCoordenateJ() == K.getCoordenateJ()) {
@@ -256,7 +290,7 @@ public class Game {
 			}
 
 			//activates the lever
-			if (H.getCoordenateI() == L.getCoordenateI() && H.getCoordenateJ() == L.getCoordenateJ()) {
+			if (H.getCoordenateI() == L.getCoordenateI() && H.getCoordenateJ() == L.getCoordenateJ() && hasKey) {
 				for (Exit c : exits)
 					c.setSprite('S');
 			}
@@ -276,6 +310,8 @@ public class Game {
 					c.getClub().setSprite('*');
 			}
 
+
+			//   DOWN
 		} else if (s.charAt(0) == 's') {
 
 			for (Exit e : exits) {
@@ -295,24 +331,46 @@ public class Game {
 			H.move2(1, 0);
 
 
-			if(map.hasHeroClub() && H.getSprite() == 'H')
-			{
-				if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+			if(!hasClub){
+				if(map.hasHeroClub() && H.getSprite() == 'H')
 				{
-					H.setSprite('A');
-					H_C.setCoordenateI(0);
-					H_C.setCoordenateJ(0);
+					if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+					{
+						H.setSprite('A');
+						H_C.setCoordenateI(0);
+						H_C.setCoordenateJ(0);
+						hasClub = true;
+					}
 				}
 			}
-
 			//checks if the hero was captured or killed
 			for (int i = 0; i < enemies.size(); i++) {
-				if (H.getSprite() == 'A' && nearOgreX(i)) //if the hero is close to an ogre and is armed
+
+				switch(enemies.get(i).getStun()){
+
+				//first turn of stun
+				case 1: 
+					enemies.get(i).setStun(2);
+					break;
+					
+				//second turn of stun
+				case 2:
+
+					enemies.get(i).setStun(0);
+					enemies.get(i).setSprite('O');
+					break;
+
+				default:
+					enemies.get(i).move();
+					break;
+				}
+				//if the hero is close to an ogre and is armed
+				if (nearOgreX(i) && hasClub && enemies.get(i).getStun() == 0)
 				{
 					enemies.get(i).setSprite('8');
 					enemies.get(i).setStun(1);
+
 				}
-				enemies.get(i).move();
 				if ((map.hasGuard() && nearGuard() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 					return 2;
 			}
@@ -349,6 +407,7 @@ public class Game {
 					c.getClub().setSprite('*');
 			}
 
+			//   LEFT
 		} else if (s.charAt(0) == 'a') {
 
 			for (Exit e : exits) {
@@ -370,24 +429,47 @@ public class Game {
 			H.move2(0, -1);
 
 			//checks if the hero picks up the club
-			if(map.hasHeroClub() && H.getSprite() == 'H')
-			{
-				if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+			if(!hasClub){
+				if(map.hasHeroClub() && H.getSprite() == 'H')
 				{
-					H.setSprite('A');
-					H_C.setCoordenateI(0);
-					H_C.setCoordenateJ(0);
+					if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+					{
+						H.setSprite('A');
+						H_C.setCoordenateI(0);
+						H_C.setCoordenateJ(0);
+						hasClub = true;
+					}
 				}
 			}
 
 			//checks if the hero was captured or killed
 			for (int i = 0; i < enemies.size(); i++) {
-				if (H.getSprite() == 'A' && nearOgreX(i)) //if the hero is close to an ogre and is armed
+
+				switch(enemies.get(i).getStun()){
+
+				//first turn of stun
+				case 1: 
+					enemies.get(i).setStun(2);
+					break;
+					
+				//second turn of stun
+				case 2:
+
+					enemies.get(i).setStun(0);
+					enemies.get(i).setSprite('O');
+					break;
+
+				default:
+					enemies.get(i).move();
+					break;
+				}
+				//if the hero is close to an ogre and is armed
+				if (nearOgreX(i) && hasClub && enemies.get(i).getStun() == 0)
 				{
 					enemies.get(i).setSprite('8');
 					enemies.get(i).setStun(1);
+
 				}
-				enemies.get(i).move();
 				if ((map.hasGuard() && nearGuard() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 					return 2;
 			}
@@ -424,6 +506,7 @@ public class Game {
 					c.getClub().setSprite('*');
 			}
 
+			//   RIGHT
 		} else if (s.charAt(0) == 'd') {
 
 			for (Exit e : exits) {
@@ -443,24 +526,48 @@ public class Game {
 			H.move2(0, 1);
 
 			//checks if the hero picks up the club
-			if(map.hasHeroClub() && H.getSprite() == 'H')
-			{
-				if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+			if(!hasClub){
+				if(map.hasHeroClub() && H.getSprite() == 'H')
 				{
-					H.setSprite('A');
-					H_C.setCoordenateI(0);
-					H_C.setCoordenateJ(0);
+					if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+					{
+						H.setSprite('A');
+						H_C.setCoordenateI(0);
+						H_C.setCoordenateJ(0);
+						hasClub = true;
+					}
 				}
 			}
 
 			//checks if the hero was captured or killed
 			for (int i = 0; i < enemies.size(); i++) {
-				if (H.getSprite() == 'A' && nearOgreX(i)) //if the hero is close to an ogre and is armed
-				{					
+				
+				switch(enemies.get(i).getStun()){
+
+				//first turn of stun
+				case 1: 
+					enemies.get(i).setStun(2);
+					break;
+					
+				//second turn of stun
+				case 2:
+
+					enemies.get(i).setStun(0);
+					enemies.get(i).setSprite('O');
+					enemies.get(i).move();
+					break;
+
+				default:
+					enemies.get(i).move();
+					break;
+				}
+				//if the hero is close to an ogre and is armed
+				if (nearOgreX(i) && hasClub && enemies.get(i).getStun() == 0)
+				{
 					enemies.get(i).setSprite('8');
 					enemies.get(i).setStun(1);
+
 				}
-				enemies.get(i).move();
 				if ((map.hasGuard() && nearGuard() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 					return 2;
 			}

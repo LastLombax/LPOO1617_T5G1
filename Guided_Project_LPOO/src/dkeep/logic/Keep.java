@@ -80,7 +80,7 @@ public class Keep implements GameMap{
 	}
 
 	public boolean validPos(int x, int y){
-		if (Kmap[x][y] == 'X' || Kmap[x][y] == 'I')
+		if (Kmap[x][y] == 'X' || Kmap[x][y] == 'I' || Kmap[x][y] == 'O' || Kmap[x][y] == '*')
 			return false;
 
 		return true;

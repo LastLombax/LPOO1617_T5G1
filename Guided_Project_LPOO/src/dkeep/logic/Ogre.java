@@ -43,10 +43,9 @@ public class Ogre implements Character{
 
 		while(!valid){
 
-			if (turnStun == 0)
+			if (getStun() == 0)
 			{
 				double randomno = Math.floor(Math.random()*4);
-
 				switch((int)randomno){
 				case 0: //go down
 					Ogre_i++;
@@ -73,9 +72,8 @@ public class Ogre implements Character{
 					if(Ogre_j >7)
 						Ogre_j--;
 					else
-					{
-						clubMovement();
-						valid=true;
+					{	clubMovement();
+					valid=true;
 					}
 					break;
 				case 3: //go left
@@ -90,18 +88,15 @@ public class Ogre implements Character{
 					break;		
 				}
 			}
-			else if (turnStun == 1)
+			else
 			{
-				turnStun = 2;
 				clubMovement();
+				valid=true;
 			}
-			else if (turnStun == 2)
-			{
-				turnStun = 0;
-				clubMovement();
-			}
+
 		}
 	}
+
 
 	//club function for movement
 	public void clubMovement(){

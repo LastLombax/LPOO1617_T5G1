@@ -16,7 +16,7 @@ public class gameInit {
 			String move = s.next();
 
 			valid = g.movement(move);
-
+			
 			if (valid == 1) //facing a wall
 				continue;
 			else if (valid == 2) //loses
