@@ -1,14 +1,5 @@
 package dkeep.logic;
 
-import dkeep.logic.Hero;
-/*
- * public void addClub(Club c)
- * if i do this ,there will be a club associated to the ogre
- * 
- * also have to return those coordenates in order to print it
- * 
- * maybe the movement can be done here inside this class
- */
 public class Ogre implements Character{
 
 	private char OgreSprite;
@@ -17,26 +8,13 @@ public class Ogre implements Character{
 	private Club c; //1,5
 	private int turnStun = 0;
 
-	public Ogre(){
-		this.Ogre_i=-4;
-		this.Ogre_j=-4;
-	}
-
 	public Ogre(int i,int j,char s){
 		this.Ogre_i=i;
 		this.Ogre_j=j;
 		this.OgreSprite=s;
 	}
-	//ogre functions
 
-	public void setClub(int i,int j,char s){
-		this.c = new Club(i,j,s);
-	}
-
-	public void setStun(int x){	this.turnStun = x;}
-	public int getStun(){return turnStun;}
-	public Club getClub(){return c;}
-
+	//ogre movement
 	public void move(){
 
 		boolean valid=false;
@@ -98,7 +76,7 @@ public class Ogre implements Character{
 	}
 
 
-	//club function for movement
+	//club movement
 	public void clubMovement(){
 
 		boolean valid=false;
@@ -151,33 +129,23 @@ public class Ogre implements Character{
 			}
 
 		}
-		/*if(c.getCoordenateI() == Key_i && c.getCoordenateJ() == Key_j)
-			walls2[c.getCoordenateI()][c.getCoordenateJ()] = '$';
-		else
-			walls2[c.getCoordenateI()][c.getCoordenateJ()] = '*';
-		 */
 	}
-
-	public int getCoordenateI(){return Ogre_i;}
-
-	public int getCoordenateJ(){return Ogre_j;}
-
-	public char getSprite(){return OgreSprite;}
-
-	public void setCoordenateI(int i){this.Ogre_i = i;}
-
-	public void setCoordenateJ(int j){this.Ogre_j = j;}
-
-	public void setSprite(char s){this.OgreSprite = s;}
-
+	
 	public boolean hasClub(){
 		if(c.getCoordenateI() >= 0 && c.getCoordenateJ()>=0)
 			return true;
-
 		return false;
 	}
 
-	public boolean isStunned(boolean stun){
-		return stun;
-	}
+	public void setClub(int i,int j,char s){this.c = new Club(i,j,s);}
+	public void setStun(int x){	this.turnStun = x;}
+	public int getStun(){return turnStun;}
+	public Club getClub(){return c;}
+	public int getCoordenateI(){return Ogre_i;}
+	public int getCoordenateJ(){return Ogre_j;}
+	public char getSprite(){return OgreSprite;}
+	public void setCoordenateI(int i){this.Ogre_i = i;}
+	public void setCoordenateJ(int j){this.Ogre_j = j;}
+	public void setSprite(char s){this.OgreSprite = s;}
+	public boolean isStunned(boolean stun){return stun;}
 }

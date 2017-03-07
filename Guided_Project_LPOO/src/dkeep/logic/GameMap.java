@@ -11,7 +11,7 @@ public interface GameMap {
 	public Key getKey(); //returns key of map
 	public Vector<Exit> getExits(); //returns all the exits existing in the map
 	public Club getHeroClub(); //returns the hero club with the initial coordinates
-
+	
 	public char[][] getMap();	//returns the map (char[][])
 	
 	public boolean validPos(int x, int y); //checks if the position with coordinates [i][j] of the map are valid (not door or wall)
