@@ -2,7 +2,7 @@ package dkeep.logic;
 
 public class Lever implements Character{
 	
-	private int LeverI;
+	private int LeverI; 
 	private int LeverJ;
 	private char LeverSprite;	
 	

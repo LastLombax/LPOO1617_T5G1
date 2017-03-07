@@ -13,7 +13,7 @@ public class Ogre implements Character{
 		this.Ogre_j=j;
 		this.OgreSprite=s;
 	}
-
+ 
 	//ogre movement
 	public void move(){
 

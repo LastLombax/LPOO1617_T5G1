@@ -3,7 +3,7 @@ import java.util.Vector;
 
 public interface GameMap {
 	
-	public Hero getHero();  //returns Hero with the initial coordinates
+	public Hero getHero();  //returns Hero with the initial coordinates 
 	public Vector<Ogre> getOgres(); //returns Ogres with the initial coordinates
 	public Vector<Club> getClubs();
 	public Guard getGuard();  //returns Guard with the initial coordinates

@@ -13,7 +13,7 @@ public class Club implements Character {
 	
 	public Club(int i,int j,char s){
 		this.ClubI=i;
-		this.ClubJ=j;
+		this.ClubJ=j; 
 		this.ClubSprite=s;
 	}
 	

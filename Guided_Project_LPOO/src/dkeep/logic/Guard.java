@@ -14,7 +14,7 @@ public class Guard implements Character{
 	// the random argument defines the personality of the Guard: 0-> Rookie, 1-> Drunken, 2-> Suspicious
 	public Guard(int i,int j, char s, int random){
 		this.Guard_i=i;
-		this.Guard_j=j;
+		this.Guard_j=j; 
 		this.GuardSprite=s;
 		this.GuardIterator=0;
 		this.ranGuard = random;

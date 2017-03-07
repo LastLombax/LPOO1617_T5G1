@@ -61,7 +61,7 @@ public class Dungeon implements GameMap{
 	
 	
 	public Vector<Exit> getExits(){
-		Vector<Exit>s = new Vector<Exit>();
+		Vector<Exit>s = new Vector<Exit>(); 
 		s.add(new Exit(5,0,'I'));
 		s.add(new Exit(6,0,'I'));
 		return s;		

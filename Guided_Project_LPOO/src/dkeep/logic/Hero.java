@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 public class Hero implements Character{
-
+ 
 	private char HeroSprite;
 	
 	private int Hero_i;

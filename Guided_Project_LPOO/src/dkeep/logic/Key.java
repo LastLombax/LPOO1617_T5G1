@@ -3,10 +3,8 @@ package dkeep.logic;
 public class Key implements Character{
 	
 	private int KeyI;
-	private int KeyJ;
-	private char KeySprite;
-	
-	
+	private int KeyJ; 
+	private char KeySprite;	
 	
 	public Key(int i,int j,char s){
 		this.KeyI=i;

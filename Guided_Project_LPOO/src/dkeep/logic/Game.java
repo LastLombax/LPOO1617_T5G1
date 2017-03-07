@@ -349,7 +349,7 @@ public class Game {
 			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !wasKeyC)
 			{
 				c.getClub().setSprite('$');
-				wasKeyC = true;
+				wasKeyC = true; 
 			}
 			else if (wasKey)
 			{

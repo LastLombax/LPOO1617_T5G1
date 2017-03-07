@@ -39,7 +39,7 @@ public class Keep implements GameMap{
 		ogres.addElement(O_1);
 		//ogres.addElement(O_2);
 		return ogres;
-	}
+	} 
 	
 	public Vector<Club> getClubs(){
 		Vector<Club>clubs = new Vector<Club>();
