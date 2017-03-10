@@ -2,7 +2,7 @@ package dkeep.logic;
 
 import java.util.Vector;
 
-public class Keep implements GameMap{
+public class Keep extends GameMap{
 
 	private Hero H = new Hero(7,1,'H');
 	private Ogre O = new Ogre(1,4,'O');
@@ -14,8 +14,6 @@ public class Keep implements GameMap{
 	private char[][] Kmap = new char [9][9];
 
 	public Keep(){
-
-
 		//added wall
 		for(int i = 0; i < 9;i++){
 			if(Kmap[i][0]!='I')
@@ -30,9 +28,6 @@ public class Keep implements GameMap{
 		for(int j = 0; j < 9;j++){
 			Kmap[8][j]='X';			
 		}
-		
-		//added Hero_Club
-	//	Kmap[6][2] = '*';
 	}
 
 	public Hero getHero(){return H;}
@@ -54,14 +49,11 @@ public class Keep implements GameMap{
 	}
 
 	public Guard getGuard(){
-		Guard g = new Guard();
-		return g;
+		return null;
 	}
 
 	public Lever getLever(){
-
-		Lever l = new Lever();
-		return l;
+		return null;
 	}
 
 	public Club getHeroClub(){
@@ -92,4 +84,22 @@ public class Keep implements GameMap{
 	public boolean hasLever(){return false;}
 	public boolean hasCLub(){return true;}
 
+	public void setMap(char[][] c){
+		this.Kmap = c;
+	}
+	public void setHero(Hero h){}
+
+	public void setGuard(Guard g){}
+
+	public void setClub(Club c){}
+
+	public void setOgre(Ogre o){}
+
+	public void setKey(Key k){}
+
+	public void setLever(Lever l){}
+
+	public void setHeroClub(Club c){}
+	
+	public void setExits(Vector<Exit> e){}
 }

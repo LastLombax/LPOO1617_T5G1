@@ -5,18 +5,20 @@ import java.util.Vector;
 import dkeep.logic.Hero;
 
 
-public class Dungeon implements GameMap{
+public class Dungeon extends GameMap{
 
 	public Hero h = new Hero(1,1,'H');
 
 	public Guard G = new Guard(1,8,'G', (int) Math.floor(Math.random()*3));
-		
+
 	public Lever L = new Lever(8,7,'k');
+	
+	private Vector<Exit>s = new Vector<Exit>();
 
 	private char[][] Dmap = new char [10][10];
 
 	public Dungeon(){
-		
+		super();
 		this.Dmap[1][4] = 'I';
 		this.Dmap[3][4] = 'I';
 		this.Dmap[3][2] = 'I';
@@ -48,20 +50,20 @@ public class Dungeon implements GameMap{
 	public Lever getLever(){
 		return L;
 	}
-	
+
 	public Key getKey(){
 		Key k = new Key();
 		return k;
 	}
-	
+
 	public boolean hasKey(){
 		return false;
 	}
-	
+
 	public boolean hasLever(){
 		return true;
 	}
-	
+
 	public boolean hasHeroClub(){
 		return false;
 	}
@@ -81,18 +83,18 @@ public class Dungeon implements GameMap{
 	public boolean hasGuard(){return true;}
 
 	public boolean hasOgre(){return false;}
-	
+
 	public boolean hasCLub(){return false;}
-	
+
 	public Hero getHero(){return h;}
-	
+
 	public Guard getGuard(){return G;}
-	
+
 	public Club getClub(){
 		Club c = new Club();
 		return c;
 	}
-	
+
 	public Ogre getOgre(){
 		Ogre o = new Ogre();
 		return o;
@@ -105,7 +107,7 @@ public class Dungeon implements GameMap{
 		Vector<Ogre>ogres = new Vector<Ogre>();
 		return ogres;
 	}
-	
+
 	public Vector<Club> getClubs(){
 		Vector<Club>clubs = new Vector<Club>();
 		return clubs;
@@ -116,4 +118,27 @@ public class Dungeon implements GameMap{
 		s.add(new Exit(6,0,'I'));
 		return s;		
 	}
+
+	public void setMap(char[][] c){
+		this.Dmap = c;
+	}
+
+	public void setHero(Hero h){}
+
+	public void setGuard(Guard g){}
+
+	public void setClub(Club c){}
+
+	public void setOgre(Ogre o){}
+
+	public void setKey(Key k){}
+
+	public void setLever(Lever l){}
+
+	public void setHeroClub(Club c){}
+	
+	public void setExits(Vector<Exit> e){
+		this.s=e;
+	}
+
 }

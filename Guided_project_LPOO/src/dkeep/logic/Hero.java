@@ -16,6 +16,8 @@ public class Hero implements Character{
 		this.HeroSprite=s;
 	}
 	
+	public Hero() {}
+
 	public int getStun(){return 0;}
 	public void setStun(int x) {} {}
 

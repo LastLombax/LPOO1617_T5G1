@@ -1,6 +1,4 @@
 package dkeep.logic;
-
-import dkeep.logic.Hero;
 /*
  * public void addClub(Club c)
  * if i do this ,there will be a club associated to the ogre
@@ -14,7 +12,7 @@ public class Ogre implements Character{
 	private char OgreSprite;
 	private int Ogre_i;
 	private int Ogre_j;
-	private Club c; //1,5
+	private Club c = new Club(); //1,5
 	private int turnStun = 0;
 
 	public Ogre(){
@@ -31,6 +29,10 @@ public class Ogre implements Character{
 
 	public void setClub(int i,int j,char s){
 		this.c = new Club(i,j,s);
+	}
+	
+	public void setClub(Club d){
+		this.c = d;
 	}
 
 	public void setStun(int x){	this.turnStun = x;}
@@ -151,11 +153,6 @@ public class Ogre implements Character{
 			}
 
 		}
-		/*if(c.getCoordenateI() == Key_i && c.getCoordenateJ() == Key_j)
-			walls2[c.getCoordenateI()][c.getCoordenateJ()] = '$';
-		else
-			walls2[c.getCoordenateI()][c.getCoordenateJ()] = '*';
-		 */
 	}
 
 	public int getCoordenateI(){return Ogre_i;}
@@ -171,7 +168,7 @@ public class Ogre implements Character{
 	public void setSprite(char s){this.OgreSprite = s;}
 
 	public boolean hasClub(){
-		if(c.getCoordenateI() >= 0 && c.getCoordenateJ()>=0)
+		if(c.getCoordenateI() >= 0 && c.getCoordenateJ() >=0)
 			return true;
 
 		return false;
