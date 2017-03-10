@@ -7,7 +7,7 @@ public class Keep extends GameMap{
 	private Hero H = new Hero(7,1,'H');
 	private Ogre O = new Ogre(1,4,'O');
 	private Ogre O_1 = new Ogre(2,5,'O');
-	private Key K = new Key(1,7,'k');
+	private Key K = new Key(1,7,'k'); 
 	private Club C = new Club(1,5,'*'); 
 	private Club C_1 = new Club(2,6,'*'); 
 	private Club Hero_club = new Club(6,2,'*');

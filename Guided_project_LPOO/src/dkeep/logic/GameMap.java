@@ -1,7 +1,7 @@
 package dkeep.logic;
 import java.util.Vector;
 
-public abstract class GameMap {
+public abstract class GameMap { 
 	
 	public abstract Hero getHero();  //returns Hero with the initial coordinates
 	public abstract Vector<Ogre> getOgres(); //returns Ogres with the initial coordinates

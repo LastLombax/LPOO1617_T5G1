@@ -324,7 +324,7 @@ public class TestTest {
 		assertEquals(0,H_teste.getStun());
 		
 		////
-		Exit e_teste = new Exit();
+		Exit e_teste = new Exit(); 
 		e_teste.setCoordenateI(1);
 		e_teste.setCoordenateJ(1);
 		e_teste.setSprite('I');

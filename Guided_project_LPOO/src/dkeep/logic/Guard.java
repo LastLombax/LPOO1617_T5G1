@@ -3,7 +3,7 @@ package dkeep.logic;
 public class Guard implements Character{
 
 	private char GuardSprite;
-	private int Guard_i;
+	private int Guard_i; 
 	private int Guard_j;
 	private int ranGuard;
 	

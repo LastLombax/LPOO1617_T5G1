@@ -9,7 +9,7 @@ package dkeep.logic;
  */
 public class Ogre implements Character{
 
-	private char OgreSprite;
+	private char OgreSprite; 
 	private int Ogre_i;
 	private int Ogre_j;
 	private Club c = new Club(); //1,5

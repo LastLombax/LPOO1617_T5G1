@@ -16,7 +16,7 @@ public class Club implements Character {
 		this.ClubJ=j;
 		this.ClubSprite=s;
 	}
-	
+	 
 	public int getStun(){return 0;}
 
 	public void setStun(int x) {}

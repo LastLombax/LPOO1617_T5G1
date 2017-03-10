@@ -12,7 +12,7 @@ public class Exit implements Character{
 		this.ExitSprite=s;
 	}
 	
-	public Exit() {}
+	public Exit() {} 
 
 	public int getStun(){return 0;}
 	public void setStun(int x) {} {}

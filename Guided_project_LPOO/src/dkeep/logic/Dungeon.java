@@ -122,7 +122,7 @@ public class Dungeon extends GameMap{
 	public void setMap(char[][] c){
 		this.Dmap = c;
 	}
-
+ 
 	public void setHero(Hero h){}
 
 	public void setGuard(Guard g){}

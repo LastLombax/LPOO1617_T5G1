@@ -12,7 +12,7 @@ public class Lever implements Character{
 	}
 	
 	public Lever(int i, int j,char s){
-		this.LeverI=i;
+		this.LeverI=i; 
 		this.LeverJ=j;
 		this.LeverSprite=s;
 	}

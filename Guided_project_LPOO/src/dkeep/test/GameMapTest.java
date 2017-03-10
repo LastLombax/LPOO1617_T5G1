@@ -6,7 +6,7 @@ import dkeep.logic.*;
 
 public class GameMapTest extends GameMap{
 
-	private Hero H = new Hero();
+	private Hero H = new Hero(); 
 	private Guard G = new Guard();
 	private Lever l = new Lever();
 	private Key k = new Key();

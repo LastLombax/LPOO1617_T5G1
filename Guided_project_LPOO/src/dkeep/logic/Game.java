@@ -143,7 +143,7 @@ public class Game {
 		}
 	}
 
-	public boolean nearEnemy() {
+	public boolean nearEnemy() { 
 
 		for (int i = 0; i < enemies.size(); i++)
 		{			
