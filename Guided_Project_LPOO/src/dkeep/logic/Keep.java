@@ -34,7 +34,7 @@ public class Keep extends GameMap{
 	
 	public Vector<Ogre> getOgres(){
 		Vector<Ogre>ogres = new Vector<Ogre>();
-		ogres.add(O);
+		ogres.add(O); 
 		return ogres;
 	}
 	

@@ -429,7 +429,7 @@ public class Game {
 	public Hero getHero(){return this.H;}
 
 	public Guard getGuard(){return this.G;}
-
+ 
 	public void setHero(Hero H){this.H=H;}
 
 	public Ogre getOgre(){return this.O;}

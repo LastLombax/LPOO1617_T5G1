@@ -8,7 +8,7 @@ public class Lever implements Character{
 	
 	public Lever(){
 		this.LeverI=-1;
-		this.LeverJ=-1;
+		this.LeverJ=-1; 
 	}
 	
 	public Lever(int i, int j,char s){

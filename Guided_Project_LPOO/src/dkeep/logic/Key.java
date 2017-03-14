@@ -8,7 +8,7 @@ public class Key implements Character{
 	
 	public Key(){
 		this.KeyI=-1;
-		this.KeyJ=-1; 
+		this.KeyJ=-1;  
 	}
 	
 	public int getStun(){return 0;}

@@ -5,7 +5,7 @@ public class Guard implements Character{
 	private char GuardSprite;
 	private int Guard_i; 
 	private int Guard_j;
-	private int ranGuard;
+	private int ranGuard; 
 	
 	private final int[]movementGuard_i={0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1};
 	private final int[]movementGuard_j={-1,0,0,0,0,-1,-1,-1,-1,-1,-1,0,1,1,1,1,1,1,1,0,0,0,0,0};	

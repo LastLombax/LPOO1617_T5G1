@@ -5,7 +5,7 @@ public abstract class GameMap {
 	
 	public abstract Hero getHero();  //returns Hero with the initial coordinates
 	public abstract Vector<Ogre> getOgres(); //returns Ogres with the initial coordinates
-	public abstract Vector<Club> getClubs();
+	public abstract Vector<Club> getClubs(); 
 	public abstract Guard getGuard();  //returns Guard with the initial coordinates
 	public abstract Lever getLever(); //returns Lever of map	
 	public abstract Key getKey(); //returns key of map

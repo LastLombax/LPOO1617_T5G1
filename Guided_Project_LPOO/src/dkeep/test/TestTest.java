@@ -11,7 +11,7 @@ import org.junit.Test;
   
 import dkeep.logic.*;
 
-public class TestTest {
+public class TestTest { 
 
 	char [][] map = {{'X','X','X','X','X'},
 			{'X',' ',' ',' ','X'},

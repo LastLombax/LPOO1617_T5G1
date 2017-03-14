@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 public interface Character {  
-	
+	 
 	public int getCoordenateI(); //returns the coordenate i of the character
 	public int getCoordenateJ(); //returns the coordenate j of the character
 	public char getSprite(); //returns the sprite of the character
