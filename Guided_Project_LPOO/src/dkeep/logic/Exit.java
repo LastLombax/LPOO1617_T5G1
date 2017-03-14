@@ -1,5 +1,5 @@
 package dkeep.logic;
-
+ 
 public class Exit implements Character{
 	
 	private int ExitI;

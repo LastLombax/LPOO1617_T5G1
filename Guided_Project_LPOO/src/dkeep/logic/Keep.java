@@ -27,7 +27,7 @@ public class Keep extends GameMap{
 			Kmap[8][j]='X';			
 		}
 	}
-
+ 
 	public Hero getHero(){return H;}
 	
 	public boolean hasHeroClub(){return true;}

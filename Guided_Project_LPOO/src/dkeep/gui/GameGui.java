@@ -152,7 +152,7 @@ public class GameGui {
 				{
 					GameStatus.setText("Try again");
 					return;
-				}*/ 
+				}*/  
 				
 				g = new Game(Integer.parseInt(fldOgres.getText()));
 				

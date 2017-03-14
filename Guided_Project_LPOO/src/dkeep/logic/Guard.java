@@ -1,5 +1,5 @@
 package dkeep.logic;
-
+ 
 public class Guard implements Character{
 
 	private char GuardSprite;

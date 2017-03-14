@@ -1,6 +1,6 @@
 package dkeep.logic;
 
-public class Lever implements Character{
+public class Lever implements Character{ 
 	
 	private int LeverI;
 	private int LeverJ;

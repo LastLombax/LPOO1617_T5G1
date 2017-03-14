@@ -424,7 +424,7 @@ public class Game {
 		return 4;
 	}
 
-	public GameMap getMap() {return map;}
+	public GameMap getMap() {return map;} 
 
 	public Hero getHero(){return this.H;}
 

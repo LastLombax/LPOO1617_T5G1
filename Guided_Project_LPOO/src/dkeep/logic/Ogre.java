@@ -1,5 +1,5 @@
 package dkeep.logic;
-/*
+/* 
  * public void addClub(Club c)
  * if i do this ,there will be a club associated to the ogre
  * 
