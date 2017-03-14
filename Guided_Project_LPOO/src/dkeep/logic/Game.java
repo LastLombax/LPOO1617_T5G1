@@ -5,17 +5,19 @@ import java.util.*;
 public class Game {
 
 	private Vector<GameMap> maps = new Vector<GameMap>();
-	private Hero H;
-	private Club H_C;
-	private Guard G;
-	private Ogre O;
-	private Lever L;
-	private Key K;
+	private Hero H = new Hero();
+	private Club H_C = new Club();
+	private Guard G = new Guard();
+	private Ogre O = new Ogre();
+	private Lever L = new Lever();
+	private Key K = new Key();
 	private Vector<Exit> exits = new Vector<Exit>();
 	private Vector<Character> enemies = new Vector<Character>();
 	private Vector<Character> nonMovingCharacters = new Vector<Character>();
 	private GameMap map;
-	private boolean hasKey, hasClub, wasKeyC, wasKey;
+	private char[][] fullMap;
+	private boolean hasKey,hasClub,wasKeyC,wasKey,hasLever=false;
+	private int nOgres;
 
 	//returns a copy of a char[][]
 	public char[][] copyMap() {
@@ -39,12 +41,12 @@ public class Game {
 	//changes the map to the next one if exists, if not returns 0;
 	public int nextMap(GameMap map) {
 
-		for (int i = 0; i < maps.size(); i++) 
+		for (int i = 0; i < maps.size(); i++) {
 			if (maps.get(i) == map && i != maps.size() - 1) {
 				this.map = maps.get(i + 1);
 				return 1;
 			}
-		
+		}
 		return 0;
 	}
 
@@ -58,19 +60,23 @@ public class Game {
 		this.exits = map.getExits();
 
 		if (map.hasGuard()) {
-			G = new Guard(map.getGuard().getCoordenateI(), map.getGuard().getCoordenateJ(), map.getGuard().getSprite(), (int) Math.floor(Math.random()*3));
+			System.out.println("map: " + map.getGuard().getRanGuard());
+			G = new Guard(map.getGuard().getCoordenateI(), map.getGuard().getCoordenateJ(), map.getGuard().getSprite(), map.getGuard().getRanGuard());
 			this.enemies.add(G);
 		}
 
-		if (map.hasOgre()) 
+		if (map.hasOgre()) {
 			for (int i = 0; i < map.getOgres().size();i++)
 			{
-				O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite());
-				if(map.hasCLub())
-					O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
-				this.enemies.add(O);
+				for (int j = 0; j < nOgres; j++)
+				{
+					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite());
+					if(map.hasCLub())
+						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+					this.enemies.add(O);
+				}
 			}
-		
+		}
 
 		if (map.hasKey())
 		{
@@ -78,11 +84,12 @@ public class Game {
 			this.hasKey = false;
 			this.wasKey = false;
 			this.nonMovingCharacters.add(K);
-		} 
+		}
 
 		if (map.hasLever()) {
 			L = new Lever(map.getLever().getCoordenateI(), map.getLever().getCoordenateJ(), map.getLever().getSprite());
 			this.nonMovingCharacters.add(L);
+			this.hasLever=true;
 		}
 
 		if (map.hasHeroClub())
@@ -92,7 +99,6 @@ public class Game {
 		}
 
 		H = new Hero(map.getHero().getCoordenateI(), map.getHero().getCoordenateJ(), map.getHero().getSprite());
-
 	}
 
 	public Game() {
@@ -104,50 +110,68 @@ public class Game {
 		changeLevel();
 	}
 
+	public Game(GameMap map){
+		this.maps.add(map);
+		this.map=maps.get(0);
+		changeLevel();
+	}
+
+	public Game(int n){
+		this.nOgres = n;
+		buildVectorMaps();
+
+		this.map = maps.get(0);
+
+		changeLevel();
+	}
+
 	//prints the map (char[][])
 	public void print() {
 
-		char[][] m = copyMap();
-
-		// prints exits
-		for (Exit c : exits)
-			m[c.getCoordenateI()][c.getCoordenateJ()] = c.getSprite();
-
-		// prints levers and Keys
-		for (Character c : nonMovingCharacters)
-			m[c.getCoordenateI()][c.getCoordenateJ()] = c.getSprite();
-
-		// prints Hero
-		m[H.getCoordenateI()][H.getCoordenateJ()] = H.getSprite();
-
-		// prints enemies
-		for (Character c : enemies){
-			m[c.getCoordenateI()][c.getCoordenateJ()] = c.getSprite();
-			if(c.hasClub())
-				m[c.getClub().getCoordenateI()][c.getClub().getCoordenateJ()]=c.getClub().getSprite();
-			
-		}
+		setFullMap();
 
 		// prints all
-		for (int i = 0; i < m.length; i++) {
-			for (int j = 0; j < m[i].length; j++) 
-				System.out.print(m[i][j] + " ");
-			
+		for (int i = 0; i < this.fullMap.length; i++) {
+			for (int j = 0; j < this.fullMap[i].length; j++) {
+				System.out.print(this.fullMap[i][j] + " ");
+			}
 			System.out.print("\n");
 		}
 	}
+	public void setFullMap(){
+		this.fullMap = copyMap();
 
-	//checks if the hero was captured by a guard
-	public boolean nearEnemy() {
+		//  exits
+		for (Exit c : exits)
+			this.fullMap[c.getCoordenateI()][c.getCoordenateJ()] = c.getSprite();
+
+		//  levers and Keys
+		for (Character c : nonMovingCharacters)
+			this.fullMap[c.getCoordenateI()][c.getCoordenateJ()] = c.getSprite();
+
+		//  Hero
+		this.fullMap[H.getCoordenateI()][H.getCoordenateJ()] = H.getSprite();
+
+		//  enemies
+		for (Character c : enemies){
+			this.fullMap[c.getCoordenateI()][c.getCoordenateJ()] = c.getSprite();
+			if(c.hasClub())
+				this.fullMap[c.getClub().getCoordenateI()][c.getClub().getCoordenateJ()]=c.getClub().getSprite();
+		}
+	}
+
+	public char[][] getFullMap(){return this.fullMap;}
+
+	public boolean nearEnemy() { 
 
 		for (int i = 0; i < enemies.size(); i++)
 		{			
 			if (Math.abs(enemies.get(i).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(i).getCoordenateJ() - H.getCoordenateJ()) <=1)
-					return true;
+				return true;
 		}
 		return false;
 	}
-	
+
 	public boolean nearEnemyX(int x) {
 
 		if (Math.abs(enemies.get(x).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(x).getCoordenateJ() - H.getCoordenateJ()) <=1)
@@ -156,6 +180,13 @@ public class Game {
 
 	}
 
+	public boolean nearOgreX(int x) {
+
+		if (Math.abs(enemies.get(x).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(x).getCoordenateJ() - H.getCoordenateJ()) <=1)
+			return true;
+		return false;
+
+	}
 
 	public boolean nearClub(Character c){
 
@@ -181,6 +212,15 @@ public class Game {
 			//if you can pass a level,change map/level or finish and win
 			for (Exit e : exits) {
 				if (e.getCoordenateI() == H.getCoordenateI() - 1 && e.getCoordenateJ() == H.getCoordenateJ()
+						&& e.getSprite() == 'I'){
+					if(hasKey){
+						e.setSprite('S');
+						return 1;
+					}
+					else
+						return 1;
+				}
+				else if (e.getCoordenateI() == H.getCoordenateI() - 1 && e.getCoordenateJ() == H.getCoordenateJ()
 						&& e.getSprite() == 'S') {
 					H.move2(-1, 0);
 					if (nextMap(map) == 0)
@@ -201,6 +241,15 @@ public class Game {
 
 			for (Exit e : exits) {
 				if (e.getCoordenateI() == H.getCoordenateI() + 1 && e.getCoordenateJ() == H.getCoordenateJ()
+						&& e.getSprite() == 'I') {
+					if(hasKey){
+						e.setSprite('S');
+						return 1;
+					}
+					else
+						return 1;
+				}
+				else if (e.getCoordenateI() == H.getCoordenateI() + 1 && e.getCoordenateJ() == H.getCoordenateJ()
 						&& e.getSprite() == 'S') {
 					H.move2(1, 0);
 					if (nextMap(map) == 0)
@@ -221,6 +270,15 @@ public class Game {
 
 			for (Exit e : exits) {
 				if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == (H.getCoordenateJ()-1)
+						&& e.getSprite() == 'I'){
+					if(hasKey){
+						e.setSprite('S');
+						return 1;
+					}
+					else
+						return 1;
+				}
+				else if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == (H.getCoordenateJ()-1)
 						&& e.getSprite() == 'S') {
 					H.move2(0, -1);
 					if (nextMap(map) == 0)
@@ -235,7 +293,7 @@ public class Game {
 			if (!map.validPos(H.getCoordenateI(), H.getCoordenateJ() - 1))
 				return 1;
 
-			H.move2(0, -1);			
+			H.move2(0, -1);
 		}
 
 		//   RIGHT
@@ -243,6 +301,15 @@ public class Game {
 
 			for (Exit e : exits) {
 				if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == H.getCoordenateJ() + 1
+						&& e.getSprite() == 'I') {
+					if(hasKey){
+						e.setSprite('S');
+						return 1;
+					}
+					else
+						return 1;
+				}
+				else if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == H.getCoordenateJ() + 1
 						&& e.getSprite() == 'S') {
 					H.move2(0, 1);
 					if (nextMap(map) == 0)
@@ -293,11 +360,13 @@ public class Game {
 
 			enemies.get(i).move();
 
+			if(enemies.get(i).getCoordenateI() == H.getCoordenateI() && enemies.get(i).getCoordenateJ()== H.getCoordenateJ())
+				return 2;
+
 			//if the hero is close to an ogre and is armed 
 			if (nearEnemyX(i) && hasClub && enemies.get(i).getStun() == 0)
 			{
 				enemies.get(i).setSprite('8');
-				System.out.println(enemies.get(i).getSprite());
 				enemies.get(i).setStun(1);
 			}
 			else if (nearEnemyX(i) && !hasClub)
@@ -319,14 +388,8 @@ public class Game {
 			K.setSprite(' ');
 		}
 
-		//to open the doors that need a key(make them from 'I' to 'S')
-		for (Exit e : exits) 
-			if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == H.getCoordenateJ()-1 && e.getSprite() == 'I' && hasKey)
-				e.setSprite('S');
-
-
 		//activates the lever
-		if (H.getCoordenateI() == L.getCoordenateI() && H.getCoordenateJ() == L.getCoordenateJ()) 
+		if (H.getCoordenateI() == L.getCoordenateI() && H.getCoordenateJ() == L.getCoordenateJ() && hasLever) 
 			for (Exit c : exits)
 				c.setSprite('S');
 
@@ -349,7 +412,7 @@ public class Game {
 			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !wasKeyC)
 			{
 				c.getClub().setSprite('$');
-				wasKeyC = true; 
+				wasKeyC = true;
 			}
 			else if (wasKey)
 			{
@@ -361,11 +424,28 @@ public class Game {
 		return 4;
 	}
 
-	public GameMap getMap() {
-		return map;
+	public GameMap getMap() {return map;}
+
+	public Hero getHero(){return this.H;}
+
+	public Guard getGuard(){return this.G;}
+
+	public void setHero(Hero H){this.H=H;}
+
+	public Ogre getOgre(){return this.O;}
+
+	public void setGuard(Guard G){
+		for(int i= 0 ; i< this.enemies.size();i++){
+			this.enemies.remove(i);
+			this.enemies.add( new Guard(G.getCoordenateI(),G.getCoordenateJ(), G.getSprite(), G.getRanGuard()));
+		}
 	}
 
-	public void setMap(GameMap map) {
-		this.map = map;
-	}
+	public void setLever(Lever l){this.L=l;}
+
+	public void setExits(Vector<Exit> e){this.exits=e;}
+
+	public void setMap(GameMap map) {this.map = map;}
+
+	public Vector<Exit> getExits(){return this.exits;}
 }
