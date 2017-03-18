@@ -3,8 +3,8 @@ package dkeep.logic;
 import java.util.Vector;
 
 import dkeep.logic.Hero;
-
  
+  
 public class Dungeon extends GameMap{
  
 	public Hero h = new Hero(1,1,'H');

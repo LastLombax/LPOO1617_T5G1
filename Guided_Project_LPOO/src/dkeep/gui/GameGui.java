@@ -21,6 +21,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
 public class GameGui {
@@ -40,9 +42,7 @@ public class GameGui {
 	private JLabel GameStatus = new JLabel("Game Status");
 	private Game g;
 
-	/**
-	 * Launch the application.
-	 */ 
+
 
 	public void updateGame(){
 		String s = new String();
@@ -58,6 +58,7 @@ public class GameGui {
 			s+= "\n";
 		}	
 		Console.setText(s);
+		Console.requestFocusInWindow();
 	}
 
 	public void verify(int valid){
@@ -68,12 +69,16 @@ public class GameGui {
 		{
 			GameStatus.setText("You lost!");
 			enableMovementButtons(false);
+			GameWindow.requestFocusInWindow();
 		}
-		if(valid==0)
+		else if(valid==0)
 		{
 			GameStatus.setText("You Won!");
 			enableMovementButtons(false);
+			GameWindow.requestFocusInWindow();
 		}
+		else
+			GameStatus.setText("Be Careful!");
 
 	}
 	
@@ -98,17 +103,11 @@ public class GameGui {
 		});
 	}
 
-
-	/**
-	 * Create the application.
-	 */
+	
 	public GameGui() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 
 		GameWindow.setResizable(false);
@@ -142,17 +141,111 @@ public class GameGui {
 		Console.setFont(new Font("Courier New", Font.PLAIN, 20));
 		Console.setBounds(7, 68, 265, 243);
 		GameWindow.getContentPane().add(Console);
+		
+		
+		
+		Console.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent e){
+				if (e.getKeyCode() == KeyEvent.VK_UP && ButtonUp.isEnabled())
+				{
+					int m = g.movement("w");
+					updateGame();
+					verify(m);
+				}
+			}
+			
+			
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		Console.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent e){
+				if (e.getKeyCode() == KeyEvent.VK_DOWN && ButtonDown.isEnabled())
+				{
+					int m = g.movement("s");
+					updateGame();
+					verify(m);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		Console.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent e){
+				if (e.getKeyCode() == KeyEvent.VK_LEFT && ButtonLeft.isEnabled())
+				{
+					int m = g.movement("a");
+					updateGame();
+					verify(m);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		Console.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent e){
+				if (e.getKeyCode() == KeyEvent.VK_RIGHT && ButtonRight.isEnabled())
+				{
+					int m = g.movement("d");
+					updateGame();
+					verify(m);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		}); 
 
 
 		ButtonNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				/*	GameStatus.setText(fldOgres.getText());
-				if ( fldOgres.getText() != "1"  || fldOgres.getText() != "2" || fldOgres.getText() != "3" || fldOgres.getText() != "4" || fldOgres.getText() != "5")
-				{
-					GameStatus.setText("Try again");
+				if(fldOgres.getText().charAt(0) < 49 || fldOgres.getText().charAt(0) > 53){
+					GameStatus.setText("Invalid number of Ogres");
 					return;
-				}*/  
+				}
 				
 				g = new Game(Integer.parseInt(fldOgres.getText()));
 				
@@ -162,6 +255,7 @@ public class GameGui {
 				updateGame();
 				enableMovementButtons(true);
 				GameStatus.setText("You can play the game");
+				Console.requestFocusInWindow();
 			}
 		});
 		ButtonNewGame.setBounds(303, 74, 97, 25);

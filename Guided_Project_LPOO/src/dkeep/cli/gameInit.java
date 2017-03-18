@@ -10,7 +10,7 @@ public class gameInit {
 		Game g = new Game(3);
 		g.print();
 
-		int valid;
+		int valid; 
 		do{
 			Scanner s= new Scanner(System.in);
 			String move = s.next();

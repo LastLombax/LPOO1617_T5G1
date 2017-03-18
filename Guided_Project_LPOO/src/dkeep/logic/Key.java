@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 public class Key implements Character{ 
-	
+	 
 	private int KeyI;
 	private int KeyJ;
 	private char KeySprite;

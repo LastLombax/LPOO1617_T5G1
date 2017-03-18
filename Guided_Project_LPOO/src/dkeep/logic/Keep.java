@@ -1,7 +1,7 @@
 package dkeep.logic;
 
 import java.util.Vector;
-
+ 
 public class Keep extends GameMap{
 
 	private Hero H = new Hero(7,1,'H');

@@ -1,6 +1,6 @@
 package dkeep.logic;
 
-import java.util.*;
+import java.util.Vector;
 
 public class Game {
 
@@ -17,7 +17,7 @@ public class Game {
 	private GameMap map;
 	private char[][] fullMap;
 	private boolean hasKey,hasClub,wasKeyC,wasKey,hasLever=false;
-	private int nOgres;
+	private int nOgres = 1;
 
 	//returns a copy of a char[][]
 	public char[][] copyMap() {
@@ -60,7 +60,6 @@ public class Game {
 		this.exits = map.getExits();
 
 		if (map.hasGuard()) {
-			System.out.println("map: " + map.getGuard().getRanGuard());
 			G = new Guard(map.getGuard().getCoordenateI(), map.getGuard().getCoordenateJ(), map.getGuard().getSprite(), map.getGuard().getRanGuard());
 			this.enemies.add(G);
 		}
@@ -283,10 +282,9 @@ public class Game {
 					H.move2(0, -1);
 					if (nextMap(map) == 0)
 						return 0;
-					else{
+					else
 						changeLevel();
-						print();
-					}
+					
 				}
 			}
 

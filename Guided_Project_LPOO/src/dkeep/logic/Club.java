@@ -8,7 +8,7 @@ public class Club implements Character {
 	
 	public Club(){
 		this.ClubI=-3;
-		this.ClubJ=-3;
+		this.ClubJ=-3; 
 	}
 	
 	public Club(int i,int j,char s){
