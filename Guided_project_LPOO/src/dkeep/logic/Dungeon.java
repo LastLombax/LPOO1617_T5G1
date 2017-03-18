@@ -2,14 +2,12 @@ package dkeep.logic;
 
 import java.util.Vector;
 
-import dkeep.logic.Hero;
-
-
+ 
 public class Dungeon extends GameMap{
-
+ 
 	public Hero h = new Hero(1,1,'H');
 
-	public Guard G = new Guard(1,8,'G', (int) Math.floor(Math.random()*3));
+	public Guard G = new Guard(1,8,'G', (int) Math.floor(Math.random()*3) );
 
 	public Lever L = new Lever(8,7,'k');
 	

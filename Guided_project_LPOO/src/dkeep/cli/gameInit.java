@@ -1,13 +1,14 @@
 package dkeep.cli; 
 
 import java.util.Scanner;
-import dkeep.logic.Game;
 
-public class gameInit {
+import dkeep.logic.Game;
+ 
+public class gameInit { 
 
 	public static void main(String[] args) {
 
-		Game g = new Game();
+		Game g = new Game(3);
 		g.print();
 
 		int valid;

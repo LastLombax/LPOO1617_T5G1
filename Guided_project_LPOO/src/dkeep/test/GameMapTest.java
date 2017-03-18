@@ -2,12 +2,19 @@ package dkeep.test;
 
 import java.util.Vector;
 
-import dkeep.logic.*;
+import dkeep.logic.Club;
+import dkeep.logic.Exit;
+import dkeep.logic.GameMap;
+import dkeep.logic.Guard;
+import dkeep.logic.Hero;
+import dkeep.logic.Key;
+import dkeep.logic.Lever;
+import dkeep.logic.Ogre;
 
 public class GameMapTest extends GameMap{
 
 	private Hero H = new Hero(); 
-	private Guard G = new Guard();
+	private Guard G = new Guard(); 
 	private Lever l = new Lever();
 	private Key k = new Key();
 	private Ogre O = new Ogre();

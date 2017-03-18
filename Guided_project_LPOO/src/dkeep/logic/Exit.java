@@ -1,10 +1,10 @@
 package dkeep.logic;
-
+ 
 public class Exit implements Character{
 	
 	private int ExitI;
 	private int ExitJ;
-	private char ExitSprite;
+	private char ExitSprite; 
 	
 	public Exit(int i,int j, char s){
 		this.ExitI=i;

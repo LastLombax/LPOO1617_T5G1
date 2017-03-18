@@ -5,11 +5,9 @@ import java.util.Vector;
 public class Keep extends GameMap{
 
 	private Hero H = new Hero(7,1,'H');
-	private Ogre O = new Ogre(1,4,'O');
-	private Ogre O_1 = new Ogre(2,5,'O');
+	private Ogre O = new Ogre(1,4,'O');	
 	private Key K = new Key(1,7,'k'); 
-	private Club C = new Club(1,5,'*'); 
-	private Club C_1 = new Club(2,6,'*'); 
+	private Club C = new Club(1,5,'*'); 	
 	private Club Hero_club = new Club(6,2,'*');
 	private char[][] Kmap = new char [9][9];
 
@@ -29,22 +27,20 @@ public class Keep extends GameMap{
 			Kmap[8][j]='X';			
 		}
 	}
-
+ 
 	public Hero getHero(){return H;}
 	
 	public boolean hasHeroClub(){return true;}
 	
 	public Vector<Ogre> getOgres(){
 		Vector<Ogre>ogres = new Vector<Ogre>();
-		ogres.add(O);
-		ogres.addElement(O_1);
+		ogres.add(O); 
 		return ogres;
 	}
 	
 	public Vector<Club> getClubs(){
 		Vector<Club>clubs = new Vector<Club>();
 		clubs.add(C);
-		clubs.addElement(C_1);
 		return clubs;
 	}
 

@@ -1,6 +1,6 @@
 package dkeep.logic;
 
-public class Key implements Character{
+public class Key implements Character{ 
 	
 	private int KeyI;
 	private int KeyJ;
@@ -8,7 +8,7 @@ public class Key implements Character{
 	
 	public Key(){
 		this.KeyI=-1;
-		this.KeyJ=-1; 
+		this.KeyJ=-1;  
 	}
 	
 	public int getStun(){return 0;}

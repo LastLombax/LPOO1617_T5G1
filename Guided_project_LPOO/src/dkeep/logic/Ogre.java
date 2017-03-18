@@ -1,5 +1,5 @@
 package dkeep.logic;
-/*
+/* 
  * public void addClub(Club c)
  * if i do this ,there will be a club associated to the ogre
  * 
@@ -8,7 +8,7 @@ package dkeep.logic;
  * maybe the movement can be done here inside this class
  */
 public class Ogre implements Character{
-
+ 
 	private char OgreSprite; 
 	private int Ogre_i;
 	private int Ogre_j;

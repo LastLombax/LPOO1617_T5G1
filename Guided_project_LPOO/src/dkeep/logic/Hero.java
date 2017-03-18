@@ -1,15 +1,12 @@
 package dkeep.logic;
 
 public class Hero implements Character{
-
+ 
 	private  char HeroSprite;
 	//first map
 	private  int Hero_i;
 	private  int Hero_j;
 
-	//second map
-//	private  int Hero2_i = 7;
-//	private  int Hero2_j = 1;
 	public Hero(int i,int j,char s){
 		this.Hero_i=i;
 		this.Hero_j=j;

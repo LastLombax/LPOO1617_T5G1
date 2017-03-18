@@ -2,8 +2,8 @@ package dkeep.logic;
 
 public class Club implements Character {
 	
-	private int ClubI;
-	private int ClubJ;
+	private int ClubI; 
+	private int ClubJ; 
 	private char ClubSprite;
 	
 	public Club(){

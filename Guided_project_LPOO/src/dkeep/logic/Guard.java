@@ -1,11 +1,11 @@
 package dkeep.logic;
-
+ 
 public class Guard implements Character{
 
 	private char GuardSprite;
 	private int Guard_i; 
 	private int Guard_j;
-	private int ranGuard;
+	private int ranGuard; 
 	
 	private final int[]movementGuard_i={0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1};
 	private final int[]movementGuard_j={-1,0,0,0,0,-1,-1,-1,-1,-1,-1,0,1,1,1,1,1,1,1,0,0,0,0,0};	
@@ -17,19 +17,7 @@ public class Guard implements Character{
 		this.Guard_j=-4;
 	}
 
-	/*
-	//normal guard
-	public Guard(int i,int j, char s){
-
-		this.Guard_i=i;
-		this.Guard_j=j;
-		this.GuardSprite=s;
-		this.GuardIterator=0;
-	    this.ranGuard = 1;
-
-	}
-	*/
-
+	
 	//random guard
 	public Guard(int i,int j, char s, int random){
 
@@ -155,4 +143,8 @@ public class Guard implements Character{
 		return c;
 	}
 	public boolean hasClub(){return false;}
+	
+	public int getRanGuard(){
+		return this.ranGuard;
+	}
 }

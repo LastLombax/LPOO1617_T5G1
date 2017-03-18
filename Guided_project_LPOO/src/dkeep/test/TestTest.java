@@ -1,14 +1,24 @@
 package dkeep.test;
-
-import static org.junit.Assert.*;
+ 
+import static org.junit.Assert.assertEquals;
 
 import java.util.Vector;
 
 import org.junit.Test;
 
-import dkeep.logic.*;
+import dkeep.logic.Club;
+import dkeep.logic.Dungeon;
+import dkeep.logic.Exit;
+import dkeep.logic.Game;
+import dkeep.logic.GameMap;
+import dkeep.logic.Guard;
+import dkeep.logic.Hero;
+import dkeep.logic.Keep;
+import dkeep.logic.Key;
+import dkeep.logic.Lever;
+import dkeep.logic.Ogre;
 
-public class TestTest {
+public class TestTest { 
 
 	char [][] map = {{'X','X','X','X','X'},
 			{'X',' ',' ',' ','X'},
@@ -182,7 +192,9 @@ public class TestTest {
 		gameMap.setHero(H);
 		gameMap.setKey(K);
 		Game game = new Game(gameMap);
+		game.print();
 		assertEquals(2,game.movement("d"));
+		game.print();
 	}
 
 	@Test
