@@ -64,7 +64,7 @@ public class Ogre implements Character{
 					break;
 				case 2: //go right
 					Ogre_j++;
-					if(Ogre_j >7)
+					if(Ogre_j > 7)
 						Ogre_j--;
 					else
 					{	clubMovement();

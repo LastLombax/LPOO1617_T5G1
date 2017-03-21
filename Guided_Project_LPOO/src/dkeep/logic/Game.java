@@ -138,6 +138,7 @@ public class Game {
 		}
 	}
 	public void setFullMap(){
+		
 		this.fullMap = copyMap();
 
 		//  exits
