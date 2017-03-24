@@ -10,7 +10,7 @@ public class GameMapTest extends GameMap{
 	private Guard G = new Guard(); 
 	private Lever l = new Lever();
 	private Key k = new Key();
-	private Ogre O = new Ogre();
+	private Ogre O = new Ogre(); 
 	private Vector<Exit>exits = new Vector<Exit>();
 	private Club C = new Club();
 	private Club H_C = new Club();

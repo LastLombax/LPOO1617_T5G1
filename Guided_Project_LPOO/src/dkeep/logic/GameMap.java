@@ -1,7 +1,8 @@
 package dkeep.logic;
+import java.io.Serializable;
 import java.util.Vector;
   
-public abstract class GameMap { 
+public abstract class GameMap implements Serializable { 
 	
 	public abstract Hero getHero();  //returns Hero with the initial coordinates
 	public abstract Vector<Ogre> getOgres(); //returns Ogres with the initial coordinates
@@ -23,14 +24,14 @@ public abstract class GameMap {
 	public abstract boolean hasLever();  //returns true if the level has a Lever,false if not
 	public abstract boolean hasHeroClub(); //returns true if the level has a club for the hero, false if not
 	
-	public abstract void setMap(char[][] c);
-	public abstract void setHeroClub(Club c);
-	public abstract void setLever(Lever l);
-	public abstract void setKey(Key k);
-	public abstract void setOgre(Ogre o);
-	public abstract void setClub(Club c);
-	public abstract void setGuard(Guard g);
-	public abstract void setHero(Hero h);
-	public abstract void setExits(Vector<Exit> e);
+	public abstract void setMap(char[][] c); //sets the map with the array c	
+	public abstract void setHeroClub(Club c); //sets the hero with the club c
+	public abstract void setLever(Lever l); //sets the level l on the map
+	public abstract void setKey(Key k); //sets the key k on the map
+	public abstract void setOgre(Ogre o); //sets the ogre o on the map
+	public abstract void setClub(Club c); //sets the club c on the map
+	public abstract void setGuard(Guard g); //sets the guard g on the map
+	public abstract void setHero(Hero h);  //sets the hero h on the map
+	public abstract void setExits(Vector<Exit> e);  //sets the exits on the vector e on the map
 	
 }

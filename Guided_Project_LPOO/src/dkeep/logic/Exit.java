@@ -1,6 +1,6 @@
 package dkeep.logic;
-  
-public class Exit implements Character{
+import java.io.Serializable;
+public class Exit implements Character, Serializable{
 	
 	private int ExitI;
 	private int ExitJ;

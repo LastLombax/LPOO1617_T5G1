@@ -1,8 +1,9 @@
 package dkeep.logic;
 
 import java.util.Vector;
+import java.io.Serializable;
 
-public class Game {
+public class Game implements Serializable{
 
 	private Vector<GameMap> maps = new Vector<GameMap>();
 	private Hero H = new Hero();
@@ -22,11 +23,10 @@ public class Game {
 	//returns a copy of a char[][]
 	public char[][] copyMap() {
 		char[][] s = new char[map.getMap().length][map.getMap().length];
-		for (int i = 0; i < map.getMap().length; i++) {
-			for (int j = 0; j < map.getMap().length; j++) {
+		for (int i = 0; i < map.getMap().length; i++) 
+			for (int j = 0; j < map.getMap().length; j++) 
 				s[i][j] = map.getMap()[i][j];
-			}
-		}
+
 		return s;
 	}
 
@@ -40,13 +40,11 @@ public class Game {
 
 	//changes the map to the next one if exists, if not returns 0;
 	public int nextMap(GameMap map) {
-
-		for (int i = 0; i < maps.size(); i++) {
+		for (int i = 0; i < maps.size(); i++) 
 			if (maps.get(i) == map && i != maps.size() - 1) {
 				this.map = maps.get(i + 1);
 				return 1;
-			}
-		}
+			}		
 		return 0;
 	}
 
@@ -67,9 +65,9 @@ public class Game {
 		if (map.hasOgre()) {
 			for (int i = 0; i < map.getOgres().size();i++)
 			{
-				for (int j = 0; j < nOgres; j++)
+				for (int j = 0; j != nOgres; j++)
 				{
-					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite());
+					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
 					if(map.hasCLub())
 						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
 					this.enemies.add(O);
@@ -126,19 +124,17 @@ public class Game {
 
 	//prints the map (char[][])
 	public void print() {
-
 		setFullMap();
 
 		// prints all
 		for (int i = 0; i < this.fullMap.length; i++) {
-			for (int j = 0; j < this.fullMap[i].length; j++) {
+			for (int j = 0; j < this.fullMap[i].length; j++) 
 				System.out.print(this.fullMap[i][j] + " ");
-			}
 			System.out.print("\n");
 		}
 	}
 	public void setFullMap(){
-		
+
 		this.fullMap = copyMap();
 
 		//  exits
@@ -165,15 +161,12 @@ public class Game {
 	public boolean nearEnemy() { 
 
 		for (int i = 0; i < enemies.size(); i++)
-		{			
 			if (Math.abs(enemies.get(i).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(i).getCoordenateJ() - H.getCoordenateJ()) <=1)
 				return true;
-		}
 		return false;
 	}
 
 	public boolean nearEnemyX(int x) {
-
 		if (Math.abs(enemies.get(x).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(x).getCoordenateJ() - H.getCoordenateJ()) <=1)
 			return true;
 		return false;
@@ -191,137 +184,74 @@ public class Game {
 	public boolean nearClub(Character c){
 
 		for (int i = 0; i < enemies.size(); i++)
-		{
 			if (enemies.get(i).hasClub()) //it means it has a club, whether it's an ogre or not
 				if ((((H.getCoordenateI() == enemies.get(i).getClub().getCoordenateI()-1) || (H.getCoordenateI() == enemies.get(i).getClub().getCoordenateI()+1)) && (H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ())) ||
 						((enemies.get(i).getClub().getCoordenateI() == H.getCoordenateI()) && ((H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ()-1) || (H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ()+1))))		
 					return true;
-		}
 
 		return false;
 	}
 
 
-
-	//deals with the input and does most of the game logic
-	public int movement(String s) {
-
-		//   UP
-		if (s.charAt(0) == 'w') { 
-
-			//if you can pass a level,change map/level or finish and win
-			for (Exit e : exits) {
-				if (e.getCoordenateI() == H.getCoordenateI() - 1 && e.getCoordenateJ() == H.getCoordenateJ()
-						&& e.getSprite() == 'I'){
-					if(hasKey){
-						e.setSprite('S');
-						return 1;
-					}
-					else
-						return 1;
+	public int verifyMovement(int i, int j){
+		//if you can pass a level,change map/level or finish and win
+		for (Exit e : exits) {
+			if (e.getCoordenateI() == H.getCoordenateI() + i && e.getCoordenateJ() == (H.getCoordenateJ() + j)
+					&& e.getSprite() == 'I'){
+				if(hasKey){
+					e.setSprite('S');
+					return 1;
 				}
-				else if (e.getCoordenateI() == H.getCoordenateI() - 1 && e.getCoordenateJ() == H.getCoordenateJ()
-						&& e.getSprite() == 'S') {
-					H.move2(-1, 0);
-					if (nextMap(map) == 0)
-						return 0;
-					else
-						changeLevel();
-				}
+				else
+					return 1;
 			}
-
-			if (!map.validPos(H.getCoordenateI() - 1, H.getCoordenateJ())) //checks if the hero can move to a valid position
-				return 1;
-
-			H.move2(-1, 0);		
-		} 
-
-		//   DOWN
-		else if (s.charAt(0) == 's') {
-
-			for (Exit e : exits) {
-				if (e.getCoordenateI() == H.getCoordenateI() + 1 && e.getCoordenateJ() == H.getCoordenateJ()
-						&& e.getSprite() == 'I') {
-					if(hasKey){
-						e.setSprite('S');
-						return 1;
-					}
-					else
-						return 1;
-				}
-				else if (e.getCoordenateI() == H.getCoordenateI() + 1 && e.getCoordenateJ() == H.getCoordenateJ()
-						&& e.getSprite() == 'S') {
-					H.move2(1, 0);
-					if (nextMap(map) == 0)
-						return 0;
-					else
-						changeLevel();
-				}
+			else if (e.getCoordenateI() == H.getCoordenateI() + i && e.getCoordenateJ() == (H.getCoordenateJ() + j)
+					&& e.getSprite() == 'S') {
+				H.move2(i, j);
+				if (nextMap(map) == 0)
+					return 0;
+				else
+					changeLevel();
 			}
-
-			if (!map.validPos(H.getCoordenateI() + 1, H.getCoordenateJ()))
-				return 1;
-
-			H.move2(1, 0);			
-		} 
-
-		//   LEFT
-		else if (s.charAt(0) == 'a') {
-
-			for (Exit e : exits) {
-				if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == (H.getCoordenateJ()-1)
-						&& e.getSprite() == 'I'){
-					if(hasKey){
-						e.setSprite('S');
-						return 1;
-					}
-					else
-						return 1;
-				}
-				else if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == (H.getCoordenateJ()-1)
-						&& e.getSprite() == 'S') {
-					H.move2(0, -1);
-					if (nextMap(map) == 0)
-						return 0;
-					else
-						changeLevel();
-					
-				}
-			}
-
-			if (!map.validPos(H.getCoordenateI(), H.getCoordenateJ() - 1))
-				return 1;
-
-			H.move2(0, -1);
 		}
 
-		//   RIGHT
-		else if (s.charAt(0) == 'd') {
+		if (!map.validPos(H.getCoordenateI() +i, H.getCoordenateJ()+j)) //checks if the hero can move to a valid position
+			return 1;
 
-			for (Exit e : exits) {
-				if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == H.getCoordenateJ() + 1
-						&& e.getSprite() == 'I') {
-					if(hasKey){
-						e.setSprite('S');
-						return 1;
-					}
-					else
-						return 1;
-				}
-				else if (e.getCoordenateI() == H.getCoordenateI() && e.getCoordenateJ() == H.getCoordenateJ() + 1
-						&& e.getSprite() == 'S') {
-					H.move2(0, 1);
-					if (nextMap(map) == 0)
-						return 0;
-					else
-						changeLevel();
-				}
-			}
+		H.move2(i, j);
+		return 3;
+	}
 
-			if (!map.validPos(H.getCoordenateI(), H.getCoordenateJ() + 1))
+	
+	
+	//deals with the input and does most of the game logic
+	public int movement(String s) {
+		int move;
+		if (s.charAt(0) == 'w') { 
+			move = verifyMovement(-1,0);
+			if (move == 0)
+				return 0;
+			else if (move == 1)
 				return 1;
-
-			H.move2(0, 1);
+		} 
+		else if (s.charAt(0) == 's') {
+			move = verifyMovement(1,0);
+			if (move == 0)
+				return 0;
+			else if (move == 1)
+				return 1;
+		} 
+		else if (s.charAt(0) == 'a') {
+			move = verifyMovement(0,-1);
+			if (move == 0)	return 0;
+			else if (move == 1)	return 1;
+		}
+		else if (s.charAt(0) == 'd') {
+			move = verifyMovement(0,1);
+			if (move == 0)
+				return 0;
+			else if (move == 1)
+				return 1;
 		}
 		else return 1;
 
@@ -336,7 +266,6 @@ public class Game {
 				hasClub = true;
 			}			
 		}		
-
 
 		//checks if the hero was captured or killed
 		for (int i = 0; i < enemies.size(); i++) {
@@ -428,7 +357,11 @@ public class Game {
 	public Hero getHero(){return this.H;}
 
 	public Guard getGuard(){return this.G;}
- 
+	
+	public Vector<Character> getEnemies(){return this.enemies;}
+
+	public void addMap(GameMap map){this.maps.add(map);}
+
 	public void setHero(Hero H){this.H=H;}
 
 	public Ogre getOgre(){return this.O;}

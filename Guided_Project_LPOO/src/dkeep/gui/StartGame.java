@@ -17,26 +17,33 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 
+import java.io.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import dkeep.logic.Game;
+import java.awt.Color;
+
 public class StartGame {
 
 	private JFrame GameWindow = new JFrame("Dungeon Escape");
-	private JPanel Console;
 	private JButton ButtonExit = new JButton("Exit");
 	private JButton ButtonUp = new JButton("Up");
 	private JButton ButtonLeft = new JButton("Left");
 	private JButton ButtonRight = new JButton("Right");
 	private JButton ButtonDown = new JButton("Down");
+	private JButton ButtonSave = new JButton("Save");
 	private JLabel GameStatus = new JLabel("Game Status");
-
+	private JPanel Console;
 	private Game g;
 
-	public StartGame(Game g) {
-
-		this.setGame(g);
-		initialize();
-	}
-
-	public void initialize() {
+	public void initialise() {
 
 		GameWindow.setResizable(false);
 		GameWindow.setBounds(600, 300, 620, 500);
@@ -125,6 +132,26 @@ public class StartGame {
 			}
 		});
 		
+		ButtonSave.setBounds(470, 297, 90, 25);
+		ButtonSave.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				try {
+					FileOutputStream fileOut = new FileOutputStream("src/save.ser");
+					ObjectOutputStream out = new ObjectOutputStream(fileOut);
+					out.writeObject(g);
+					out.close();
+					fileOut.close();
+					//System.out.printf("Serialized data is saved in /src/save.txt");
+				}catch(IOException i) {
+					i.printStackTrace();
+				}
+			}
+		});
+		
+		addContent();
+	}
+	
+	public void addContent(){
 		GameWindow.getContentPane().add(ButtonUp);
 		GameWindow.getContentPane().add(ButtonLeft);
 		GameWindow.getContentPane().add(ButtonRight);
@@ -132,8 +159,8 @@ public class StartGame {
 		GameWindow.getContentPane().add(ButtonExit);	
 		GameWindow.getContentPane().add(Console);
 		GameWindow.getContentPane().add(GameStatus);
+		GameWindow.getContentPane().add(ButtonSave);
 	}
-	
 
 	public void enableMovementButtons(boolean enable){
 		ButtonUp.setEnabled(enable);
@@ -162,6 +189,10 @@ public class StartGame {
 			GameStatus.setText("Be Careful!");
 	}
 
+	public StartGame(Game g) {
+		this.setGame(g);
+		initialise();
+	}
 	
 	public JFrame getGameWindow() {return GameWindow;}
 	public void setGameWindow(JFrame gameWindow) {GameWindow = gameWindow; }

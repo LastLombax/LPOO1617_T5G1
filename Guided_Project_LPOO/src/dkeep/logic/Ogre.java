@@ -1,32 +1,32 @@
 package dkeep.logic;
- 
-public class Ogre implements Character{
+
+import java.io.Serializable;
+
+public class Ogre implements Character,Serializable{
  
 	private char OgreSprite; 
 	private int Ogre_i;
 	private int Ogre_j;
 	private Club c = new Club(); //1,5
 	private int turnStun = 0;
+	private int mapLength;
 
 	public Ogre(){
 		this.Ogre_i=-4;
 		this.Ogre_j=-4;
 	}
 
-	public Ogre(int i,int j,char s){
+	public Ogre(int i,int j,char s,int length){
 		this.Ogre_i=i;
 		this.Ogre_j=j;
 		this.OgreSprite=s;
+		this.mapLength = length;
 	}
 	//ogre functions
 
-	public void setClub(int i,int j,char s){
-		this.c = new Club(i,j,s);
-	}
+	public void setClub(int i,int j,char s){this.c = new Club(i,j,s);}
 	
-	public void setClub(Club d){
-		this.c = d;
-	}
+	public void setClub(Club d){this.c = d;}
 
 	public void setStun(int x){	this.turnStun = x;}
 	public int getStun(){return turnStun;}
@@ -44,7 +44,7 @@ public class Ogre implements Character{
 				switch((int)randomno){
 				case 0: //go down
 					Ogre_i++;
-					if(Ogre_i>7)
+					if(Ogre_i>this.mapLength)
 						Ogre_i--;
 					else
 					{
@@ -64,7 +64,7 @@ public class Ogre implements Character{
 					break;
 				case 2: //go right
 					Ogre_j++;
-					if(Ogre_j > 7)
+					if(Ogre_j > this.mapLength)
 						Ogre_j--;
 					else
 					{	clubMovement();
@@ -163,11 +163,8 @@ public class Ogre implements Character{
 	public boolean hasClub(){
 		if(c.getCoordenateI() >= 0 && c.getCoordenateJ() >=0)
 			return true;
-
 		return false;
 	}
 
-	public boolean isStunned(boolean stun){
-		return stun;
-	}
+	public boolean isStunned(boolean stun){return stun;}
 }

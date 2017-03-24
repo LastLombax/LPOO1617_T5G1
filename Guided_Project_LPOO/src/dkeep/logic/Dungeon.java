@@ -1,18 +1,18 @@
 package dkeep.logic;
 
 import java.util.Vector;
-
+import java.io.Serializable;
 import dkeep.logic.Hero;
- 
-  
-public class Dungeon extends GameMap{
- 
+
+
+public class Dungeon extends GameMap implements Serializable{
+
 	public Hero h = new Hero(1,1,'H');
 
 	public Guard G = new Guard(1,8,'G', (int) Math.floor(Math.random()*3) );
 
 	public Lever L = new Lever(8,7,'k');
-	
+
 	private Vector<Exit>s = new Vector<Exit>();
 
 	private char[][] Dmap = new char [10][10];
@@ -25,20 +25,25 @@ public class Dungeon extends GameMap{
 		this.Dmap[8][2] = 'I';
 		this.Dmap[8][4] = 'I';
 
-		//added wall
-		for(int i = 0; i < 10;i++){
+		addWalls();
+
+	}
+
+	public void addWalls(){
+		
+		for(int i = 0; i < 10;i++)
 			if(this.Dmap[i][0]!='I')
 				this.Dmap[i][0]='X';			
-		}	
-		for(int i = 0; i < 10;i++){
+
+		for(int i = 0; i < 10;i++)
 			this.Dmap[i][9]='X';			
-		}
-		for(int j = 0; j < 10;j++){
+
+		for(int j = 0; j < 10;j++)
 			this.Dmap[0][j]='X';			
-		}
-		for(int j = 0; j < 10;j++){
+
+		for(int j = 0; j < 10;j++)
 			this.Dmap[9][j]='X';			
-		}
+
 		this.Dmap[1][6] =
 				this.Dmap[2][1] = this.Dmap[2][2] =this.Dmap[2][4] = this.Dmap[2][5] = this.Dmap[2][6] = 
 				this.Dmap[3][6] =
@@ -47,26 +52,18 @@ public class Dungeon extends GameMap{
 				this.Dmap[8][6] = 'X';
 	}
 
-	public Lever getLever(){
-		return L;
-	}
+	public Lever getLever(){return L;}
 
 	public Key getKey(){
 		Key k = new Key();
 		return k;
 	}
 
-	public boolean hasKey(){
-		return false;
-	}
+	public boolean hasKey(){return false;}
 
-	public boolean hasLever(){
-		return true;
-	}
+	public boolean hasLever(){return true;}
 
-	public boolean hasHeroClub(){
-		return false;
-	}
+	public boolean hasHeroClub(){return false;}
 
 	public char[][] getMap(){return Dmap;}
 
@@ -119,10 +116,8 @@ public class Dungeon extends GameMap{
 		return s;		
 	}
 
-	public void setMap(char[][] c){
-		this.Dmap = c;
-	}
- 
+	public void setMap(char[][] c){this.Dmap = c;}
+
 	public void setHero(Hero h){}
 
 	public void setGuard(Guard g){}
@@ -136,9 +131,7 @@ public class Dungeon extends GameMap{
 	public void setLever(Lever l){}
 
 	public void setHeroClub(Club c){}
-	
-	public void setExits(Vector<Exit> e){
-		this.s=e;
-	}
+
+	public void setExits(Vector<Exit> e){this.s=e;}
 
 }

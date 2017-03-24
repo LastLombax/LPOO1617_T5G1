@@ -1,9 +1,9 @@
 package dkeep.logic;
+import java.io.Serializable;
 
-public class Key implements Character{ 
+public class Key implements Character,Serializable{ 
 	 
-	private int KeyI;
-	private int KeyJ;
+	private int KeyI, KeyJ;
 	private char KeySprite;
 	
 	public Key(){

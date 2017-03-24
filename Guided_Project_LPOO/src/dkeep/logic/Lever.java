@@ -32,10 +32,7 @@ public class Lever implements Character{
 	public void setSprite(char s){this.LeverSprite=s;}
 	
 	public boolean hasClub(){return false;}
-	public Club getClub(){
-		Club c = new Club();
-		return c;
-	}
+	public Club getClub(){return null;}
 	
 	public void move(){}
 

@@ -4,9 +4,7 @@ import java.util.Scanner;
 import dkeep.logic.Game;
  
 public class gameInit { 
-
 	public static void main(String[] args) {
-
 		Game g = new Game(3);
 		g.print();
 
@@ -14,8 +12,7 @@ public class gameInit {
 		do{
 			Scanner s= new Scanner(System.in);
 			String move = s.next();
-
-			valid = g.movement(move);
+			valid = g.movement(move);	
 			
 			if (valid == 1) //facing a wall
 				continue;

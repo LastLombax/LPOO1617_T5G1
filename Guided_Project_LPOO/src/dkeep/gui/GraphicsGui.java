@@ -1,63 +1,56 @@
 package dkeep.gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import dkeep.logic.Game;
 
 public class GraphicsGui extends JPanel{
 
-	BufferedImage wall;
-	BufferedImage hero, heroArmed, heroKey;
-	BufferedImage ogre, ogreStunned, club;
-	BufferedImage guard, guardSleeping;
-	BufferedImage key, lever, coverKey;
-	BufferedImage door, doorOpened;
-	char[][] map;
+	private BufferedImage wall, hero, heroArmed, heroKey, ogre, ogreStunned, club, guard, guardSleeping, key, lever, coverKey, door, doorOpened;
+	private char[][] map;
 	private Game game;
 
 	public GraphicsGui(Game g) {		
 		setGame(g);
 		updateGame();		
+		loadCharacterImages();		
+		loadMapImages();
+	}
+	
+	public void loadCharacterImages(){
 		try {			
-			wall = ImageIO.read(new File("src/wall.png"));
-			hero = ImageIO.read(new File("src/CloudR.png"));
-			heroArmed = ImageIO.read(new File("src/CloudArmed.png"));
-			heroKey = ImageIO.read(new File("src/heroKey.png"));
-			ogre = ImageIO.read(new File("src/Sephiroth.png"));
-			ogreStunned = ImageIO.read(new File("src/SephirothStunned.png"));
-			club = ImageIO.read(new File("src/Masamune.png"));			
+			hero = ImageIO.read(new File("src/Hero.png"));
+			heroArmed = ImageIO.read(new File("src/HeroArmed.png"));
+			heroKey = ImageIO.read(new File("src/HeroOnKey.png"));
+			ogre = ImageIO.read(new File("src/Ogre.png"));
+			ogreStunned = ImageIO.read(new File("src/OgreStunned.png"));
+			club = ImageIO.read(new File("src/Club.png"));			
 			guard = ImageIO.read(new File("src/Guard.png"));
-			guardSleeping = ImageIO.read(new File("src/GuardStopped.png"));
+			guardSleeping = ImageIO.read(new File("src/GuardSleeping.png"));
+			coverKey = ImageIO.read(new File("src/OgreOnKey.png"));			
+		} catch (IOException e) {
+			System.out.println("Image not found");
+			e.printStackTrace();
+		}		
+	}
+	
+	public void loadMapImages(){
+		try {			
+			wall = ImageIO.read(new File("src/wall.png"));			
 			key = ImageIO.read(new File("src/Key.png"));
 			lever = ImageIO.read(new File("src/Lever.png"));
-			coverKey = ImageIO.read(new File("src/coverKey.png"));
 			door = ImageIO.read(new File("src/door.png"));
-			doorOpened = ImageIO.read(new File("src/doorOpened.png"));
-			
+			doorOpened = ImageIO.read(new File("src/doorOpened.png"));			
 			
 		} catch (IOException e) {
 			System.out.println("Image not found");
 			e.printStackTrace();
 		}		
-		
 	}
 
 	@Override

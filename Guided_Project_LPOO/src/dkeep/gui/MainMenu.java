@@ -1,15 +1,20 @@
 package dkeep.gui;
+
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.io.*;
+import dkeep.gui.*;
+import dkeep.logic.Game;
+
 
 public class MainMenu {
-  
+
 	private JFrame MainMenu = new JFrame("Main Menu");
 	private JButton ButtonNewGame = new JButton("New Game");
-	private JButton ButtonOptions = new JButton("Options");
+	private JButton ButtonLevelEditor = new JButton("Level Editor");
 	private JButton ButtonLoadGame = new JButton("Load Game");
 	private JButton ButtonExitGame = new JButton("Exit");
 
@@ -26,51 +31,82 @@ public class MainMenu {
 		});
 	}
 
-	private void initialize() {	
-		getMainMenu().setResizable(false);
-		getMainMenu().setBounds(600, 300, 400, 500);
-		getMainMenu().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getMainMenu().getContentPane().setLayout(null);				
-		
+	private void initialise() {	
+		MainMenu.setResizable(false);
+		MainMenu.setBounds(600, 300, 400, 500);
+		MainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		MainMenu.getContentPane().setLayout(null);				
+
 		ButtonNewGame.setBounds(140, 75, 115, 40);		
 		ButtonNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				getMainMenu().setVisible(false);
-				NewGame ng = new NewGame();				
+				MainMenu.setVisible(false);
+				NewGameSettings ng = new NewGameSettings();				
 				ng.getGameWindowOptions().setVisible(true);					
-				getMainMenu().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				MainMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}
 		});		
-		
-		ButtonOptions.setBounds(140, 150, 115, 40);
-		ButtonOptions.addActionListener(new ActionListener() {
+
+		ButtonLevelEditor.setBounds(140, 150, 115, 40);
+		ButtonLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				getMainMenu().setVisible(false);
+				LevelEditorSettings lv = new LevelEditorSettings();
+				lv.getSettings().setVisible(true);
+				getMainMenu().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);				
 			}
 		});
-	
+
 		ButtonLoadGame.setBounds(140, 225, 115, 40);
 		ButtonLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});		
-		
+				Game g = null;
+				if (!readFile(g))
+					return;
+				StartGame sg = new StartGame(g);	
+				sg.getGameWindow().setVisible(true);
+			}			
+		});	
+
 		ButtonExitGame.setBounds(140, 300, 115, 40);
 		ButtonExitGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		
-		getMainMenu().getContentPane().add(ButtonNewGame);
-		getMainMenu().getContentPane().add(ButtonOptions);
-		getMainMenu().getContentPane().add(ButtonLoadGame);
-		getMainMenu().getContentPane().add(ButtonExitGame);
+
+		addContent();
+
 	}
 	
-	public MainMenu() {initialize();}
+	public boolean readFile(Game g){
+		try {
+			FileInputStream fileIn = new FileInputStream("src/save.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			g = (Game) in.readObject();
+			in.close();
+			fileIn.close();
+		}catch(IOException i) {
+			i.printStackTrace();
+			return false;
+		}catch(ClassNotFoundException c) {
+			System.out.println("Game class not found");
+			c.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public void addContent(){
+		MainMenu.getContentPane().add(ButtonNewGame);
+		MainMenu.getContentPane().add(ButtonLevelEditor);
+		MainMenu.getContentPane().add(ButtonLoadGame);
+		MainMenu.getContentPane().add(ButtonExitGame);
+	}
+
+
+	public MainMenu() {initialise();}
 	public JFrame getMainMenu() {return MainMenu;}
 	public void setMainMenu(JFrame mainMenu) {MainMenu = mainMenu;}
-	
+
 }

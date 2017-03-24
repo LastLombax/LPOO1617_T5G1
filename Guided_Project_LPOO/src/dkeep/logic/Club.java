@@ -1,6 +1,8 @@
 package dkeep.logic;
 
-public class Club implements Character {
+import java.io.Serializable;
+
+public class Club implements Character, Serializable {
 	
 	private int ClubI; 
 	private int ClubJ; 

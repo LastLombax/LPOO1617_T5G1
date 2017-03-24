@@ -1,11 +1,12 @@
 package dkeep.logic;
 
 import java.util.Vector;
- 
-public class Keep extends GameMap{
+import java.io.Serializable;
+
+public class Keep extends GameMap implements Serializable{
 
 	private Hero H = new Hero(7,1,'H');
-	private Ogre O = new Ogre(1,4,'O');	
+	private Ogre O = new Ogre(1,4,'O',7);	
 	private Key K = new Key(1,7,'k'); 
 	private Club C = new Club(1,5,'*'); 	
 	private Club Hero_club = new Club(6,2,'*');
@@ -13,19 +14,18 @@ public class Keep extends GameMap{
 
 	public Keep(){
 		//added wall
-		for(int i = 0; i < 9;i++){
+		for(int i = 0; i < 9;i++)
 			if(Kmap[i][0]!='I')
 				Kmap[i][0]='X';			
-		}	
-		for(int i = 0; i < 9;i++){
+		
+		for(int i = 0; i < 9;i++)
 			Kmap[i][8]='X';			
-		}
-		for(int j = 0; j < 9;j++){
+		
+		for(int j = 0; j < 9;j++)
 			Kmap[0][j]='X';			
-		}
-		for(int j = 0; j < 9;j++){
+		
+		for(int j = 0; j < 9;j++)
 			Kmap[8][j]='X';			
-		}
 	}
  
 	public Hero getHero(){return H;}
@@ -44,16 +44,11 @@ public class Keep extends GameMap{
 		return clubs;
 	}
 
-	public Guard getGuard(){
-		return null;
-	}
+	public Guard getGuard(){return null;}
 
-	public Lever getLever(){
-		return null;
-	}
+	public Lever getLever(){return null;}
 
-	public Club getHeroClub(){
-		return Hero_club;
+	public Club getHeroClub(){return Hero_club;
 	}
 	public Key getKey(){return K;}
 
@@ -63,9 +58,7 @@ public class Keep extends GameMap{
 		return s;
 	}
 
-	public char[][] getMap(){
-		return Kmap;
-	}
+	public char[][] getMap(){return Kmap;}
 
 	public boolean validPos(int x, int y){
 		if (Kmap[x][y] == 'X' || Kmap[x][y] == 'I' || Kmap[x][y] == 'O' || Kmap[x][y] == '*')
@@ -80,9 +73,8 @@ public class Keep extends GameMap{
 	public boolean hasLever(){return false;}
 	public boolean hasCLub(){return true;}
 
-	public void setMap(char[][] c){
-		this.Kmap = c;
-	}
+	public void setMap(char[][] c){this.Kmap = c;}
+	
 	public void setHero(Hero h){}
 
 	public void setGuard(Guard g){}

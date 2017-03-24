@@ -71,7 +71,7 @@ public class TestTest {
 	Hero H = new Hero(1,1,'H');
 	Guard G = new Guard(1,3,'G',(int) Math.floor(Math.random()*3));
 	Lever k = new Lever(3,1,'k');
-	Ogre O = new Ogre(1,3,'O');
+	Ogre O = new Ogre(1,3,'O',7);
 	Key K = new Key(3,1,'k');
 	Vector<Exit> exits = new Vector<Exit>();
 	{exits.add(new Exit(2,0,'I'));
@@ -185,7 +185,27 @@ public class TestTest {
 		gameMap.setHero(H);
 		gameMap.setKey(K);
 		Game game = new Game(gameMap);
-		assertEquals(2,game.movement("d"));
+		int tmp = 0;
+		do{
+			int rand = (int) Math.floor(Math.random()*4);
+			switch(rand){
+			case 0:
+				tmp = game.movement("a");
+				break;
+			case 1:
+				tmp = game.movement("s");
+				break;
+			case 2:
+				tmp = game.movement("w");
+				break;
+			case 3:
+				tmp = game.movement("d");
+				break;
+			}
+			
+		}while(tmp!=2);
+		
+		assertEquals(2,tmp);
 	}
 
 	@Test
@@ -194,7 +214,6 @@ public class TestTest {
 		gameMap.setMap(map);
 		gameMap.setExits(exits);
 		O.setClub(new Club(-3,-3,'*'));
-		gameMap.setOgre(O);
 		gameMap.setHero(H);
 		gameMap.setKey(K);
 		Game game = new Game(gameMap);
@@ -223,7 +242,6 @@ public class TestTest {
 		gameMap.setMap(map);
 		gameMap.setExits(exits);
 		O.setClub(new Club());
-		gameMap.setOgre(O);
 		gameMap.setHero(H);
 		gameMap.setKey(K);
 		Game game = new Game(gameMap);
@@ -239,7 +257,6 @@ public class TestTest {
 		gameMap.setMap(map);
 		gameMap.setExits(exits);
 		O.setClub(new Club(-3,-3,'*'));
-		gameMap.setOgre(O);
 		gameMap.setHero(H);
 		gameMap.setKey(K);
 		Game game = new Game(gameMap);
@@ -247,6 +264,24 @@ public class TestTest {
 		game.movement("s");
 		game.movement("a");
 		assertEquals(0,game.movement("a"));
+	}
+	@Test
+	public void TestNextMap() {
+		GameMap gameMap = new GameMapTest();
+		gameMap.setMap(map);
+		gameMap.setExits(exits);
+		O.setClub(new Club(-3,-3,'*'));
+		gameMap.setHero(H);
+		gameMap.setKey(K);
+		Game game = new Game(gameMap);
+		game.addMap(new Dungeon());
+		game.movement("s");
+		game.movement("s");
+		game.movement("a");
+		game.movement("a");
+		game.movement("s");
+		game.movement("w");
+		assertEquals(1,game.movement("s"));
 	}
 
 	@Test
@@ -265,6 +300,127 @@ public class TestTest {
 		assertEquals(false,dungeon.hasKey());
 
 	}
+	
+	@Test
+	public void TestConstructors2(){
+		GameMap gameMap = new GameMapTest();
+		gameMap.setMap(map);
+		gameMap.setExits(exits);
+		O.setClub(new Club(-3,-3,'*'));
+		gameMap.setHero(H);
+		gameMap.setKey(K);
+		gameMap.setGuard(G);
+		Game game = new Game(gameMap);
+		game.setExits(exits);
+		game.setFullMap();
+		game.setHero(H);
+		assertEquals(game.getHero().getCoordenateI(),H.getCoordenateI());
+	}
+	
+	@Test
+	public void TestConstructorGame(){
+		Guard Guuard123 = new Guard(1,3,'G',1);
+		Game game = new Game(new Dungeon());
+		game.setGuard(new Guard(1,8,'G',1));
+		boolean yo = false;
+		do{
+			int rand = (int) Math.floor(Math.random()*4);
+			switch(rand){
+			case 0:
+			    game.movement("a");
+				break;
+			case 1:
+				game.movement("s");
+				break;
+			case 2:
+				game.movement("w");
+				break;
+			case 3:
+				game.movement("d");
+				break;
+			}
+			for(int i =0; i < game.getEnemies().size();i++){
+				if(game.getEnemies().get(i).getSprite() == 'g')
+					yo=true;
+			}
+		}while(!yo);
+		assertEquals(true, yo);
+	}
+	
+	@Test
+	public void TestConstructorGuard(){
+		Guard Guuard123 = new Guard(1,3,'G',2);
+		Game game = new Game(new Dungeon());
+		game.setGuard(new Guard(1,8,'G',2));
+		boolean yo = false;
+		do{
+			int rand = (int) Math.floor(Math.random()*4);
+			switch(rand){
+			case 0:
+			    if(game.movement("a") == 1){
+			    	continue;
+			    }
+				break;
+			case 1:
+				if(game.movement("s") == 1){
+					continue;
+				}
+			case 2:
+				if(game.movement("d") == 1){
+					continue;
+				}
+			case 3:
+				if(game.movement("w") == 1){
+					continue;
+				}
+			}
+			for(int i =0; i < game.getEnemies().size();i++){
+				if(game.getEnemies().get(i).getCoordenateI() == 5 && game.getEnemies().get(i).getCoordenateJ() == 8)
+					yo=true;
+			}
+		}while(!yo);
+		assertEquals(true, yo);
+	}
+	
+	@Test
+	public void TestConstructorOgreMovement(){
+		GameMap gameMap = new GameMapTest();
+		gameMap.setMap(map);
+		gameMap.setExits(exits);
+		O.setClub(new Club(-3,-3,'*'));
+		gameMap.setOgre(O);
+		gameMap.setHero(H);
+		gameMap.setKey(K);
+		Game game = new Game(gameMap);
+		boolean yo = false;
+		do{
+			int rand = (int) Math.floor(Math.random()*4);
+			switch(rand){
+			case 0:
+			    if(game.movement("a") == 1){
+			    	continue;
+			    }
+				break;
+			case 1:
+				if(game.movement("s") == 1){
+					continue;
+				}
+			case 2:
+				if(game.movement("d") == 1){
+					continue;
+				}
+			case 3:
+				if(game.movement("w") == 1){
+					continue;
+				}
+			}
+			for(int i =0; i < game.getEnemies().size();i++){
+				if(game.getEnemies().get(i).getCoordenateI() == 2 && game.getEnemies().get(i).getCoordenateJ() == 3 ||game.getEnemies().get(i).getCoordenateI() == 1 && game.getEnemies().get(i).getCoordenateJ() == 2)
+					yo=true;
+			}
+		}while(!yo);
+		assertEquals(true, yo);
+	}
 
 	@Test
 	public void TestConstructorKeep(){
@@ -282,8 +438,8 @@ public class TestTest {
 		assertEquals(true,keep.hasKey());
 		
 		Vector<Ogre>ogres = new Vector<Ogre>();
-		ogres.add(new Ogre(1,4,'O'));
-		ogres.add(new Ogre(2,5,'O'));
+		ogres.add(new Ogre(1,4,'O',7));
+		ogres.add(new Ogre(2,5,'O',7));
 		assertEquals(1,keep.getOgres().get(0).getCoordenateI());
 		assertEquals(7,keep.getHero().getCoordenateI());
 		assertEquals(null,keep.getGuard());
@@ -298,10 +454,13 @@ public class TestTest {
 		lever_teste.setCoordenateI(1);
 		lever_teste.setCoordenateJ(1);
 		lever_teste.setSprite('k');
+		lever_teste.move();
+		lever_teste.setStun(1);
 
 		assertEquals(1,lever_teste.getCoordenateI());
 		assertEquals(1,lever_teste.getCoordenateJ());
 		assertEquals('k',lever_teste.getSprite());
+		assertEquals(false,lever_teste.hasClub());
 		assertEquals(0,lever_teste.getStun());
 		
 		//////
@@ -309,10 +468,13 @@ public class TestTest {
 		k_teste.setCoordenateI(1);
 		k_teste.setCoordenateJ(1);
 		k_teste.setSprite('k');
+		k_teste.move();
+		k_teste.setStun(1);
 		
 		assertEquals(1,k_teste.getCoordenateI());
 		assertEquals(1,k_teste.getCoordenateJ());
 		assertEquals('k',k_teste.getSprite());
+		assertEquals(false,k_teste.hasClub());
 		assertEquals(0,k_teste.getStun());
 		
 		/////
@@ -320,6 +482,7 @@ public class TestTest {
 		H_teste.setCoordenateI(1);
 		H_teste.setCoordenateJ(1);
 		H_teste.setSprite('k');
+		H_teste.move();
 		
 		assertEquals(1,H_teste.getCoordenateI());
 		assertEquals(1,H_teste.getCoordenateJ());
@@ -331,11 +494,38 @@ public class TestTest {
 		e_teste.setCoordenateI(1);
 		e_teste.setCoordenateJ(1);
 		e_teste.setSprite('I');
+		e_teste.move();
+		e_teste.setStun(1);
 		
 		assertEquals(1,e_teste.getCoordenateI());
 		assertEquals(1,e_teste.getCoordenateJ());
 		assertEquals('I',e_teste.getSprite());
+		assertEquals(false,e_teste.hasClub());
 		assertEquals(0,e_teste.getStun());
+		
+		/////
+		Guard g_teste = new Guard(); 
+		g_teste.setCoordenateI(1);
+		g_teste.setCoordenateJ(1);
+		g_teste.setSprite('I');
+		
+		assertEquals(1,g_teste.getCoordenateI());
+		assertEquals(1,g_teste.getCoordenateJ());
+		assertEquals('I',g_teste.getSprite());
+		assertEquals(0,g_teste.getStun());
+		
+		/////
+		Club c_teste = new Club();
+		c_teste.setCoordenateI(1);
+		c_teste.setCoordenateJ(1);
+		c_teste.setSprite('I');
+		c_teste.move();
+		assertEquals(1,c_teste.getCoordenateI());
+		assertEquals(1,c_teste.getCoordenateJ());
+		assertEquals('I',c_teste.getSprite());
+		assertEquals(false,c_teste.hasClub());
+		assertEquals(null,c_teste.getClub());
+		assertEquals(0,c_teste.getStun());
 
 	}
 	

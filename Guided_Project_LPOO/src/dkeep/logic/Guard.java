@@ -1,16 +1,14 @@
 package dkeep.logic;
   
-public class Guard implements Character{
+import java.io.Serializable;
+
+public class Guard implements Character, Serializable{
 
 	private char GuardSprite;
-	private int Guard_i; 
-	private int Guard_j;
-	private int ranGuard; 
-	
+	private int Guard_i, Guard_j, ranGuard, GuardIterator;	
 	private final int[]movementGuard_i={0,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1};
 	private final int[]movementGuard_j={-1,0,0,0,0,-1,-1,-1,-1,-1,-1,0,1,1,1,1,1,1,1,0,0,0,0,0};	
-	private int GuardIterator;
-
+	
 
 	public Guard(){
 		this.Guard_i=-4;
@@ -144,7 +142,5 @@ public class Guard implements Character{
 	}
 	public boolean hasClub(){return false;}
 	
-	public int getRanGuard(){
-		return this.ranGuard;
-	}
+	public int getRanGuard(){return this.ranGuard;}
 }
