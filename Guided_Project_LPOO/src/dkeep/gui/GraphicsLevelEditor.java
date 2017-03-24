@@ -51,13 +51,13 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 					g.drawImage(square, i*size, j*size, size, size, null);	
 				else if (lv.getCharMap()[i][j] == 'O')
 					g.drawImage(ogre, i*size, j*size, size, size, null);		
-				else if (lv.getCharMap()[i][j] == 'W')
+				else if (lv.getCharMap()[i][j] == 'X')
 					g.drawImage(wall, i*size, j*size, size, size, null);		
 				else if (lv.getCharMap()[i][j] == 'A')
 					g.drawImage(heroArmed, i*size, j*size, size, size, null);		
-				else if (lv.getCharMap()[i][j] == 'K')
+				else if (lv.getCharMap()[i][j] == 'k')
 					g.drawImage(key,  i*size, j*size, size, size, null);		
-				else if (lv.getCharMap()[i][j] == 'D')
+				else if (lv.getCharMap()[i][j] == 'I')
 					g.drawImage(door,  i*size, j*size, size, size, null);
 			}
 	}
@@ -74,11 +74,28 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 				if (posX >= (i-1) && posX < i && posY >=(j-1) && posY < j)
 				{
 					if (lv.getCharMap()[i-1][j-1] == ' ' && lv.getSelected() != ' ') //if cell is empty
+					{
 						lv.getCharMap()[i-1][j-1] = lv.getSelected();
+						checkElement(i-1,j-1, true);
+						if (lv.getSelected() == 'O')
+							lv.nOgresPlaced++;
+					}
 					else if (lv.getCharMap()[i-1][j-1]  == lv.getSelected()) // if you select the wrong cell
+					{
+						if (lv.getSelected() == 'O')
+							lv.nOgresPlaced--;
 						lv.getCharMap()[i-1][j-1] = ' ';
+						checkElement(i-1,j-1, false);
+					}
 					else if (lv.getCharMap()[i-1][j-1]  != ' ') //if you want to replace a cell
-						lv.getCharMap()[i-1][j-1] = lv.getSelected();
+					{
+						if(lv.getCharMap()[i-1][j-1] == 'O')
+								lv.nOgresPlaced--;
+						if (lv.getSelected() == 'O')
+							lv.nOgresPlaced++;
+						lv.getCharMap()[i-1][j-1] = lv.getSelected();	
+						checkElement(i-1,j-1, true);
+					}
 				}
 			}
 		repaint();
@@ -89,7 +106,18 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 	public void setEditor(LevelEditor lv){this.lv = lv;}
 
 	
-	
+	public void checkElement(int x, int y, boolean bool){
+		if (lv.getCharMap()[x][y] == 'O')
+			lv.hasOgre = bool;
+		else if (lv.getCharMap()[x][y] == 'A')
+			lv.hasHero = bool;
+		else if (lv.getCharMap()[x][y] == 'k')
+			lv.hasKey = bool;
+		else if (lv.getCharMap()[x][y] == 'X')
+			lv.hasWall = bool;
+		else if(lv.getCharMap()[x][y] == 'I')
+			lv.hasExit = bool;
+	}
 	
 	
 	
