@@ -1,7 +1,5 @@
 package dkeep.gui;
 
-import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,22 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dkeep.logic.Game;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 
 import java.io.*;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import dkeep.logic.Game;
-import java.awt.Color;
+import java.awt.Font;
 
 public class StartGame {
 
@@ -40,20 +26,21 @@ public class StartGame {
 	private JButton ButtonDown = new JButton("Down");
 	private JButton ButtonSave = new JButton("Save");
 	private JLabel GameStatus = new JLabel("Game Status");
-	private JPanel Console;
+	protected JPanel Console;
 	private Game g;
+
 
 	public void initialise() {
 
 		GameWindow.setResizable(false);
-		GameWindow.setBounds(600, 300, 620, 500);
+		GameWindow.setBounds(600, 50, 810, 810);
 		GameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GameWindow.getContentPane().setLayout(null);
 		
 		
 		Console = new GraphicsGui(g);
 		Console.setBackground(Color.LIGHT_GRAY);
-		Console.setBounds(0, 0, 400, 400);
+		Console.setBounds(0, 0, 600, 600);
 		
 		//keyboard keys
 		Console.addKeyListener(new KeyListener(){
@@ -85,44 +72,50 @@ public class StartGame {
 			@Override
 			public void keyTyped(KeyEvent arg0) {}
 		});
+		GameStatus.setFont(new Font("Tahoma", Font.PLAIN, 17));
 
 		
-		GameStatus.setBounds(0, 425, 184, 16);
+		GameStatus.setBounds(12, 676, 291, 19);
 		GameStatus.setText("You can play the game");				
+		ButtonUp.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				
-		ButtonUp.setBounds(470, 125, 80, 20);
+		ButtonUp.setBounds(662, 164, 80, 20);
 		ButtonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int m = g.movement("w");
 				verify(m);
 			}
 		});
+		ButtonLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		ButtonLeft.setBounds(420, 163,80, 20);
+		ButtonLeft.setBounds(612, 202,80, 20);
 		ButtonLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int m = g.movement("a");
 				verify(m);
 			}
 		});
+		ButtonRight.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		ButtonRight.setBounds(520, 163, 80, 20);
+		ButtonRight.setBounds(712, 202, 80, 20);
 		ButtonRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int m = g.movement("d");
 				verify(m);
 			}
 		});
+		ButtonDown.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		ButtonDown.setBounds(470, 200, 80, 20);
+		ButtonDown.setBounds(662, 239, 80, 20);
 		ButtonDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int m = g.movement("s");
 				verify(m);
 			}
 		});
+		ButtonExit.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		ButtonExit.setBounds(470, 420, 80, 20);
+		ButtonExit.setBounds(662, 670, 90, 25);
 		ButtonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GameWindow.setVisible(false);
@@ -131,8 +124,9 @@ public class StartGame {
 				GameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}
 		});
+		ButtonSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		ButtonSave.setBounds(470, 297, 90, 25);
+		ButtonSave.setBounds(662, 443, 90, 25);
 		ButtonSave.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -188,12 +182,20 @@ public class StartGame {
 		else
 			GameStatus.setText("Be Careful!");
 	}
-
+	
+	
+	//public StartGame(){}
+	
+	
 	public StartGame(Game g) {
 		this.setGame(g);
 		initialise();
 	}
 	
+	public StartGame() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public JFrame getGameWindow() {return GameWindow;}
 	public void setGameWindow(JFrame gameWindow) {GameWindow = gameWindow; }
 	public Game getGame() {return g;}

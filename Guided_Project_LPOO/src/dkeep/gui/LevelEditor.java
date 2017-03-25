@@ -6,7 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
+import dkeep.logic.Game;
+
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Writer;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
@@ -24,10 +30,10 @@ public class LevelEditor {
 	private JButton ButtonOgre = new JButton("Ogre");
 	private	JPanel Map;
 	private int width, height, nOgres;
-	public int  nOgresPlaced = 0;
+	public int  nOgresPlaced, nHeroesPlaced, nWallsPlaced, nDoorsPlaced, nKeysPlaced;
 	private char selected;
 	public char[][] charMap;
-	public boolean hasWall, hasHero, hasKey, hasOgre, hasExit;
+
 
 	public LevelEditor(){}
 	/**
@@ -126,28 +132,37 @@ public class LevelEditor {
 		ButtonSaveMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (!hasWall || !hasOgre || !hasHero || !hasKey){
-					lblEditStatus.setText("There's, at least, a missing element to the map!");
-					return;
+				if (checkElements()){
+					
+					if (!checkBorders())
+						lblEditStatus.setText("The borders can't be empty cells!");
+
+					try {
+						FileOutputStream fileOut = new FileOutputStream("src/Map1");						
+						fileOut.write(width +'0');
+						fileOut.write('\n');
+						fileOut.write(height +'0');
+						fileOut.write('\n');
+						fileOut.write(nOgres +'0');
+						fileOut.write('\n');
+						for (int j = 0; j < height ;j++){						
+							for (int i = 0; i < width; i++)							
+								fileOut.write(charMap[i][j]);
+							fileOut.write('\n');
+						}
+
+					} catch (IOException e1) {
+						lblEditStatus.setText("There was an error on saving the map");
+						e1.printStackTrace();
+					}
+
+					lblEditStatus.setText("Map has been saved in the file Map1!");
+
 				}
-				
-				if (nOgresPlaced > 1){
-					lblEditStatus.setText("Place only ONE Ogre");
-					return;
-				}					
-
-				if (!checkBorders())
-					lblEditStatus.setText("The borders can't be empty cells!");
-				
-				lblEditStatus.setText("All set!");
-
-
-				//criar classe extra e instanciar um objeto dessa classe extra por cada mapa
 			}
 		});
 
 		ButtonSaveMap.setBounds(619, 912, 114, 27);
-
 
 
 		ButtonBack.addActionListener(new ActionListener() {
@@ -165,23 +180,58 @@ public class LevelEditor {
 
 	}
 
+	public boolean checkElements(){
+		
+		if ( nOgresPlaced == 0 || nDoorsPlaced == 0 || nHeroesPlaced == 0|| nWallsPlaced == 0 || nKeysPlaced == 0){
+			lblEditStatus.setText("There's, at least, a missing element to the map!");
+			return false;
+		}
+
+		if (nOgresPlaced > 1){
+			lblEditStatus.setText("Place only ONE Ogre");
+			return false;
+		}	
+		if (nHeroesPlaced > 1){
+			lblEditStatus.setText("Place only ONE Hero");
+			return false;
+		}	
+
+		if (nKeysPlaced > 1){
+			lblEditStatus.setText("Place only ONE Key");
+			return false;
+		}		
+
+		if (nDoorsPlaced > 1){
+			lblEditStatus.setText("Place only ONE Door");
+			return false;
+		}		
+
+		return true;
+	}
+
 	public boolean checkBorders(){
+
+		//upper border
+
 		for(int i = 0; i < width;i++)
-			if(charMap[i][0] == ' ')
+			if(charMap[i][0] == ' ' || charMap[i][0] != 'X' || charMap[i][0] != 'I')
 				return false;
 
+		//lower border
 		for(int i = 0; i < width;i++)
 			if(charMap[i][height-1] == ' ')
 				return false;
-		
+
+		//left border
 		for(int j = 0; j < height;j++)
 			if(charMap[0][j] == ' ')
 				return false;
-		
+
+		//right border
 		for(int j = 0; j < height;j++)
 			if(charMap[width-1][j] == ' ')
 				return false;
-		
+
 		return true;
 
 	}

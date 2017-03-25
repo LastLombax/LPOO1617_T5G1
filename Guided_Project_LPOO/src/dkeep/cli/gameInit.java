@@ -5,7 +5,7 @@ import dkeep.logic.Game;
  
 public class gameInit { 
 	public static void main(String[] args) {
-		Game g = new Game(3);
+		Game g = new Game(0);
 		g.print();
 
 		int valid; 

@@ -13,20 +13,23 @@ public class GraphicsGui extends JPanel{
 
 	private BufferedImage wall, hero, heroArmed, heroKey, ogre, ogreStunned, club, guard, guardSleeping, key, lever, coverKey, door, doorOpened;
 	private char[][] map;
-	private Game game;
+	private Game game;	
+	//private StartGame s = new StartGame();
+	private int sizeX, sizeY;
 
 	public GraphicsGui(Game g) {		
 		setGame(g);
 		updateGame();		
 		loadCharacterImages();		
 		loadMapImages();
+
 	}
-	
+
 	public void loadCharacterImages(){
 		try {			
 			hero = ImageIO.read(new File("src/Hero.png"));
 			heroArmed = ImageIO.read(new File("src/HeroArmed.png"));
-			heroKey = ImageIO.read(new File("src/HeroOnKey.png"));
+			heroKey = ImageIO.read(new File("src/HeroKey.png"));
 			ogre = ImageIO.read(new File("src/Ogre.png"));
 			ogreStunned = ImageIO.read(new File("src/OgreStunned.png"));
 			club = ImageIO.read(new File("src/Club.png"));			
@@ -38,7 +41,7 @@ public class GraphicsGui extends JPanel{
 			e.printStackTrace();
 		}		
 	}
-	
+
 	public void loadMapImages(){
 		try {			
 			wall = ImageIO.read(new File("src/wall.png"));			
@@ -46,7 +49,7 @@ public class GraphicsGui extends JPanel{
 			lever = ImageIO.read(new File("src/Lever.png"));
 			door = ImageIO.read(new File("src/door.png"));
 			doorOpened = ImageIO.read(new File("src/doorOpened.png"));			
-			
+
 		} catch (IOException e) {
 			System.out.println("Image not found");
 			e.printStackTrace();
@@ -55,12 +58,11 @@ public class GraphicsGui extends JPanel{
 
 	@Override
 	protected void paintComponent(Graphics g) {		
-		super.paintComponent(g);		
-		int size = 40;
+		super.paintComponent(g);
 		this.map = getGame().getFullMap();
-		
+		int size = 60;
 		for (int i = 0; i < map.length; i++){
-			for (int j = 0; j < map.length; j++){
+			for (int j = 0; j < map[0].length; j++){
 				if (map[i][j] == 'X')
 					g.drawImage(wall, j*size, i*size, size, size, null);
 				else if (map[i][j] == 'H')
@@ -90,7 +92,7 @@ public class GraphicsGui extends JPanel{
 				else if (map[i][j] == '$')
 					g.drawImage(coverKey, j*size, i*size, size, size, null);
 				else 					
-					g.setColor(Color.WHITE);
+					g.setColor(Color.LIGHT_GRAY);
 			}
 		}
 		updateGame();

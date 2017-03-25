@@ -47,7 +47,7 @@ public class MainMenu {
 			}
 		});		
 
-		ButtonLevelEditor.setBounds(140, 150, 115, 40);
+		ButtonLevelEditor.setBounds(140, 225, 115, 40);
 		ButtonLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getMainMenu().setVisible(false);
@@ -57,7 +57,7 @@ public class MainMenu {
 			}
 		});
 
-		ButtonLoadGame.setBounds(140, 225, 115, 40);
+		ButtonLoadGame.setBounds(140, 150, 115, 40);
 		ButtonLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game g = null;

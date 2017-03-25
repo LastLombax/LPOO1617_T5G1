@@ -1,6 +1,9 @@
 package dkeep.logic;
 
 import java.util.Vector;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 
 public class Game implements Serializable{
@@ -19,14 +22,18 @@ public class Game implements Serializable{
 	private char[][] fullMap;
 	private boolean hasKey,hasClub,wasKeyC,wasKey,hasLever=false;
 	private int nOgres = 1;
+	private int extraOgres;
 
 	//returns a copy of a char[][]
 	public char[][] copyMap() {
-		char[][] s = new char[map.getMap().length][map.getMap().length];
-		for (int i = 0; i < map.getMap().length; i++) 
-			for (int j = 0; j < map.getMap().length; j++) 
-				s[i][j] = map.getMap()[i][j];
+		int w = map.getMap()[0].length;
+		int l = map.getMap().length;
 
+		char[][] s = new char[l][w];
+
+		for (int i = 0; i < l; i++) 
+			for (int j = 0; j < w; j++)
+				s[i][j] = map.getMap()[i][j];	
 		return s;
 	}
 
@@ -36,6 +43,33 @@ public class Game implements Serializable{
 		Keep kp = new Keep();
 		maps.add(dg);
 		maps.addElement(kp);
+
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src/Map1"));			
+
+			int width = Integer.parseInt(br.readLine());
+			int height = Integer.parseInt(br.readLine());
+			extraOgres = Integer.parseInt(br.readLine());
+
+			char[][] extraMap = new char[height][width];
+
+			for (int i = 0; i < height; i++) {
+				String st = br.readLine();
+				for (int j = 0; j < st.length(); j++) 	
+					extraMap[i][j] = st.charAt(j);			
+			}
+			br.close();
+			EditedMap e = new EditedMap(extraMap, extraOgres);
+			maps.addElement(e);
+
+		} catch (IOException e) {
+			System.out.println("Map doesn't exist!");
+			e.printStackTrace();
+		}
+
+
+
 	}
 
 	//changes the map to the next one if exists, if not returns 0;
@@ -65,15 +99,30 @@ public class Game implements Serializable{
 		if (map.hasOgre()) {
 			for (int i = 0; i < map.getOgres().size();i++)
 			{
-				for (int j = 0; j != nOgres; j++)
+				if (maps.size() > 2 && map.getMap() == maps.get(2).getMap()) //the extra map
 				{
-					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
-					if(map.hasCLub())
-						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
-					this.enemies.add(O);
+					for (int j = 0; j != extraOgres; j++){
+
+						O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
+						if(map.hasCLub())
+							O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+						this.enemies.add(O);
+					}
 				}
+				else //no extra map
+				{ 
+					for (int j = 0; j != nOgres; j++)
+					{
+						O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
+						if(map.hasCLub())
+							O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+						this.enemies.add(O);
+					}
+				}
+
 			}
 		}
+
 
 		if (map.hasKey())
 		{
@@ -89,7 +138,7 @@ public class Game implements Serializable{
 			this.hasLever=true;
 		}
 
-		if (map.hasHeroClub())
+		if (map.hasHeroClub() && map == maps.get(1))
 		{
 			H_C = new Club(map.getHeroClub().getCoordenateI(),map.getHeroClub().getCoordenateJ(),map.getHeroClub().getSprite());
 			this.nonMovingCharacters.add(H_C);
@@ -124,6 +173,7 @@ public class Game implements Serializable{
 
 	//prints the map (char[][])
 	public void print() {
+
 		setFullMap();
 
 		// prints all
@@ -134,6 +184,7 @@ public class Game implements Serializable{
 		}
 	}
 	public void setFullMap(){
+
 
 		this.fullMap = copyMap();
 
@@ -194,6 +245,7 @@ public class Game implements Serializable{
 
 
 	public int verifyMovement(int i, int j){
+
 		//if you can pass a level,change map/level or finish and win
 		for (Exit e : exits) {
 			if (e.getCoordenateI() == H.getCoordenateI() + i && e.getCoordenateJ() == (H.getCoordenateJ() + j)
@@ -222,10 +274,11 @@ public class Game implements Serializable{
 		return 3;
 	}
 
-	
-	
+
+
 	//deals with the input and does most of the game logic
 	public int movement(String s) {
+
 		int move;
 		if (s.charAt(0) == 'w') { 
 			move = verifyMovement(-1,0);
@@ -357,7 +410,7 @@ public class Game implements Serializable{
 	public Hero getHero(){return this.H;}
 
 	public Guard getGuard(){return this.G;}
-	
+
 	public Vector<Character> getEnemies(){return this.enemies;}
 
 	public void addMap(GameMap map){this.maps.add(map);}

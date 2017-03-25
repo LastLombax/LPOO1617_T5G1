@@ -24,7 +24,7 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 		this.repaint();
 		this.addMouseListener(this);
 	}
-	
+
 	public void loadEditImages(){
 		try {			
 			wall = ImageIO.read(new File("src/wall.png"));
@@ -61,7 +61,7 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 					g.drawImage(door,  i*size, j*size, size, size, null);
 			}
 	}
-	
+
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -76,25 +76,19 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 					if (lv.getCharMap()[i-1][j-1] == ' ' && lv.getSelected() != ' ') //if cell is empty
 					{
 						lv.getCharMap()[i-1][j-1] = lv.getSelected();
-						checkElement(i-1,j-1, true);
-						if (lv.getSelected() == 'O')
-							lv.nOgresPlaced++;
+						checkElement(i-1,j-1, '+');
 					}
 					else if (lv.getCharMap()[i-1][j-1]  == lv.getSelected()) // if you select the wrong cell
 					{
-						if (lv.getSelected() == 'O')
-							lv.nOgresPlaced--;
+						checkElement(i-1,j-1, '-');
 						lv.getCharMap()[i-1][j-1] = ' ';
-						checkElement(i-1,j-1, false);
+
 					}
 					else if (lv.getCharMap()[i-1][j-1]  != ' ') //if you want to replace a cell
 					{
-						if(lv.getCharMap()[i-1][j-1] == 'O')
-								lv.nOgresPlaced--;
-						if (lv.getSelected() == 'O')
-							lv.nOgresPlaced++;
+						checkElement(i-1,j-1, '-');
 						lv.getCharMap()[i-1][j-1] = lv.getSelected();	
-						checkElement(i-1,j-1, true);
+						checkElement(i-1,j-1, '+');
 					}
 				}
 			}
@@ -105,22 +99,37 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 
 	public void setEditor(LevelEditor lv){this.lv = lv;}
 
-	
-	public void checkElement(int x, int y, boolean bool){
-		if (lv.getCharMap()[x][y] == 'O')
-			lv.hasOgre = bool;
-		else if (lv.getCharMap()[x][y] == 'A')
-			lv.hasHero = bool;
-		else if (lv.getCharMap()[x][y] == 'k')
-			lv.hasKey = bool;
-		else if (lv.getCharMap()[x][y] == 'X')
-			lv.hasWall = bool;
-		else if(lv.getCharMap()[x][y] == 'I')
-			lv.hasExit = bool;
+
+	public void checkElement(int x, int y, char inc){
+		if (inc == '+'){
+			if (lv.getCharMap()[x][y] == 'O')
+				lv.nOgresPlaced++;
+			else if (lv.getCharMap()[x][y] == 'A')
+				lv.nHeroesPlaced++;
+			else if (lv.getCharMap()[x][y] == 'k')
+				lv.nKeysPlaced++;
+			else if (lv.getCharMap()[x][y] == 'X')
+				lv.nWallsPlaced++;
+			else if(lv.getCharMap()[x][y] == 'I')
+				lv.nDoorsPlaced++;
+		}
+		else if (inc == '-')
+		{
+			if (lv.getCharMap()[x][y] == 'O')
+				lv.nOgresPlaced--;
+			else if (lv.getCharMap()[x][y] == 'A')
+				lv.nHeroesPlaced--;
+			else if (lv.getCharMap()[x][y] == 'k')
+				lv.nKeysPlaced--;
+			else if (lv.getCharMap()[x][y] == 'X')
+				lv.nWallsPlaced--;
+			else if(lv.getCharMap()[x][y] == 'I')
+				lv.nDoorsPlaced--;
+		}
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
