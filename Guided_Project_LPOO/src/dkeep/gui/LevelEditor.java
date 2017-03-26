@@ -49,23 +49,26 @@ public class LevelEditor {
 		initialise();
 	}
 
-	public void initialise(){
-
+	
+	public void EditorConf(){
 		Editor.setBounds(500, 10, 1000, 1000);
 		Editor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Editor.getContentPane().setLayout(null);
-
-
+		
 		lblEditStatus.setText("Choose an element and click on a cell");
 		lblEditStatus.setFont(new Font("Times New Roman", Font.PLAIN, 17));
-
+	}
+	
+	public void mapConf(){
 		for (int i = 0; i <  charMap.length; i++)
 			for (int j = 0; j < charMap[i].length; j++)
 				charMap[i][j] = ' '; //it's a white square
 
 		Map = new GraphicsLevelEditor(width, height, this);
 		Map.setBounds(50, 50, width*100, height*100);
-
+	}
+	
+	public void buttonWall(){
 		ButtonWall.setFont(new Font("Tahoma", Font.PLAIN, 15));		
 		ButtonWall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -73,7 +76,9 @@ public class LevelEditor {
 				selected = 'X';
 			}
 		});
-
+	}
+	
+	public void buttonExit(){
 		ButtonExitDoor.setFont(new Font("Tahoma", Font.PLAIN, 15));		
 		ButtonExitDoor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -81,15 +86,9 @@ public class LevelEditor {
 				selected = 'I';
 			}
 		});
-
-		ButtonKey.setFont(new Font("Tahoma", Font.PLAIN, 15));		
-		ButtonKey.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				lblEditStatus.setText("Choose an element and click on a cell");
-				selected = 'k';
-			}
-		});
-
+	}
+	
+	public void buttonOgreNHero(){
 		ButtonHero.setFont(new Font("Tahoma", Font.PLAIN, 15));	
 		ButtonHero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,7 +103,31 @@ public class LevelEditor {
 				selected = 'O';
 			}
 		});
+	}
+	
+	public void buttonkey(){
 
+		ButtonKey.setFont(new Font("Tahoma", Font.PLAIN, 15));		
+		ButtonKey.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblEditStatus.setText("Choose an element and click on a cell");
+				selected = 'k';
+			}
+		});
+	}
+	
+	public void buttonback(){
+		ButtonBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Editor.setVisible(false);
+				MainMenu m = new MainMenu();
+				m.getMainMenu().setVisible(true);
+				getEditor().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			}
+		});
+	}
+	
+	public void save1(){
 		SaveSlot1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (checkElements()){
@@ -125,8 +148,9 @@ public class LevelEditor {
 				}
 			}
 		});
-
-
+	}
+	
+	public void save2(){
 		SaveSlot2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (checkElements()){
@@ -147,8 +171,9 @@ public class LevelEditor {
 				}
 			}
 		});
-
-
+	}
+	
+	public void save3(){
 		SaveSlot3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkElements()){
@@ -170,9 +195,9 @@ public class LevelEditor {
 
 			}
 		});
-
-
-
+	}
+	
+	public void save4(){
 		SaveSlot4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkElements()){
@@ -194,19 +219,24 @@ public class LevelEditor {
 
 			}
 		});
+	}
 	
+	public void initialise(){
 
-		ButtonBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Editor.setVisible(false);
-				MainMenu m = new MainMenu();
-				m.getMainMenu().setVisible(true);
-				getEditor().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			}
-		});
+		EditorConf();
+		mapConf();
+		buttonWall();
+		buttonExit();
+		buttonkey();
+		buttonOgreNHero();
 
+		save1();
+		save2();
+		save3();
+		save4();
+
+		buttonback();
 		setBounds();
-
 		addContent();		
 
 	}

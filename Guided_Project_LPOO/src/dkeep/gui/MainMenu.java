@@ -29,12 +29,7 @@ public class MainMenu {
 		});
 	}
 
-	private void initialise() {	
-		MainMenu.setResizable(false);
-		MainMenu.setBounds(600, 300, 400, 500);
-		MainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		MainMenu.getContentPane().setLayout(null);				
-
+	public void buttonNew(){
 		ButtonNewGame.setBounds(140, 75, 115, 40);		
 		ButtonNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -43,8 +38,10 @@ public class MainMenu {
 				ng.getGameWindowOptions().setVisible(true);					
 				MainMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}
-		});		
-
+		});	
+	}
+	
+	public void LevelEdit(){
 		ButtonLevelEditor.setBounds(140, 225, 115, 40);
 		ButtonLevelEditor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -54,7 +51,8 @@ public class MainMenu {
 				getMainMenu().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);				
 			}
 		});
-
+	}
+	public void buttonLoad(){
 		ButtonLoadGame.setBounds(140, 150, 115, 40);
 		ButtonLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -76,6 +74,17 @@ public class MainMenu {
 				sg.getGameWindow().setVisible(true);
 			}			
 		});	
+	}
+	
+	private void initialise() {	
+		MainMenu.setResizable(false);
+		MainMenu.setBounds(600, 300, 400, 500);
+		MainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		MainMenu.getContentPane().setLayout(null);				
+	
+		buttonNew();
+		LevelEdit();
+		buttonLoad();
 
 		ButtonExitGame.setBounds(140, 300, 115, 40);
 		ButtonExitGame.addActionListener(new ActionListener() {
@@ -85,7 +94,6 @@ public class MainMenu {
 		});
 
 		addContent();
-
 	}
 
 	public void addContent(){

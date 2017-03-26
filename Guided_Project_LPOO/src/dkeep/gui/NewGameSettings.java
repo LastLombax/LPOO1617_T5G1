@@ -28,19 +28,20 @@ public class NewGameSettings {
 	private JLabel GameStatus = new JLabel(" ");
 	protected Game g;
 	
-	public void initialise(){	
+	
+	public void windowConf(){
 
 		GameWindowOptions.setResizable(false);
 		GameWindowOptions.setBounds(600, 300, 325, 250);
 		GameWindowOptions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GameWindowOptions.getContentPane().setLayout(null);	
 		
-		
 		lblNumberOfOgres.setBounds(28, 16, 98, 16);	
 		lblNumberOfOgres.setHorizontalAlignment(SwingConstants.LEFT);
 		
-
-
+	}
+	
+	public void fldOgresConf(){
 		fldOgres.setBounds(186, 13, 61, 22);
 		fldOgres.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		fldOgres.setBackground(Color.WHITE);
@@ -53,8 +54,9 @@ public class NewGameSettings {
 		fldBehaviour.setModel(new DefaultComboBoxModel(new String[] {"Rookie", "Drunk", "Suspicious"}));
 		fldBehaviour.setEditable(true);
 		fldBehaviour.setBounds(186, 63, 89, 22);
+	}
 	
-
+	public void buttonStart(){
 		ButtonStart.setBounds(186, 149, 112, 33);
 		ButtonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -74,7 +76,12 @@ public class NewGameSettings {
 			}
 				
 		});
-		
+	}
+	
+	public void initialise(){	
+
+		windowConf();
+		fldOgresConf();	
 
 		ButtonBack.setBounds(28, 151, 114, 29);
 		ButtonBack.addActionListener(new ActionListener() {

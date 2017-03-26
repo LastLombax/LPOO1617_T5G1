@@ -29,118 +29,146 @@ public class StartGame {
 	protected JPanel Console;
 	private Game g;
 
+public void keys(){
+	//keyboard keys
+			Console.addKeyListener(new KeyListener(){
+				public void keyPressed(KeyEvent e){
+					if (e.getKeyCode() == KeyEvent.VK_UP)
+					{			
+						int m = getGame().movement("w");
+						verify(m);
+					}
+					if (e.getKeyCode() == KeyEvent.VK_DOWN)
+					{
+						int m = getGame().movement("s");
+						verify(m);
+					}
+					if (e.getKeyCode() == KeyEvent.VK_LEFT)
+					{
+						int m = getGame().movement("a");
+						verify(m);
+					}
+					if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+					{
+						int m = getGame().movement("d");
+						verify(m);
+					}
+				}
 
+				@Override
+				public void keyReleased(KeyEvent arg0) {}
+				@Override
+				public void keyTyped(KeyEvent arg0) {}
+			});
+}
+	
+
+public void buttonUp(){
+	ButtonUp.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	
+	ButtonUp.setBounds(662, 164, 80, 20);
+	ButtonUp.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int m = g.movement("w");
+			verify(m);
+		}
+	});
+}
+
+public void buttonLeft(){
+	ButtonLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	
+	ButtonLeft.setBounds(612, 202,80, 20);
+	ButtonLeft.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int m = g.movement("a");
+			verify(m);
+		}
+	});
+}
+
+public void buttonDown(){
+	ButtonDown.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	
+	ButtonDown.setBounds(662, 239, 80, 20);
+	ButtonDown.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int m = g.movement("s");
+			verify(m);
+		}
+	});
+}
+
+public void buttonRight(){
+	ButtonRight.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	
+	ButtonRight.setBounds(712, 202, 80, 20);
+	ButtonRight.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			int m = g.movement("d");
+			verify(m);
+		}
+	});
+
+}
+
+public void buttonExit(){
+	ButtonExit.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+	ButtonExit.setBounds(662, 670, 90, 25);
+	ButtonExit.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			GameWindow.setVisible(false);
+			MainMenu m = new MainMenu();
+			m.getMainMenu().setVisible(true);
+			GameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+	});
+}
+
+public void buttonSave(){
+	ButtonSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	
+	ButtonSave.setBounds(662, 443, 90, 25);
+	ButtonSave.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+			try {
+				FileOutputStream fileOut = new FileOutputStream("src/save.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(g);
+				out.close();
+				fileOut.close();
+				//System.out.printf("Serialized data is saved in /src/save.txt");
+			}catch(IOException i) {
+				i.printStackTrace();
+			}
+		}
+	});
+}
+
+public void GameWindowConf(){
+	GameWindow.setResizable(false);
+	GameWindow.setBounds(600, 50, 810, 810);
+	GameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	GameWindow.getContentPane().setLayout(null);
+}
+	
 	public void initialise() {
 
-		GameWindow.setResizable(false);
-		GameWindow.setBounds(600, 50, 810, 810);
-		GameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GameWindow.getContentPane().setLayout(null);
-		
-		
+		GameWindowConf();		
 		Console = new GraphicsGui(g);
 		Console.setBackground(Color.LIGHT_GRAY);
 		Console.setBounds(0, 0, 600, 600);
 		
-		//keyboard keys
-		Console.addKeyListener(new KeyListener(){
-			public void keyPressed(KeyEvent e){
-				if (e.getKeyCode() == KeyEvent.VK_UP)
-				{			
-					int m = getGame().movement("w");
-					verify(m);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_DOWN)
-				{
-					int m = getGame().movement("s");
-					verify(m);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_LEFT)
-				{
-					int m = getGame().movement("a");
-					verify(m);
-				}
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-				{
-					int m = getGame().movement("d");
-					verify(m);
-				}
-			}
-
-			@Override
-			public void keyReleased(KeyEvent arg0) {}
-			@Override
-			public void keyTyped(KeyEvent arg0) {}
-		});
+		keys();
 		GameStatus.setFont(new Font("Tahoma", Font.PLAIN, 17));
-
-		
 		GameStatus.setBounds(12, 676, 291, 19);
 		GameStatus.setText("You can play the game");				
-		ButtonUp.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				
-		ButtonUp.setBounds(662, 164, 80, 20);
-		ButtonUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int m = g.movement("w");
-				verify(m);
-			}
-		});
-		ButtonLeft.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		ButtonLeft.setBounds(612, 202,80, 20);
-		ButtonLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int m = g.movement("a");
-				verify(m);
-			}
-		});
-		ButtonRight.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		ButtonRight.setBounds(712, 202, 80, 20);
-		ButtonRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int m = g.movement("d");
-				verify(m);
-			}
-		});
-		ButtonDown.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		ButtonDown.setBounds(662, 239, 80, 20);
-		ButtonDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int m = g.movement("s");
-				verify(m);
-			}
-		});
-		ButtonExit.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-		ButtonExit.setBounds(662, 670, 90, 25);
-		ButtonExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GameWindow.setVisible(false);
-				MainMenu m = new MainMenu();
-				m.getMainMenu().setVisible(true);
-				GameWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			}
-		});
-		ButtonSave.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		ButtonSave.setBounds(662, 443, 90, 25);
-		ButtonSave.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				try {
-					FileOutputStream fileOut = new FileOutputStream("src/save.ser");
-					ObjectOutputStream out = new ObjectOutputStream(fileOut);
-					out.writeObject(g);
-					out.close();
-					fileOut.close();
-					//System.out.printf("Serialized data is saved in /src/save.txt");
-				}catch(IOException i) {
-					i.printStackTrace();
-				}
-			}
-		});
+		buttonUp();
+		buttonLeft();
+		buttonDown();
+		buttonRight();
+		buttonExit();
 		
 		addContent();
 	}
