@@ -300,38 +300,64 @@ public class LevelEditor {
 	}
 
 	public boolean checkBorders(){
-
 		if (!upperBorder() || !lowerBorder() || !leftBorder() || !rightBorder())
 			return false;		
-
 		return true;
 
 	}
 
 	public boolean upperBorder(){
 		for(int i = 0; i < width;i++)
-			if(charMap[i][0] == 'O'|| charMap[i][0] == 'A' || charMap[i][0] == 'k' ||charMap[i][0] == ' ')
+			if (!checkUpper(i))
 				return false;	
 		return true;
 	}
+	
+	public boolean checkUpper(int i){
+		if(charMap[i][0] == 'O'|| charMap[i][0] == 'A' || charMap[i][0] == 'k' ||charMap[i][0] == ' ')
+			return false;
+		return true;
+	}
+	
+	
 	public boolean lowerBorder(){
 		for(int i = 0; i < width;i++)
-			if(charMap[i][height-1] == 'O'||charMap[i][height-1] == 'A' || charMap[i][height-1] == 'k' ||charMap[i][height-1] == ' ')
+			if (!checkLower(i))
 				return false;
 		return true;
 	}
+	
+	public boolean checkLower(int i){
+		if(charMap[i][height-1] == 'O'||charMap[i][height-1] == 'A' || charMap[i][height-1] == 'k' ||charMap[i][height-1] == ' ')
+			return false;
+		return true;
+	}
+
 	public boolean leftBorder(){
 		for(int j = 0; j < height;j++)
-			if(charMap[0][j] == 'O' || charMap[0][j] == 'A'  || charMap[0][j] == 'k' || charMap[0][j] == ' ')
+			if (!checkLeft(j))
 				return false;	
 		return true;
 	}
+	
+	public boolean checkLeft(int j){
+		if(charMap[0][j] == 'O' || charMap[0][j] == 'A'  || charMap[0][j] == 'k' || charMap[0][j] == ' ')
+			return false;	
+	return true;
+		
+	}
+	
 	public boolean rightBorder(){
-
 		for(int j = 0; j < height;j++)
-			if(charMap[width-1][j] == 'O' || charMap[width-1][j] == 'A'  || charMap[width-1][j] == 'k' || charMap[width-1][j] == ' ')					
-				return false;		
+			if (!checkRight(j))
+			return false;		
 		return true;
+	}
+	public boolean checkRight(int j){
+		if(charMap[width-1][j] == 'O' || charMap[width-1][j] == 'A'  || charMap[width-1][j] == 'k' || charMap[width-1][j] == ' ')					
+			return false;		
+	return true;
+		
 	}
 	
 	
