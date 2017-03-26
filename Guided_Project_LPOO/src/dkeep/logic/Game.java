@@ -104,36 +104,33 @@ public class Game implements Serializable{
 	public void createOgre(){
 		for (int i = 0; i < map.getOgres().size();i++)
 		{
-			if (maps.size() > 2 && map.getMap() == maps.get(2).getMap()) //the extra map
-			{
-				for (int j = 0; j != extraOgres; j++){
-					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
-					if(map.hasCLub())
-						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
-					this.enemies.add(O);
-				}
-			}
-			else //no extra map
-			{ 
-				for (int j = 0; j != nOgres; j++)
-				{
-					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
-					if(map.hasCLub())
-						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
-					this.enemies.add(O);
-				}
-			}
+			if (maps.size() > 2 && map.getMap() == maps.get(2).getMap()) 			
+				extraMap(i);	
+			else 
+				normalMap(i);
+		}
+	}
+	
+	public void extraMap(int i){
+		for (int j = 0; j != extraOgres; j++){
+			O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
+			if(map.hasCLub())
+				O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+			this.enemies.add(O);
+		}
+	}
+	
+	public void normalMap(int i){
+		for (int j = 0; j != nOgres; j++)
+		{
+			O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
+			if(map.hasCLub())
+				O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+			this.enemies.add(O);
 		}
 	}
 
-	public void changeLevel() {
-
-		this.exits = new Vector<Exit>();
-		this.enemies = new Vector<Character>();
-		this.nonMovingCharacters = new Vector<Character>();
-		this.exits = map.getExits();
-
-
+	public void checkDynamicElements(){
 		if (map.hasGuard()) {
 			G = new Guard(map.getGuard().getCoordenateI(), map.getGuard().getCoordenateJ(), map.getGuard().getSprite(), map.getGuard().getRanGuard());
 			this.enemies.add(G);
@@ -141,7 +138,22 @@ public class Game implements Serializable{
 
 		if (map.hasOgre()) 
 			createOgre();
+		
+		if (map.hasHeroClub() && map == maps.get(1))
+		{
+			H_C = new Club(map.getHeroClub().getCoordenateI(),map.getHeroClub().getCoordenateJ(),map.getHeroClub().getSprite());
+			this.nonMovingCharacters.add(H_C);
+		}
 
+	}
+	
+	public void changeLevel() {
+
+		this.exits = new Vector<Exit>();
+		this.enemies = new Vector<Character>();
+		this.nonMovingCharacters = new Vector<Character>();
+		this.exits = map.getExits();
+		checkDynamicElements();
 
 		if (map.hasKey())
 		{
@@ -155,13 +167,7 @@ public class Game implements Serializable{
 			L = new Lever(map.getLever().getCoordenateI(), map.getLever().getCoordenateJ(), map.getLever().getSprite());
 			this.nonMovingCharacters.add(L);
 			this.hasLever=true;
-		}
-
-		if (map.hasHeroClub() && map == maps.get(1))
-		{
-			H_C = new Club(map.getHeroClub().getCoordenateI(),map.getHeroClub().getCoordenateJ(),map.getHeroClub().getSprite());
-			this.nonMovingCharacters.add(H_C);
-		}
+		}	
 
 		H = new Hero(map.getHero().getCoordenateI(), map.getHero().getCoordenateJ(), map.getHero().getSprite());
 	}
@@ -195,6 +201,7 @@ public class Game implements Serializable{
 			System.out.print("\n");
 		}
 	}
+	
 	public void setFullMap(){
 		this.fullMap = copyMap();
 
@@ -238,11 +245,9 @@ public class Game implements Serializable{
 
 		for (int i = 0; i < enemies.size(); i++)
 			if (enemies.get(i).hasClub()) //it means it has a club, whether it's an ogre or not
-				//if (Math.abs(enemies.get(i).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(i).getCoordenateJ() - H.getCoordenateJ()) <=1)
 				if ((((H.getCoordenateI() == enemies.get(i).getClub().getCoordenateI()-1) || (H.getCoordenateI() == enemies.get(i).getClub().getCoordenateI()+1)) && (H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ())) ||
 						((enemies.get(i).getClub().getCoordenateI() == H.getCoordenateI()) && ((H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ()-1) || (H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ()+1))))		
 					return true;
-
 		return false;
 	}
 
@@ -313,6 +318,7 @@ public class Game implements Serializable{
 		}
 		return 0;
 	}
+	
 
 	public void HeroClubInteraction(){
 		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H')		

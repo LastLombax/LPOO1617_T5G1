@@ -27,17 +27,28 @@ public class Dungeon extends GameMap implements Serializable{
 		addWalls();
 	}
 
-	public void addWalls(){
-		
+	public void addHorizontalBorder(){
 		for(int i = 0; i < 10;i++)
 			if(this.Dmap[i][0]!='I')
 				this.Dmap[i][0]='X';			
 
-		for(int i = 0; i < 10;i++)	this.Dmap[i][9]='X';			
+		for(int i = 0; i < 10;i++)
+			this.Dmap[i][9]='X';			
 
-		for(int j = 0; j < 10;j++)	this.Dmap[0][j]='X';			
+	}
 
-		for(int j = 0; j < 10;j++)	this.Dmap[9][j]='X';			
+	public void addVerticalBorder(){
+		for(int j = 0; j < 10;j++)
+			this.Dmap[0][j]='X';			
+
+		for(int j = 0; j < 10;j++)
+			this.Dmap[9][j]='X';	
+	}
+	
+	public void addWalls(){
+
+		addHorizontalBorder();
+		addVerticalBorder();
 
 		this.Dmap[1][6] =
 				this.Dmap[2][1] = this.Dmap[2][2] =this.Dmap[2][4] = this.Dmap[2][5] = this.Dmap[2][6] = 
@@ -78,7 +89,7 @@ public class Dungeon extends GameMap implements Serializable{
 	public Hero getHero(){return h;}
 
 	public Guard getGuard(){return G;}
-	
+
 	public Club getHeroClub(){
 		return null;
 	}
