@@ -120,36 +120,54 @@ public class Ogre implements Character,Serializable{
 		while(!valid){
 			double randomno = Math.floor(Math.random()*4);
 			switch((int)randomno){
-			case 0: //go down				
-				if(Ogre_i == this.mapLength)
-					break;
-				else
-					valid = setClubCoors(1, 0);
+			case 0: //go down		
+				
+				valid = clubDown();
 				break;
 			case 1: //go up
-				if(Ogre_i == 1)
-					break;
-				else
-					valid = setClubCoors(-1, 0);
+				
+				valid =clubUp();
 				break;
 			case 2: //go right
-				if(Ogre_j == this.mapLength)
-					break;
-				else
-					valid = setClubCoors(0, 1);
+				
+				valid =clubRight();
 				break;
 			case 3: //go left
-				if(Ogre_j == 1)
-					break;
-				else
-					valid = setClubCoors(0, -1);
+				
+				valid =clubLeft();
 				break;
 			}
 
 		}
 	}
+	
+	public boolean clubDown(){
+		if(Ogre_i == this.mapLength)
+			return false;
+		else
+			return setClubCoors(1, 0);
+	}
 
+	public boolean clubUp(){
+		if(Ogre_i == 1)
+			return false;
+		else
+			return setClubCoors(-1, 0);
+	}
 
+	public boolean clubRight(){
+		if(Ogre_j == this.mapLength)
+			return false;
+		else
+			return setClubCoors(0, 1);
+	}
+	
+	public boolean clubLeft(){
+		if(Ogre_j == 1)
+			return false;
+		else
+			return setClubCoors(0, -1);
+	}
 	public boolean setClubCoors(int i, int j){
 		c.setCoordenateI(Ogre_i + i);
 		c.setCoordenateJ(Ogre_j + j);
