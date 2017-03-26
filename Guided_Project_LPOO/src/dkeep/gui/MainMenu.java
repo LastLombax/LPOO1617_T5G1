@@ -24,9 +24,7 @@ public class MainMenu {
 				try {
 					MainMenu window = new MainMenu();
 					window.getMainMenu().setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				} catch (Exception e) {	e.printStackTrace();}
 			}
 		});
 	}
@@ -87,11 +85,10 @@ public class MainMenu {
 			in.close();
 			fileIn.close();
 		}catch(IOException i) {
-			i.printStackTrace();
+			System.out.println("File not found!");
 			return false;
 		}catch(ClassNotFoundException c) {
 			System.out.println("Game class not found");
-			c.printStackTrace();
 			return false;
 		}
 		return true;

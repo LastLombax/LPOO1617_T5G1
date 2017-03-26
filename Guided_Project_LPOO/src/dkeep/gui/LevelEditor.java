@@ -136,25 +136,8 @@ public class LevelEditor {
 					
 					if (!checkBorders())
 						lblEditStatus.setText("The borders can't be empty cells!");
-
-					try {
-						FileOutputStream fileOut = new FileOutputStream("src/Map1");						
-						fileOut.write(width +'0');
-						fileOut.write('\n');
-						fileOut.write(height +'0');
-						fileOut.write('\n');
-						fileOut.write(nOgres +'0');
-						fileOut.write('\n');
-						for (int j = 0; j < height ;j++){						
-							for (int i = 0; i < width; i++)							
-								fileOut.write(charMap[i][j]);
-							fileOut.write('\n');
-						}
-
-					} catch (IOException e1) {
-						lblEditStatus.setText("There was an error on saving the map");
-						e1.printStackTrace();
-					}
+					
+					addFile();
 
 					lblEditStatus.setText("Map has been saved in the file Map1!");
 
@@ -180,6 +163,26 @@ public class LevelEditor {
 
 	}
 
+	public void addFile(){
+		try {
+			FileOutputStream fileOut = new FileOutputStream("src/Map1");						
+			fileOut.write(width +'0');
+			fileOut.write('\n');
+			fileOut.write(height +'0');
+			fileOut.write('\n');
+			fileOut.write(nOgres +'0');
+			fileOut.write('\n');
+			for (int j = 0; j < height ;j++){						
+				for (int i = 0; i < width; i++)							
+					fileOut.write(charMap[i][j]);
+				fileOut.write('\n');
+			}
+			fileOut.close();
+		} catch (IOException e1) {
+			lblEditStatus.setText("There was an error on saving the map");
+			e1.printStackTrace();
+		}
+	}
 	public boolean checkElements(){
 		
 		if ( nOgresPlaced == 0 || nDoorsPlaced == 0 || nHeroesPlaced == 0|| nWallsPlaced == 0 || nKeysPlaced == 0){

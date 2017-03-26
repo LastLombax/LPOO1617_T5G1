@@ -27,11 +27,9 @@ public class EditedMap extends GameMap implements Serializable{
 					O = new Ogre(i,j,'O', Emap[i].length-2);
 					defineClub(i,j);
 				}
-
 				else if (Emap[i][j] == 'I')
 					I = new Exit(i,j,'I');
 			}
-
 
 	}
 

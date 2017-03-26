@@ -63,10 +63,7 @@ public class Game implements Serializable{
 			EditedMap e = new EditedMap(extraMap, extraOgres);
 			maps.addElement(e);
 
-		} catch (IOException e) {
-			System.out.println("Map doesn't exist!");
-			e.printStackTrace();
-		}
+		} catch (IOException e) {System.out.println("Map doesn't exist!");}
 
 
 
@@ -83,12 +80,39 @@ public class Game implements Serializable{
 	}
 
 	//changes the level(restart characters according to the map)
+
+	public void createOgre(){
+		for (int i = 0; i < map.getOgres().size();i++)
+		{
+			if (maps.size() > 2 && map.getMap() == maps.get(2).getMap()) //the extra map
+			{
+				for (int j = 0; j != extraOgres; j++){
+
+					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
+					if(map.hasCLub())
+						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+					this.enemies.add(O);
+				}
+			}
+			else //no extra map
+			{ 
+				for (int j = 0; j != nOgres; j++)
+				{
+					O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
+					if(map.hasCLub())
+						O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
+					this.enemies.add(O);
+				}
+			}
+
+		}
+	}
+
 	public void changeLevel() {
 
 		this.exits = new Vector<Exit>();
 		this.enemies = new Vector<Character>();
 		this.nonMovingCharacters = new Vector<Character>();
-
 		this.exits = map.getExits();
 
 		if (map.hasGuard()) {
@@ -96,32 +120,8 @@ public class Game implements Serializable{
 			this.enemies.add(G);
 		}
 
-		if (map.hasOgre()) {
-			for (int i = 0; i < map.getOgres().size();i++)
-			{
-				if (maps.size() > 2 && map.getMap() == maps.get(2).getMap()) //the extra map
-				{
-					for (int j = 0; j != extraOgres; j++){
-
-						O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
-						if(map.hasCLub())
-							O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
-						this.enemies.add(O);
-					}
-				}
-				else //no extra map
-				{ 
-					for (int j = 0; j != nOgres; j++)
-					{
-						O = new Ogre(map.getOgres().get(i).getCoordenateI(),map.getOgres().get(i).getCoordenateJ(), map.getOgres().get(i).getSprite(),map.getMap().length-2);
-						if(map.hasCLub())
-							O.setClub(map.getClubs().get(i).getCoordenateI(), map.getClubs().get(i).getCoordenateJ(),map.getClubs().get(i).getSprite());
-						this.enemies.add(O);
-					}
-				}
-
-			}
-		}
+		if (map.hasOgre()) 
+			createOgre();
 
 
 		if (map.hasKey())
@@ -275,52 +275,8 @@ public class Game implements Serializable{
 	}
 
 
+	public int wasCaptured(){
 
-	//deals with the input and does most of the game logic
-	public int movement(String s) {
-
-		int move;
-		if (s.charAt(0) == 'w') { 
-			move = verifyMovement(-1,0);
-			if (move == 0)
-				return 0;
-			else if (move == 1)
-				return 1;
-		} 
-		else if (s.charAt(0) == 's') {
-			move = verifyMovement(1,0);
-			if (move == 0)
-				return 0;
-			else if (move == 1)
-				return 1;
-		} 
-		else if (s.charAt(0) == 'a') {
-			move = verifyMovement(0,-1);
-			if (move == 0)	return 0;
-			else if (move == 1)	return 1;
-		}
-		else if (s.charAt(0) == 'd') {
-			move = verifyMovement(0,1);
-			if (move == 0)
-				return 0;
-			else if (move == 1)
-				return 1;
-		}
-		else return 1;
-
-
-		//checks if the hero picks up the club
-		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H')
-		{
-			if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
-			{
-				H.setSprite('A');
-				H_C.setSprite(' ');
-				hasClub = true;
-			}			
-		}		
-
-		//checks if the hero was captured or killed
 		for (int i = 0; i < enemies.size(); i++) {
 
 			if (nearClub(enemies.get(i)))
@@ -359,7 +315,20 @@ public class Game implements Serializable{
 			if ((map.hasGuard() && nearEnemy() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 				return 2;
 		}
+		return 0;
+	}
 
+	public void elementInteraction(){
+
+		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H')
+		{
+			if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+			{
+				H.setSprite('A');
+				H_C.setSprite(' ');
+				hasClub = true;
+			}			
+		}		
 
 		//if the hero picks up the key 
 
@@ -401,7 +370,35 @@ public class Game implements Serializable{
 				wasKeyC = false;
 			}
 		}
+	}
 
+	//deals with the input and does most of the game logic
+	public int movement(String s) {
+		int move;
+		if (s.charAt(0) == 'w') { 
+			move = verifyMovement(-1,0);
+			if (move == 0)	return 0;
+			else if (move == 1)	return 1;
+		} 
+		else if (s.charAt(0) == 's') {
+			move = verifyMovement(1,0);
+			if (move == 0)		return 0;
+			else if (move == 1)		return 1;
+		} 
+		else if (s.charAt(0) == 'a') {
+			move = verifyMovement(0,-1);
+			if (move == 0)	return 0;
+			else if (move == 1)	return 1;
+		}
+		else if (s.charAt(0) == 'd') {
+			move = verifyMovement(0,1);
+			if (move == 0)		return 0;
+			else if (move == 1)		return 1;
+		}
+		else return 1;		
+
+		if (wasCaptured() == 2)	return 2;		
+		elementInteraction();
 		return 4;
 	}
 

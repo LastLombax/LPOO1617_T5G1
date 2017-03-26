@@ -36,10 +36,7 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 			door = ImageIO.read(new File("src/door.png"));
 			square = ImageIO.read(new File("src/square.jpg"));
 
-		} catch (IOException e) {
-			System.out.println("Image not found");
-			e.printStackTrace();
-		}		
+		} catch (IOException e) {System.out.println("Image not found");	}		
 	}
 
 	@Override

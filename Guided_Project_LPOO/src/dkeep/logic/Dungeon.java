@@ -35,14 +35,11 @@ public class Dungeon extends GameMap implements Serializable{
 			if(this.Dmap[i][0]!='I')
 				this.Dmap[i][0]='X';			
 
-		for(int i = 0; i < 10;i++)
-			this.Dmap[i][9]='X';			
+		for(int i = 0; i < 10;i++)	this.Dmap[i][9]='X';			
 
-		for(int j = 0; j < 10;j++)
-			this.Dmap[0][j]='X';			
+		for(int j = 0; j < 10;j++)	this.Dmap[0][j]='X';			
 
-		for(int j = 0; j < 10;j++)
-			this.Dmap[9][j]='X';			
+		for(int j = 0; j < 10;j++)	this.Dmap[9][j]='X';			
 
 		this.Dmap[1][6] =
 				this.Dmap[2][1] = this.Dmap[2][2] =this.Dmap[2][4] = this.Dmap[2][5] = this.Dmap[2][6] = 

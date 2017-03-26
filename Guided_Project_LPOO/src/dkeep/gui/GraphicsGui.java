@@ -14,8 +14,6 @@ public class GraphicsGui extends JPanel{
 	private BufferedImage wall, hero, heroArmed, heroKey, ogre, ogreStunned, club, guard, guardSleeping, key, lever, coverKey, door, doorOpened;
 	private char[][] map;
 	private Game game;	
-	//private StartGame s = new StartGame();
-	private int sizeX, sizeY;
 
 	public GraphicsGui(Game g) {		
 		setGame(g);
@@ -36,10 +34,7 @@ public class GraphicsGui extends JPanel{
 			guard = ImageIO.read(new File("src/Guard.png"));
 			guardSleeping = ImageIO.read(new File("src/GuardSleeping.png"));
 			coverKey = ImageIO.read(new File("src/OgreOnKey.png"));			
-		} catch (IOException e) {
-			System.out.println("Image not found");
-			e.printStackTrace();
-		}		
+		} catch (IOException e) {System.out.println("Image not found");}
 	}
 
 	public void loadMapImages(){

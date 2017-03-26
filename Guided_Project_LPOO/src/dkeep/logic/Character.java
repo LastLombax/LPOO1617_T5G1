@@ -1,7 +1,6 @@
 package dkeep.logic;
 
 
-
 public interface Character {  
 	   
 	public int getCoordenateI(); //returns the coordinate i of the character
