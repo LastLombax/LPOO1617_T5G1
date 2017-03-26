@@ -88,6 +88,7 @@ public class TestTest {
 		gameMap.setLever(k);
 		Game game = new Game(gameMap);
 		game.movement("d");
+		game.print();
 		assertEquals(1,game.getHero().getCoordenateI());
 		assertEquals(2,game.getHero().getCoordenateJ());		
 	}
@@ -127,6 +128,7 @@ public class TestTest {
 		gameMap.setMap(map);
 		gameMap.setExits(exits);
 		Guard J =new Guard(1,3,'G',0);
+		assertEquals(null,J.getClub());
 		gameMap.setGuard(J);
 		gameMap.setHero(H);
 		gameMap.setLever(k);
@@ -291,6 +293,16 @@ public class TestTest {
 		for(int i =0; i < 10; i++)
 			for(int j=0; j < 10;j++)
 				assertEquals(map_dungeon[i][j],dungeon.getMap()[i][j]);
+		
+		dungeon.setMap(map_dungeon);
+		dungeon.setHero(H);
+		dungeon.setGuard(G);
+		dungeon.setClub(new Club());
+		dungeon.setOgre(new Ogre());
+		dungeon.setKey(new Key());
+		dungeon.setLever(new Lever());
+		dungeon.setHeroClub(new Club());
+		dungeon.setExits(new Vector<Exit>());
 
 		assertEquals(true,dungeon.hasLever());
 		assertEquals(false,dungeon.hasOgre());
@@ -298,7 +310,10 @@ public class TestTest {
 		assertEquals(true,dungeon.hasGuard());
 		assertEquals(false,dungeon.hasHeroClub());
 		assertEquals(false,dungeon.hasKey());
-
+		assertEquals(null,dungeon.getKey());
+		assertEquals(null,dungeon.getOgres());
+		assertEquals(null,dungeon.getClubs());
+		assertEquals(null,dungeon.getHeroClub());
 	}
 	
 	@Test
@@ -429,6 +444,16 @@ public class TestTest {
 		for(int i =0; i < 9; i++)
 			for(int j=0; j < 9;j++)
 				assertEquals(map_keep[i][j],keep.getMap()[i][j]);
+		
+		keep.setMap(map_keep);
+		keep.setHero(H);
+		keep.setGuard(G);
+		keep.setClub(new Club());
+		keep.setOgre(new Ogre());
+		keep.setKey(new Key());
+		keep.setLever(new Lever());
+		keep.setHeroClub(new Club());
+		keep.setExits(new Vector<Exit>());
 
 		assertEquals(false,keep.hasLever());
 		assertEquals(true,keep.hasOgre());
@@ -449,6 +474,53 @@ public class TestTest {
 	}
 	
 	@Test
+	public void TestConstructorEditedMap(){
+		fillmapkeep();
+		int[] heroCor = new int[2];
+		heroCor[0] = 7;
+		heroCor[1] = 1;
+		int[] ogreCor = new int[2];
+		ogreCor[0] = 1;
+		ogreCor[1] = 4;
+		GameMap edited_map = new EditedMap(this.map_keep,1,heroCor,ogreCor);
+		for(int i =0; i < 9; i++)
+			for(int j=0; j < 9;j++)
+				assertEquals(map_keep[i][j],edited_map.getMap()[i][j]);
+		
+		edited_map.setMap(map_keep);
+		edited_map.setHero(H);
+		edited_map.setGuard(G);
+		edited_map.setClub(new Club());
+		edited_map.setOgre(new Ogre());
+		edited_map.setKey(new Key());
+		edited_map.setLever(new Lever());
+		edited_map.setHeroClub(new Club());
+		edited_map.setExits(new Vector<Exit>());
+
+		assertEquals(false,edited_map.hasLever());
+		assertEquals(true,edited_map.hasOgre());
+		assertEquals(true,edited_map.hasCLub());
+		assertEquals(false,edited_map.hasGuard());
+		assertEquals(true,edited_map.hasHeroClub());
+		assertEquals(true,edited_map.hasKey());
+		
+		Vector<Ogre>ogres = new Vector<Ogre>();
+		ogres.add(new Ogre(1,4,'O',7));
+		assertEquals(1,edited_map.getOgres().get(0).getCoordenateI());
+		assertEquals(7,edited_map.getHero().getCoordenateI());
+		assertEquals(null,edited_map.getGuard());
+		assertEquals(null,edited_map.getLever());
+		assertEquals(null,edited_map.getHeroClub());
+	}
+	
+	@Test
+	public void TestConstructorGame2(){
+	  Game g = new Game(1);
+	  g.setFullMap();
+	  assertEquals(1,g.getHero().getCoordenateI());
+	}
+	
+	@Test
 	public void TestConstructors(){
 		Lever lever_teste =new Lever();
 		lever_teste.setCoordenateI(1);
@@ -461,6 +533,7 @@ public class TestTest {
 		assertEquals(1,lever_teste.getCoordenateJ());
 		assertEquals('k',lever_teste.getSprite());
 		assertEquals(false,lever_teste.hasClub());
+		assertEquals(null,lever_teste.getClub());
 		assertEquals(0,lever_teste.getStun());
 		
 		//////
@@ -475,6 +548,7 @@ public class TestTest {
 		assertEquals(1,k_teste.getCoordenateJ());
 		assertEquals('k',k_teste.getSprite());
 		assertEquals(false,k_teste.hasClub());
+		assertEquals(null,k_teste.getClub());
 		assertEquals(0,k_teste.getStun());
 		
 		/////
@@ -501,6 +575,7 @@ public class TestTest {
 		assertEquals(1,e_teste.getCoordenateJ());
 		assertEquals('I',e_teste.getSprite());
 		assertEquals(false,e_teste.hasClub());
+		assertEquals(null,e_teste.getClub());
 		assertEquals(0,e_teste.getStun());
 		
 		/////

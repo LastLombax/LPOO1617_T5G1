@@ -34,8 +34,7 @@ public class Key implements Character,Serializable{
 	
 	public boolean hasClub(){return false;}
 	public Club getClub(){
-		Club c = new Club();
-		return c;
+		return null;
 	}
 	
 	public void move(){}

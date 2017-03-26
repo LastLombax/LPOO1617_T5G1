@@ -1,6 +1,8 @@
 package dkeep.logic;
 
-public class Lever implements Character{ 
+import java.io.Serializable;
+
+public class Lever implements Character,Serializable{ 
 	 
 	private int LeverI;
 	private int LeverJ;

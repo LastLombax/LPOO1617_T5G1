@@ -130,8 +130,7 @@ public class Guard implements Character, Serializable{
 	public void setSprite(char s){this.GuardSprite=s;}
 
 	public Club getClub(){
-		Club c = new Club();
-		return c;
+		return null;
 	}
 	public boolean hasClub(){return false;}
 

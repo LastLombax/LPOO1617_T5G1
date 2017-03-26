@@ -1,7 +1,8 @@
 package dkeep.logic;
 
+import java.io.Serializable;
 
-public interface Character {  
+public interface Character extends Serializable{  
 	   
 	public int getCoordenateI(); //returns the coordinate i of the character
 	public int getCoordenateJ(); //returns the coordinate j of the character

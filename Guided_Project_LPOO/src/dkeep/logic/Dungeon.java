@@ -50,8 +50,7 @@ public class Dungeon extends GameMap implements Serializable{
 	public Lever getLever(){return L;}
 
 	public Key getKey(){
-		Key k = new Key();
-		return k;
+		return null;
 	}
 
 	public boolean hasKey(){return false;}
@@ -70,8 +69,6 @@ public class Dungeon extends GameMap implements Serializable{
 		return true;
 	}
 
-	public GameMap nextMap(GameMap game){return game;}
-
 	public boolean hasGuard(){return true;}
 
 	public boolean hasOgre(){return false;}
@@ -81,28 +78,16 @@ public class Dungeon extends GameMap implements Serializable{
 	public Hero getHero(){return h;}
 
 	public Guard getGuard(){return G;}
-
-	public Club getClub(){
-		Club c = new Club();
-		return c;
-	}
-
-	public Ogre getOgre(){
-		Ogre o = new Ogre();
-		return o;
-	}
+	
 	public Club getHeroClub(){
-		Club c = new Club();
-		return c;
+		return null;
 	}
 	public Vector<Ogre> getOgres(){
-		Vector<Ogre>ogres = new Vector<Ogre>();
-		return ogres;
+		return null;
 	}
 
 	public Vector<Club> getClubs(){
-		Vector<Club>clubs = new Vector<Club>();
-		return clubs;
+		return null;
 	}
 	public Vector<Exit> getExits(){
 		Vector<Exit>s = new Vector<Exit>();

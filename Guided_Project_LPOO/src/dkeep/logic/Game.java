@@ -20,7 +20,7 @@ public class Game implements Serializable{
 	private Vector<Character> nonMovingCharacters = new Vector<Character>();
 	private GameMap map;
 	private char[][] fullMap;
-	private boolean hasKey,hasClub,wasKeyC,wasKey,hasLever=false;
+	private boolean hasKey,hasClub,wasKeyC = false,wasKey,hasLever=false;
 	private int nOgres = 1;
 	private int extraOgres;
 
@@ -362,12 +362,12 @@ public class Game implements Serializable{
 		}
 
 		for(Character c :enemies){
-			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !wasKeyC)
+			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !hasKey)
 			{
 				c.getClub().setSprite('$');
 				wasKeyC = true;
 			}
-			else if (wasKey)
+			else if (wasKeyC)
 			{
 				c.getClub().setSprite('*');
 				wasKeyC = false;

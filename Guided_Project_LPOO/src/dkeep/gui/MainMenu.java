@@ -59,8 +59,19 @@ public class MainMenu {
 		ButtonLoadGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game g = null;
-				if (!readFile(g))
+				try {
+					FileInputStream fileIn = new FileInputStream("src/save.ser");
+					ObjectInputStream in = new ObjectInputStream(fileIn);
+					g = (Game) in.readObject();
+					in.close();
+					fileIn.close();
+				}catch(IOException i) {
+					System.out.println("File not found!");
 					return;
+				}catch(ClassNotFoundException c) {
+					System.out.println("Game class not found");
+					return;
+				}
 				StartGame sg = new StartGame(g);	
 				sg.getGameWindow().setVisible(true);
 			}			
@@ -75,23 +86,6 @@ public class MainMenu {
 
 		addContent();
 
-	}
-	
-	public boolean readFile(Game g){
-		try {
-			FileInputStream fileIn = new FileInputStream("src/save.ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			g = (Game) in.readObject();
-			in.close();
-			fileIn.close();
-		}catch(IOException i) {
-			System.out.println("File not found!");
-			return false;
-		}catch(ClassNotFoundException c) {
-			System.out.println("Game class not found");
-			return false;
-		}
-		return true;
 	}
 
 	public void addContent(){
