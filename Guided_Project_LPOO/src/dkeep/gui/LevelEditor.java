@@ -31,7 +31,7 @@ public class LevelEditor {
 	public int  nOgresPlaced, nHeroesPlaced, nWallsPlaced, nDoorsPlaced, nKeysPlaced;
 	private char selected;
 	public char[][] charMap;
-	
+
 
 	public LevelEditor(){}
 	/**
@@ -49,16 +49,16 @@ public class LevelEditor {
 		initialise();
 	}
 
-	
+
 	public void EditorConf(){
 		Editor.setBounds(500, 10, 1000, 1000);
 		Editor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Editor.getContentPane().setLayout(null);
-		
+
 		lblEditStatus.setText("Choose an element and click on a cell");
 		lblEditStatus.setFont(new Font("Times New Roman", Font.PLAIN, 17));
 	}
-	
+
 	public void mapConf(){
 		for (int i = 0; i <  charMap.length; i++)
 			for (int j = 0; j < charMap[i].length; j++)
@@ -67,7 +67,7 @@ public class LevelEditor {
 		Map = new GraphicsLevelEditor(width, height, this);
 		Map.setBounds(50, 50, width*100, height*100);
 	}
-	
+
 	public void buttonWall(){
 		ButtonWall.setFont(new Font("Tahoma", Font.PLAIN, 15));		
 		ButtonWall.addActionListener(new ActionListener() {
@@ -77,7 +77,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void buttonExit(){
 		ButtonExitDoor.setFont(new Font("Tahoma", Font.PLAIN, 15));		
 		ButtonExitDoor.addActionListener(new ActionListener() {
@@ -87,7 +87,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void buttonOgreNHero(){
 		ButtonHero.setFont(new Font("Tahoma", Font.PLAIN, 15));	
 		ButtonHero.addActionListener(new ActionListener() {
@@ -104,7 +104,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void buttonkey(){
 
 		ButtonKey.setFont(new Font("Tahoma", Font.PLAIN, 15));		
@@ -115,7 +115,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void buttonback(){
 		ButtonBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +126,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void save1(){
 		SaveSlot1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,7 +149,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void save2(){
 		SaveSlot2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -172,7 +172,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void save3(){
 		SaveSlot3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -196,7 +196,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void save4(){
 		SaveSlot4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -220,7 +220,7 @@ public class LevelEditor {
 			}
 		});
 	}
-	
+
 	public void initialise(){
 
 		EditorConf();
@@ -262,7 +262,7 @@ public class LevelEditor {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	public boolean checkElements(){
 
 		if ( nOgresPlaced == 0 || nDoorsPlaced == 0 || nHeroesPlaced == 0|| nWallsPlaced == 0 || nKeysPlaced == 0){
@@ -301,30 +301,39 @@ public class LevelEditor {
 
 	public boolean checkBorders(){
 
-		//upper border
-		for(int i = 0; i < width;i++)
-			if(charMap[i][0] == 'O'|| charMap[i][0] == 'A' || charMap[i][0] == 'k' ||charMap[i][0] == ' ')
-				return false;			
-
-		//lower border
-		for(int i = 0; i < width;i++)
-			if(charMap[i][height-1] == 'O'||charMap[i][height-1] == 'A' || charMap[i][height-1] == 'k' ||charMap[i][height-1] == ' ')
-				return false;
-
-		//left border
-		for(int j = 0; j < height;j++)
-			if(charMap[0][j] == 'O' || charMap[0][j] == 'A'  || charMap[0][j] == 'k' || charMap[0][j] == ' ')
-				return false;			
-
-		//right border
-		for(int j = 0; j < height;j++)
-			if(charMap[width-1][j] == 'O' || charMap[width-1][j] == 'A'  || charMap[width-1][j] == 'k' || charMap[width-1][j] == ' ')					
-				return false;			
+		if (!upperBorder() || !lowerBorder() || !leftBorder() || !rightBorder())
+			return false;		
 
 		return true;
 
 	}
 
+	public boolean upperBorder(){
+		for(int i = 0; i < width;i++)
+			if(charMap[i][0] == 'O'|| charMap[i][0] == 'A' || charMap[i][0] == 'k' ||charMap[i][0] == ' ')
+				return false;	
+		return true;
+	}
+	public boolean lowerBorder(){
+		for(int i = 0; i < width;i++)
+			if(charMap[i][height-1] == 'O'||charMap[i][height-1] == 'A' || charMap[i][height-1] == 'k' ||charMap[i][height-1] == ' ')
+				return false;
+		return true;
+	}
+	public boolean leftBorder(){
+		for(int j = 0; j < height;j++)
+			if(charMap[0][j] == 'O' || charMap[0][j] == 'A'  || charMap[0][j] == 'k' || charMap[0][j] == ' ')
+				return false;	
+		return true;
+	}
+	public boolean rightBorder(){
+
+		for(int j = 0; j < height;j++)
+			if(charMap[width-1][j] == 'O' || charMap[width-1][j] == 'A'  || charMap[width-1][j] == 'k' || charMap[width-1][j] == ' ')					
+				return false;		
+		return true;
+	}
+	
 	
 	public void addContent(){
 		Editor.getContentPane().add(lblEditStatus);	
@@ -355,7 +364,7 @@ public class LevelEditor {
 		SaveSlot3.setBounds(454, 788, 114, 29);
 		SaveSlot4.setBounds(649, 790, 114, 29);
 	}
-	
+
 	public char[][] getCharMap(){return charMap;}
 
 	public JFrame getEditor() {return Editor;}

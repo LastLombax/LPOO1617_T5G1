@@ -52,73 +52,56 @@ public class Guard implements Character, Serializable{
 		}
 	}
 
-	public void rookie(){
+	public void normalMovement(){
 		if(GuardIterator == 24)
 			GuardIterator = 0;
 		updateGuard('+');
 	}
 
 	public void drunk(){
-		int reverse;
 		int stops = (int) Math.floor(Math.random()*2);
-
 		if (stops == 0) //normal movement
 		{
 			if (GuardSprite == 'g') //if it stopped earlier
-			{
-				reverse = (int) Math.floor(Math.random()*2);
-				if (reverse == 0) //doesn't change path
-				{
-					if(GuardIterator == 24)
-						GuardIterator = 0;
-					updateGuard('+');
-				}
-				else //changes path
-				{
-					if(GuardIterator == 0)
-						GuardIterator = 24;						
-					updateGuard('-');						
-				}
-			}			
-
+				guardSleeping();	
 			else
-			{
-				if(GuardIterator == 24)
-					GuardIterator = 0;
-				updateGuard('+');				
-			}
-
+				normalMovement();
+			
 			GuardSprite = 'G';
 		}
-
 		else //will fall asleep
 			GuardSprite = 'g';
 	}
 
 	public void suspicious(){
 		int reverse = (int) Math.floor(Math.random()*2);
-
+		
 		if (reverse == 0) //doesn't change path
-		{
-			if(GuardIterator == 24)
-				GuardIterator = 0;
-			updateGuard('+');
+			normalMovement();
+		
+		else //changes path		
+			changePath();			
+	}
 
-		}
-		else //changes path
-		{
-			if(GuardIterator == 0)
-				GuardIterator = 24;
-			updateGuard('-');
-
-		}
+	public void guardSleeping(){
+		int reverse = (int) Math.floor(Math.random()*2);
+		if (reverse == 0) //doesn't change path
+			normalMovement();
+		else //changes path		
+			changePath();		
+	}
+	
+	public void changePath(){
+		if(GuardIterator == 0)
+			GuardIterator = 24;						
+		updateGuard('-');	
 	}
 
 	public void move(){
 
 		//rookie /normal
 		if (ranGuard == 0)
-			rookie();
+			normalMovement();
 		//drunk
 		else if (ranGuard == 1) 
 			drunk();

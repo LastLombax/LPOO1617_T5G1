@@ -38,7 +38,7 @@ public class Game implements Serializable{
 	}
 
 	//builds a vector that contains the maps
-	
+
 	public void readMap(int s){
 		int[] heroCor = new int[2];
 		int[] ogreCor = new int[2];
@@ -74,7 +74,7 @@ public class Game implements Serializable{
 
 		} catch (IOException e) {}
 	}
-	
+
 	public void buildVectorMaps() {
 		Dungeon dg = new Dungeon();
 		Keep kp = new Keep();
@@ -82,7 +82,7 @@ public class Game implements Serializable{
 		maps.addElement(kp);		
 		for (int s = 1; s <= 4; s ++)
 			readMap(s);
-		
+
 	}
 
 	//changes the map to the next one if exists, if not returns 0;
@@ -234,7 +234,7 @@ public class Game implements Serializable{
 
 		for (int i = 0; i < enemies.size(); i++)
 			if (enemies.get(i).hasClub()) //it means it has a club, whether it's an ogre or not
-				//	if (Math.abs(enemies.get(i).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(i).getCoordenateJ() - H.getCoordenateJ()) <=1)
+				//if (Math.abs(enemies.get(i).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(i).getCoordenateJ() - H.getCoordenateJ()) <=1)
 				if ((((H.getCoordenateI() == enemies.get(i).getClub().getCoordenateI()-1) || (H.getCoordenateI() == enemies.get(i).getClub().getCoordenateI()+1)) && (H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ())) ||
 						((enemies.get(i).getClub().getCoordenateI() == H.getCoordenateI()) && ((H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ()-1) || (H.getCoordenateJ() == enemies.get(i).getClub().getCoordenateJ()+1))))		
 					return true;
@@ -274,7 +274,7 @@ public class Game implements Serializable{
 	public int wasCaptured(){
 
 		for (int i = 0; i < enemies.size(); i++) {
-			
+
 			if (nearClub(enemies.get(i)))
 				return 2;
 
@@ -302,42 +302,38 @@ public class Game implements Serializable{
 				enemies.get(i).setSprite('8');
 				enemies.get(i).setStun(1);
 			}
-			else if (nearEnemyX(i) && !hasClub)
-				return 2;
-
-			if (nearClub(enemies.get(i)))
-				return 2;
-
-			if ((map.hasGuard() && nearEnemy() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
+			
+			else if ( (nearEnemyX(i) && !hasClub) || nearClub(enemies.get(i))
+					|| (map.hasGuard() && nearEnemy() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 				return 2;
 		}
 		return 0;
 	}
 
-	public void elemenIt2(){
+	public void HeroClubInteraction(){
 		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H')		
 			if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ()){
 				H.setSprite('A');
 				H_C.setSprite(' ');
 				hasClub = true;
 			}
-		
-		//if the hero picks up the key 
+	}
+
+	public void HeroKeyInteraction(){
 		if (map.hasKey() && H.getCoordenateI() == K.getCoordenateI() && H.getCoordenateJ() == K.getCoordenateJ()) {			
 			H.setSprite('K');
 			hasKey = true;
 			K.setSprite(' ');
 		}
 	}
-	
-	public void elementIter3(){
-		//activates the lever
+
+	public void HeroLeverInteraction(){
 		if (H.getCoordenateI() == L.getCoordenateI() && H.getCoordenateJ() == L.getCoordenateJ() && hasLever) 
 			for (Exit c : exits)
 				c.setSprite('S');
+	}
 
-
-		//checks if the ogre is in the same position as the key,if it is change sprite to '$'
+	public void OgreKeyInteraction(){
 		if (map.hasOgre()) {
 			if (O.getCoordenateI() == K.getCoordenateI() && O.getCoordenateJ() == K.getCoordenateJ() && !wasKey)
 			{
@@ -352,12 +348,8 @@ public class Game implements Serializable{
 		}
 
 	}
-	
-	public void elementInteraction(){
 
-		elemenIt2();
-		elementIter3();
-
+	public void ClubKeyInteraction(){
 		for(Character c :enemies){
 			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !hasKey){
 				c.getClub().setSprite('$');
@@ -370,30 +362,41 @@ public class Game implements Serializable{
 		}
 	}
 
+	public void elementInteraction(){
+		HeroClubInteraction();
+		HeroKeyInteraction();
+		HeroLeverInteraction();
+		OgreKeyInteraction();
+		ClubKeyInteraction();
+	}
+
 	//deals with the input and does most of the game logic
 	public int movement(String s) {
 		int move;
-		if (s.charAt(0) == 'w') { 
+		switch(s.charAt(0)){
+		case 'w':
 			move = verifyMovement(-1,0);
 			if (move == 0)	return 0;
 			else if (move == 1)	return 1;
-		} 
-		else if (s.charAt(0) == 's') {
+			break;
+		case 's':
 			move = verifyMovement(1,0);
 			if (move == 0)		return 0;
 			else if (move == 1)		return 1;
-		} 
-		else if (s.charAt(0) == 'a') {
+			break;
+		case 'a':
 			move = verifyMovement(0,-1);
 			if (move == 0)	return 0;
 			else if (move == 1)	return 1;
-		}
-		else if (s.charAt(0) == 'd') {
+			break;
+		case 'd':
 			move = verifyMovement(0,1);
 			if (move == 0)		return 0;
 			else if (move == 1)		return 1;
+			break;
+		default:
+			return 1;
 		}
-		else return 1;		
 
 		if (wasCaptured() == 2)	return 2;		
 		elementInteraction();

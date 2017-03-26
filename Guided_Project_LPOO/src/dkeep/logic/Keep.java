@@ -13,14 +13,21 @@ public class Keep extends GameMap implements Serializable{
 	private char[][] Kmap = new char [9][9];
 
 	public Keep(){
-		//added wall
+		addHorizontalBorders();		
+		addVerticalBorders();		
+	}
+	
+	public void addHorizontalBorders(){
 		for(int i = 0; i < 9;i++)
 			if(Kmap[i][0]!='I')
 				Kmap[i][0]='X';			
 		
 		for(int i = 0; i < 9;i++)
 			Kmap[i][8]='X';			
-		
+	}
+	
+	public void addVerticalBorders(){
+
 		for(int j = 0; j < 9;j++)
 			Kmap[0][j]='X';			
 		

@@ -106,45 +106,35 @@ public class Ogre implements Character,Serializable{
 				if(Ogre_i == this.mapLength)
 					break;
 				else
-				{
-					c.setCoordenateI(Ogre_i+1);
-					c.setCoordenateJ(Ogre_j);
-					valid = true;
-				}
+					valid = setClubCoors(1, 0);
 				break;
 			case 1: //go up
 				if(Ogre_i == 1)
 					break;
 				else
-				{
-					c.setCoordenateI(Ogre_i-1);
-					c.setCoordenateJ(Ogre_j);
-					valid = true;
-				}
+					valid = setClubCoors(-1, 0);
 				break;
 			case 2: //go right
 				if(Ogre_j == this.mapLength)
 					break;
 				else
-				{
-					c.setCoordenateI(Ogre_i);
-					c.setCoordenateJ(Ogre_j+1);
-					valid = true;
-				}
+					valid = setClubCoors(0, 1);
 				break;
 			case 3: //go left
 				if(Ogre_j == 1)
 					break;
 				else
-				{
-					c.setCoordenateI(Ogre_i);
-					c.setCoordenateJ(Ogre_j-1);
-					valid = true;
-				}
+					valid = setClubCoors(0, -1);
 				break;
 			}
 
 		}
+	}
+	
+	public boolean setClubCoors(int i, int j){
+		c.setCoordenateI(Ogre_i + i);
+		c.setCoordenateJ(Ogre_j + j);
+		return true;
 	}
 
 	public int getCoordenateI(){return Ogre_i;}
