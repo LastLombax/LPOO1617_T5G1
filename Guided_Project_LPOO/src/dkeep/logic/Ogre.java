@@ -37,7 +37,6 @@ public class Ogre implements Character,Serializable{
 		boolean valid=false;
 
 		while(!valid){
-
 			if (getStun() == 0)
 			{
 				double randomno = Math.floor(Math.random()*4);

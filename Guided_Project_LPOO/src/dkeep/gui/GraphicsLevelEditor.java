@@ -95,12 +95,16 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 				lv.nOgresPlaced += inc;
 			else if (lv.getCharMap()[x][y] == 'A')
 				lv.nHeroesPlaced+= inc;
-			else if (lv.getCharMap()[x][y] == 'k')
-				lv.nKeysPlaced+= inc;
-			else if (lv.getCharMap()[x][y] == 'X')
-				lv.nWallsPlaced+= inc;
-			else if(lv.getCharMap()[x][y] == 'I')
-				lv.nDoorsPlaced+= inc;
+			checkStaticElements(x,y,inc);
+	}
+	
+	public void checkStaticElements(int x, int y, int inc){
+		if (lv.getCharMap()[x][y] == 'k')
+			lv.nKeysPlaced+= inc;
+		else if (lv.getCharMap()[x][y] == 'X')
+			lv.nWallsPlaced+= inc;
+		else if(lv.getCharMap()[x][y] == 'I')
+			lv.nDoorsPlaced+= inc;
 	}
 
 
