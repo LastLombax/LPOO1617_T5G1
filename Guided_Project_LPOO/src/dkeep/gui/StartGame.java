@@ -169,6 +169,7 @@ public void GameWindowConf(){
 		buttonDown();
 		buttonRight();
 		buttonExit();
+		buttonSave();
 		
 		addContent();
 	}

@@ -82,6 +82,7 @@ public class NewGameSettings {
 
 		windowConf();
 		fldOgresConf();	
+		buttonStart();
 
 		ButtonBack.setBounds(28, 151, 114, 29);
 		ButtonBack.addActionListener(new ActionListener() {

@@ -230,14 +230,6 @@ public class Game implements Serializable{
 
 	}
 
-	public boolean nearOgreX(int x) {
-
-		if (Math.abs(enemies.get(x).getCoordenateI() - H.getCoordenateI()) + Math.abs(enemies.get(x).getCoordenateJ() - H.getCoordenateJ()) <=1)
-			return true;
-		return false;
-
-	}
-
 	public boolean nearClub(Character c){
 
 		for (int i = 0; i < enemies.size(); i++)
