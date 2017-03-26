@@ -265,11 +265,20 @@ public class LevelEditor {
 
 	public boolean checkElements(){
 
-		if ( nOgresPlaced == 0 || nDoorsPlaced == 0 || nHeroesPlaced == 0|| nWallsPlaced == 0 || nKeysPlaced == 0){
+		if ( !checkDynamic() || nDoorsPlaced == 0 || nWallsPlaced == 0 || nKeysPlaced == 0){
 			lblEditStatus.setText("There's, at least, a missing element to the map!");
 			return false;
-		}
-
+		}		
+		
+		return checkNumbElements();
+	}
+	
+	public boolean checkDynamic(){
+		if( nOgresPlaced == 0 || nHeroesPlaced == 0)
+			return false;
+		return true;
+	}
+	public boolean checkNumbElements(){
 		if (nOgresPlaced > 1){
 			lblEditStatus.setText("Place only ONE Ogre");
 			return false;
@@ -287,8 +296,7 @@ public class LevelEditor {
 		if (nDoorsPlaced > 1){
 			lblEditStatus.setText("Place only ONE Door");
 			return false;
-		}		
-
+		}	
 		return true;
 	}
 

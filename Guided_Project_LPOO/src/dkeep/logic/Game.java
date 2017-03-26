@@ -359,6 +359,7 @@ public class Game implements Serializable{
 
 	}
 
+
 	public void ClubKeyInteraction(){
 		for(Character c :enemies){
 			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !hasKey){
