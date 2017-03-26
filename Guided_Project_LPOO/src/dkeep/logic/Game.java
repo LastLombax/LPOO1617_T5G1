@@ -15,7 +15,6 @@ public class Game implements Serializable{
 	private Ogre O = new Ogre();
 	private Lever L = new Lever();
 	private Key K = new Key();
-	private Vector<Exit> exits = new Vector<Exit>();
 	private Vector<Character> enemies = new Vector<Character>();
 	private Vector<Character> nonMovingCharacters = new Vector<Character>();
 	private GameMap map;
@@ -23,6 +22,10 @@ public class Game implements Serializable{
 	private boolean hasKey,hasClub,wasKeyC = false,wasKey,hasLever=false;
 	private int nOgres = 1;
 	private int extraOgres;
+	private Vector<Exit> exits;
+	private int[] heroCor = new int[2];
+	private int[] ogreCor = new int[2];
+	private char[][] extraMap;
 
 	//returns a copy of a char[][]
 	public char[][] copyMap() {
@@ -40,8 +43,6 @@ public class Game implements Serializable{
 	//builds a vector that contains the maps
 
 	public void readMap(int s){
-		int[] heroCor = new int[2];
-		int[] ogreCor = new int[2];
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("src/Map" + s));			
 
@@ -49,30 +50,33 @@ public class Game implements Serializable{
 			int height = Integer.parseInt(br.readLine());
 			extraOgres = Integer.parseInt(br.readLine());
 
-			char[][] extraMap = new char[height][width];
+			extraMap = new char[height][width];
 
 			for (int i = 0; i < height; i++) {
 				String st = br.readLine();
-				for (int j = 0; j < st.length(); j++) {	
-					if (st.charAt(j) == 'A'){
-						heroCor[0] = i;
-						heroCor[1] = j;
-						extraMap[i][j] = ' ';
-					}
-					else if (st.charAt(j) == 'O'){
-						ogreCor[0] = i;
-						ogreCor[1] = j;
-						extraMap[i][j] = ' ';
-					}
-					else
-						extraMap[i][j] = st.charAt(j);	
-				}
+				for (int j = 0; j < st.length(); j++)
+					checkDynamicElements(i,j,st);
 			}	
 			br.close();
 			EditedMap e = new EditedMap(extraMap, extraOgres, heroCor, ogreCor);
 			maps.addElement(e);
 
 		} catch (IOException e) {}
+	}
+
+	public void checkDynamicElements(int i, int j, String st/*, int heroCor[], int ogreCor[]*/){
+		if (st.charAt(j) == 'A'){
+			heroCor[0] = i;
+			heroCor[1] = j;
+			extraMap[i][j] = ' ';
+		}
+		else if (st.charAt(j) == 'O'){
+			ogreCor[0] = i;
+			ogreCor[1] = j;
+			extraMap[i][j] = ' ';
+		}
+		else
+			extraMap[i][j] = st.charAt(j);	
 	}
 
 	public void buildVectorMaps() {
@@ -302,7 +306,7 @@ public class Game implements Serializable{
 				enemies.get(i).setSprite('8');
 				enemies.get(i).setStun(1);
 			}
-			
+
 			else if ( (nearEnemyX(i) && !hasClub) || nearClub(enemies.get(i))
 					|| (map.hasGuard() && nearEnemy() && enemies.get(i).getSprite() == 'G') || enemies.get(i).hasClub() && nearClub(enemies.get(i)))
 				return 2;

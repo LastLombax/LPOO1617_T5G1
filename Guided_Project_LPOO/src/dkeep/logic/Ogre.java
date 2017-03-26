@@ -118,9 +118,7 @@ public class Ogre implements Character,Serializable{
 		boolean valid=false;
 
 		while(!valid){
-
 			double randomno = Math.floor(Math.random()*4);
-
 			switch((int)randomno){
 			case 0: //go down				
 				if(Ogre_i == this.mapLength)
@@ -150,7 +148,6 @@ public class Ogre implements Character,Serializable{
 
 		}
 	}
-
 
 
 	public boolean setClubCoors(int i, int j){

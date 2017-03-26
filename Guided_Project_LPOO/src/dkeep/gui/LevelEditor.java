@@ -358,8 +358,7 @@ public class LevelEditor {
 			return false;		
 	return true;
 		
-	}
-	
+	}	
 	
 	public void addContent(){
 		Editor.getContentPane().add(lblEditStatus);	
