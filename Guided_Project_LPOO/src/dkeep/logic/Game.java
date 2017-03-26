@@ -321,16 +321,22 @@ public class Game implements Serializable{
 	
 
 	public void HeroClubInteraction(){
-		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H')		
-			if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ()){
+		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H' && compareHeroClub())
+			{
 				H.setSprite('A');
 				H_C.setSprite(' ');
 				hasClub = true;
 			}
 	}
+	
+	public boolean compareHeroClub(){
+		if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
+			return true;
+		return false;
+	}
 
 	public void HeroKeyInteraction(){
-		if (map.hasKey() && H.getCoordenateI() == K.getCoordenateI() && H.getCoordenateJ() == K.getCoordenateJ()) {			
+		if (map.hasKey() && compareHeroKey()) {			
 			H.setSprite('K');
 			hasKey = true;
 			K.setSprite(' ');
@@ -343,9 +349,16 @@ public class Game implements Serializable{
 				c.setSprite('S');
 	}
 
+	public boolean compareHeroKey(){
+		if(H.getCoordenateI() == K.getCoordenateI() && H.getCoordenateJ() == K.getCoordenateJ())
+			return true;
+		return false;
+	}
+	
+
 	public void OgreKeyInteraction(){
 		if (map.hasOgre()) {
-			if (O.getCoordenateI() == K.getCoordenateI() && O.getCoordenateJ() == K.getCoordenateJ() && !wasKey)
+			if ( compareOgreKey() && !wasKey)
 			{
 				O.setSprite('$');
 				wasKey = true;
@@ -358,11 +371,16 @@ public class Game implements Serializable{
 		}
 
 	}
-
+	
+	public boolean compareOgreKey(){
+		if(O.getCoordenateI() == K.getCoordenateI() && O.getCoordenateJ() == K.getCoordenateJ())
+			return true;
+		return false;
+	}
 
 	public void ClubKeyInteraction(){
 		for(Character c :enemies){
-			if(c.hasClub() && compareClubKey(c) && !hasKey){
+			if(compareClubKey(c) && !hasKey){
 				c.getClub().setSprite('$');
 				wasKeyC = true;
 			}
@@ -374,7 +392,7 @@ public class Game implements Serializable{
 	}
 
 	public boolean compareClubKey(Character c){
-		if(c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ())
+		if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ())
 			return true;
 		return false;
 	}
