@@ -38,27 +38,7 @@ public class Ogre implements Character,Serializable{
 
 		while(!valid){
 			if (getStun() == 0)
-			{
-				double randomno = Math.floor(Math.random()*4);
-				switch((int)randomno){
-				case 0: //go down
-					if(goDown()) 
-						valid = true;
-					break;
-				case 1: //go up
-					if(goUp()) 
-						valid = true;
-					break;
-				case 2: //go right
-					if(goRight()) 
-						valid = true;
-					break;
-				case 3: //go left
-					if(goLeft())
-						valid = true;
-					break;		
-				}
-			}
+				valid = updateOgre();
 			else
 			{
 				clubMovement();
@@ -67,6 +47,22 @@ public class Ogre implements Character,Serializable{
 
 		}
 	}
+	
+	public boolean updateOgre(){
+		double randomno = Math.floor(Math.random()*4);
+		switch((int)randomno){
+		case 0: //go down
+			return goDown();
+		case 1: //go up
+			return goUp();
+		case 2: //go right
+			return goRight();
+		case 3: //go left
+			return goLeft();		
+		}
+		return false;
+	}
+	
 
 	public boolean goDown(){
 		Ogre_i++;
