@@ -322,25 +322,23 @@ public class Game implements Serializable{
 		return 0;
 	}
 
-	public void elementInteraction(){
-
+	public void elemenIt2(){
 		if(!hasClub && map.hasHeroClub() && H.getSprite() == 'H')		
-			if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ())
-			{
+			if(H.getCoordenateI() == H_C.getCoordenateI() && H.getCoordenateJ() == H_C.getCoordenateJ()){
 				H.setSprite('A');
 				H_C.setSprite(' ');
 				hasClub = true;
-			}			
-			
-
+			}
+		
 		//if the hero picks up the key 
-
 		if (map.hasKey() && H.getCoordenateI() == K.getCoordenateI() && H.getCoordenateJ() == K.getCoordenateJ()) {			
 			H.setSprite('K');
 			hasKey = true;
 			K.setSprite(' ');
 		}
-
+	}
+	
+	public void elementIter3(){
 		//activates the lever
 		if (H.getCoordenateI() == L.getCoordenateI() && H.getCoordenateJ() == L.getCoordenateJ() && hasLever) 
 			for (Exit c : exits)
@@ -361,14 +359,19 @@ public class Game implements Serializable{
 			}
 		}
 
+	}
+	
+	public void elementInteraction(){
+
+		elemenIt2();
+		elementIter3();
+
 		for(Character c :enemies){
-			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !hasKey)
-			{
+			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !hasKey){
 				c.getClub().setSprite('$');
 				wasKeyC = true;
 			}
-			else if (wasKeyC)
-			{
+			else if (wasKeyC){
 				c.getClub().setSprite('*');
 				wasKeyC = false;
 			}
