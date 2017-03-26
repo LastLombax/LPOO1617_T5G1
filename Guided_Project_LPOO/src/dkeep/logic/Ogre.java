@@ -3,7 +3,7 @@ package dkeep.logic;
 import java.io.Serializable;
 
 public class Ogre implements Character,Serializable{
- 
+
 	private char OgreSprite; 
 	private int Ogre_i;
 	private int Ogre_j;
@@ -25,7 +25,7 @@ public class Ogre implements Character,Serializable{
 	//ogre functions
 
 	public void setClub(int i,int j,char s){this.c = new Club(i,j,s);}
-	
+
 	public void setClub(Club d){this.c = d;}
 
 	public void setStun(int x){	this.turnStun = x;}
@@ -43,43 +43,20 @@ public class Ogre implements Character,Serializable{
 				double randomno = Math.floor(Math.random()*4);
 				switch((int)randomno){
 				case 0: //go down
-					Ogre_i++;
-					if(Ogre_i>this.mapLength)
-						Ogre_i--;
-					else
-					{
-						clubMovement();
-						valid=true;
-					}
+					if(goDown()) 
+						valid = true;
 					break;
 				case 1: //go up
-					Ogre_i--;
-					if(Ogre_i <1)
-						Ogre_i++;
-					else
-					{
-						clubMovement();
-						valid=true;
-					}
+					if(goUp()) 
+						valid = true;
 					break;
 				case 2: //go right
-					Ogre_j++;
-					if(Ogre_j > this.mapLength)
-						Ogre_j--;
-					else
-					{	clubMovement();
-					valid=true;
-					}
+					if(goRight()) 
+						valid = true;
 					break;
 				case 3: //go left
-					Ogre_j--;
-					if(Ogre_j<1)
-						Ogre_j++;
-					else
-					{
-						clubMovement();
-						valid=true;
-					}
+					if(goLeft())
+						valid = true;
 					break;		
 				}
 			}
@@ -90,6 +67,50 @@ public class Ogre implements Character,Serializable{
 			}
 
 		}
+	}
+
+	public boolean goDown(){
+		Ogre_i++;
+		if(Ogre_i>this.mapLength)
+			Ogre_i--;
+		else{
+			clubMovement();
+			return true;
+		}
+		return false;
+	}
+	public boolean goUp(){
+		Ogre_i--;
+		if(Ogre_i <1)
+			Ogre_i++;
+		else
+		{
+			clubMovement();
+			return true;
+		}
+		return false;
+	}
+	public boolean goLeft(){
+		Ogre_j--;
+		if(Ogre_j<1)
+			Ogre_j++;
+		else
+		{
+			clubMovement();
+			return true;
+		}
+		return false;
+	}
+	public boolean goRight(){
+		Ogre_j++;
+		if(Ogre_j > this.mapLength)
+			Ogre_j--;
+		else
+		{	
+			clubMovement();
+			return true;
+		}
+		return false;
 	}
 
 	//club function for movement
@@ -130,7 +151,9 @@ public class Ogre implements Character,Serializable{
 
 		}
 	}
-	
+
+
+
 	public boolean setClubCoors(int i, int j){
 		c.setCoordenateI(Ogre_i + i);
 		c.setCoordenateJ(Ogre_j + j);

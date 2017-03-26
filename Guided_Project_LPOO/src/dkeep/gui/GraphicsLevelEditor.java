@@ -70,19 +70,19 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 					if (lv.getCharMap()[i-1][j-1] == ' ' && lv.getSelected() != ' ') //if cell is empty
 					{
 						lv.getCharMap()[i-1][j-1] = lv.getSelected();
-						checkElement(i-1,j-1, '+');
+						checkElement(i-1,j-1, 1);
 					}
 					else if (lv.getCharMap()[i-1][j-1]  == lv.getSelected()) // if you select the wrong cell
 					{
-						checkElement(i-1,j-1, '-');
+						checkElement(i-1,j-1, -1);
 						lv.getCharMap()[i-1][j-1] = ' ';
 
 					}
 					else if (lv.getCharMap()[i-1][j-1]  != ' ') //if you want to replace a cell
 					{
-						checkElement(i-1,j-1, '-');
+						checkElement(i-1,j-1, -1);
 						lv.getCharMap()[i-1][j-1] = lv.getSelected();	
-						checkElement(i-1,j-1, '+');
+						checkElement(i-1,j-1,1);
 					}
 				}
 			}
@@ -90,32 +90,17 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 	}
 
 
-	public void checkElement(int x, int y, char inc){
-		if (inc == '+'){
+	public void checkElement(int x, int y, int inc){
 			if (lv.getCharMap()[x][y] == 'O')
-				lv.nOgresPlaced++;
+				lv.nOgresPlaced += inc;
 			else if (lv.getCharMap()[x][y] == 'A')
-				lv.nHeroesPlaced++;
+				lv.nHeroesPlaced+= inc;
 			else if (lv.getCharMap()[x][y] == 'k')
-				lv.nKeysPlaced++;
+				lv.nKeysPlaced+= inc;
 			else if (lv.getCharMap()[x][y] == 'X')
-				lv.nWallsPlaced++;
+				lv.nWallsPlaced+= inc;
 			else if(lv.getCharMap()[x][y] == 'I')
-				lv.nDoorsPlaced++;
-		}
-		else if (inc == '-')
-		{
-			if (lv.getCharMap()[x][y] == 'O')
-				lv.nOgresPlaced--;
-			else if (lv.getCharMap()[x][y] == 'A')
-				lv.nHeroesPlaced--;
-			else if (lv.getCharMap()[x][y] == 'k')
-				lv.nKeysPlaced--;
-			else if (lv.getCharMap()[x][y] == 'X')
-				lv.nWallsPlaced--;
-			else if(lv.getCharMap()[x][y] == 'I')
-				lv.nDoorsPlaced--;
-		}
+				lv.nDoorsPlaced+= inc;
 	}
 
 
