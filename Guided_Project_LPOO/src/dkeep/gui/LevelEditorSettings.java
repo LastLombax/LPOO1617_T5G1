@@ -25,33 +25,22 @@ public class LevelEditorSettings {
 	private JTextField fldOgres = new JTextField();
 
 	
-	public void initialise(){
-
+	public void editConf(){
 		Editor.setBounds(550, 250, 399, 295);
 		Editor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Editor.getContentPane().setLayout(null);	
-
+		Editor.getContentPane().setLayout(null);
 
 		Width.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7"}));
 		Width.setBounds(189, 13, 64, 29);
 		
 		lblWidth.setFont(new Font("Tahoma", Font.PLAIN, 16));
-
-
 		lblWidth.setBounds(112, 16, 55, 23);
 		
 		lblHeight.setFont(new Font("Tahoma", Font.PLAIN, 16));
-
-
 		lblHeight.setBounds(112, 63, 55, 17);
-		
-
-
-		Height.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7"}));
-		Height.setBounds(189, 58, 64, 29);
-		
-
-
+	}
+	
+	public void buttonBack(){
 		ButtonBack.setBounds(32, 177, 114, 29);
 		ButtonBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -61,9 +50,9 @@ public class LevelEditorSettings {
 				getSettings().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			}
 		});
-		
-
-		
+	}
+	
+	public void buttonContinue(){
 		ButtonContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(fldOgres.getText().charAt(0) < 49 || fldOgres.getText().charAt(0) > 53)
@@ -77,15 +66,21 @@ public class LevelEditorSettings {
 			}
 		});
 		ButtonContinue.setBounds(240, 177, 114, 29);
-		
+	}
+	
+	public void initialise(){
 
+		editConf();
+
+		Height.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7"}));
+		Height.setBounds(189, 58, 64, 29);
+		
+		buttonBack();
+		buttonContinue();
 		
 		lblOgres.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblOgres.setBounds(112, 105, 55, 23);
-		
-
-		fldOgres.setBounds(189, 106, 64, 22);
-		
+		fldOgres.setBounds(189, 106, 64, 22);		
 		fldOgres.setColumns(10);
 
 		addContent();
