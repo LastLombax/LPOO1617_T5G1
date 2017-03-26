@@ -114,31 +114,24 @@ public class Ogre implements Character,Serializable{
 
 	//club function for movement
 	public void clubMovement(){
-
 		boolean valid=false;
-
-		while(!valid){
-			double randomno = Math.floor(Math.random()*4);
-			switch((int)randomno){
-			case 0: //go down		
-				
-				valid = clubDown();
-				break;
-			case 1: //go up
-				
-				valid =clubUp();
-				break;
-			case 2: //go right
-				
-				valid =clubRight();
-				break;
-			case 3: //go left
-				
-				valid =clubLeft();
-				break;
-			}
-
+		while(!valid)
+			valid = updateClub();		
+	}
+	
+	public boolean updateClub(){		
+		double randomno = Math.floor(Math.random()*4);
+		switch((int)randomno){
+		case 0: //go down						
+			return clubDown();
+		case 1: //go up				
+			return clubUp();
+		case 2: //go right				
+			return clubRight();
+		case 3: //go left				
+			return clubLeft();
 		}
+		return false;
 	}
 	
 	public boolean clubDown(){
