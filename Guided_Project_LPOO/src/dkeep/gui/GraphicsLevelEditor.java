@@ -42,21 +42,25 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 		super.paintComponent(g);	
 		for (int i = 0; i <  lv.getCharMap().length; i++)
 			for (int j = 0; j < lv.getCharMap()[i].length; j++){
-				if (lv.getCharMap()[i][j] == ' ')					
-					g.drawImage(square, i*size, j*size, size, size, null);	
-				else if (lv.getCharMap()[i][j] == 'O')
-					g.drawImage(ogre, i*size, j*size, size, size, null);		
-				else if (lv.getCharMap()[i][j] == 'X')
-					g.drawImage(wall, i*size, j*size, size, size, null);		
+				 if (lv.getCharMap()[i][j] == 'O')
+					g.drawImage(ogre, i*size, j*size, size, size, null);			
 				else if (lv.getCharMap()[i][j] == 'A')
-					g.drawImage(heroArmed, i*size, j*size, size, size, null);		
-				else if (lv.getCharMap()[i][j] == 'k')
-					g.drawImage(key,  i*size, j*size, size, size, null);		
-				else if (lv.getCharMap()[i][j] == 'I')
-					g.drawImage(door,  i*size, j*size, size, size, null);
+					g.drawImage(heroArmed, i*size, j*size, size, size, null);	
+				 checkStaticElements(i,j, g);			
 			}
 	}
 
+	public void checkStaticElements(int i, int j, Graphics g){
+		if (lv.getCharMap()[i][j] == ' ')					
+			g.drawImage(square, i*size, j*size, size, size, null);	
+		else if (lv.getCharMap()[i][j] == 'X')
+			g.drawImage(wall, i*size, j*size, size, size, null);
+		else if (lv.getCharMap()[i][j] == 'k')
+			g.drawImage(key,  i*size, j*size, size, size, null);		
+		else if (lv.getCharMap()[i][j] == 'I')
+			g.drawImage(door,  i*size, j*size, size, size, null);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 

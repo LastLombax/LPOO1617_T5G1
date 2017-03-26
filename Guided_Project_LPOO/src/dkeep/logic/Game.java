@@ -362,7 +362,7 @@ public class Game implements Serializable{
 
 	public void ClubKeyInteraction(){
 		for(Character c :enemies){
-			if(c.hasClub() && c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ() && !hasKey){
+			if(c.hasClub() && compareClubKey(c) && !hasKey){
 				c.getClub().setSprite('$');
 				wasKeyC = true;
 			}
@@ -373,6 +373,12 @@ public class Game implements Serializable{
 		}
 	}
 
+	public boolean compareClubKey(Character c){
+		if(c.getClub().getCoordenateI()==K.getCoordenateI() && c.getClub().getCoordenateJ() == K.getCoordenateJ())
+			return true;
+		return false;
+	}
+	
 	public void elementInteraction(){
 		HeroClubInteraction();
 		HeroKeyInteraction();
