@@ -24,9 +24,7 @@ public class Dungeon extends GameMap implements Serializable{
 		this.Dmap[3][2] = 'I';
 		this.Dmap[8][2] = 'I';
 		this.Dmap[8][4] = 'I';
-
 		addWalls();
-
 	}
 
 	public void addWalls(){

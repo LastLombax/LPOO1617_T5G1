@@ -183,10 +183,6 @@ public class StartGame {
 			GameStatus.setText("Be Careful!");
 	}
 	
-	
-	//public StartGame(){}
-	
-	
 	public StartGame(Game g) {
 		this.setGame(g);
 		initialise();

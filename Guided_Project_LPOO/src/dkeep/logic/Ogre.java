@@ -92,7 +92,6 @@ public class Ogre implements Character,Serializable{
 		}
 	}
 
-
 	//club function for movement
 	public void clubMovement(){
 
@@ -104,7 +103,7 @@ public class Ogre implements Character,Serializable{
 
 			switch((int)randomno){
 			case 0: //go down				
-				if(Ogre_i == 7)
+				if(Ogre_i == this.mapLength)
 					break;
 				else
 				{
@@ -124,7 +123,7 @@ public class Ogre implements Character,Serializable{
 				}
 				break;
 			case 2: //go right
-				if(Ogre_j == 7)
+				if(Ogre_j == this.mapLength)
 					break;
 				else
 				{

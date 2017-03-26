@@ -9,24 +9,20 @@ public class EditedMap extends GameMap implements Serializable{
 	private Ogre O;	
 	private Key K;
 	private Club C; 	
-	private Club Hero_club;
 	private Exit I;
-	private char[][] Emap;// = new char [9][9];
+	private char[][] Emap;
 
-	public EditedMap(char[][] map, int nOgres){
+	public EditedMap(char[][] map, int nOgres, int[] Hero, int []Ogre){
 		this.Emap = map;
-
+		this.H = new Hero(Hero[0], Hero[1], 'A');
+		this.O = new Ogre(Ogre[0], Ogre[1], 'O', Emap[0].length-2);
+		defineClub(Ogre[0], Ogre[1]);
+				
 		for (int i = 0; i < Emap.length; i++)
 			for (int j = 0; j < Emap[i].length;j++)
 			{
 				if (Emap[i][j] == 'k')
 					K = new Key(i, j,'k');
-				else if (Emap[i][j] == 'A')
-					H = new Hero(i,j,'A');
-				else if (Emap[i][j] == 'O'){
-					O = new Ogre(i,j,'O', Emap[i].length-2);
-					defineClub(i,j);
-				}
 				else if (Emap[i][j] == 'I')
 					I = new Exit(i,j,'I');
 			}

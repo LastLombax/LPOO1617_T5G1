@@ -15,7 +15,6 @@ public class Guard implements Character, Serializable{
 		this.Guard_j=-4;
 	}
 
-
 	//random guard
 	public Guard(int i,int j, char s, int random){
 
@@ -25,7 +24,6 @@ public class Guard implements Character, Serializable{
 		this.GuardIterator=0;
 		this.ranGuard = random;
 	}
-
 
 	public int getCoordenateI(){return Guard_i;}
 

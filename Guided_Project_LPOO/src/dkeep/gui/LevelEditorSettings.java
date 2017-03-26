@@ -32,7 +32,7 @@ public class LevelEditorSettings {
 		Editor.getContentPane().setLayout(null);	
 
 
-		Width.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7", "8", "9", "10"}));
+		Width.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7"}));
 		Width.setBounds(189, 13, 64, 29);
 		
 		lblWidth.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -47,11 +47,9 @@ public class LevelEditorSettings {
 		
 
 
-		Height.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7", "8", "9", "10"}));
+		Height.setModel(new DefaultComboBoxModel(new String[] {"4", "5", "6", "7"}));
 		Height.setBounds(189, 58, 64, 29);
 		
-
-
 
 
 		ButtonBack.setBounds(32, 177, 114, 29);

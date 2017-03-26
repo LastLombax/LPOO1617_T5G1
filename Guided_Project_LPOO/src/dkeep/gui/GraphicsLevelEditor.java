@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class GraphicsLevelEditor extends JPanel implements MouseListener{
 
 	private int size = 100,  width, height;
-	private BufferedImage wall, heroArmed, ogre, club, key,  door, square;
+	private BufferedImage wall, heroArmed, ogre, key,  door, square;
 	LevelEditor lv = new LevelEditor();
 
 	public GraphicsLevelEditor(int width, int height, LevelEditor lv) {	
@@ -28,10 +28,8 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 	public void loadEditImages(){
 		try {			
 			wall = ImageIO.read(new File("src/wall.png"));
-			//hero = ImageIO.read(new File("src/Hero.png"));
 			heroArmed = ImageIO.read(new File("src/HeroArmed.png"));
-			ogre = ImageIO.read(new File("src/Ogre.png"));
-			club = ImageIO.read(new File("src/Club.png"));			
+			ogre = ImageIO.read(new File("src/Ogre.png"));	
 			key = ImageIO.read(new File("src/Key.png"));
 			door = ImageIO.read(new File("src/door.png"));
 			square = ImageIO.read(new File("src/square.jpg"));
@@ -58,7 +56,6 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 					g.drawImage(door,  i*size, j*size, size, size, null);
 			}
 	}
-
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -92,10 +89,6 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 		repaint();
 	}
 
-	public void setCoord(int x, int y){	this.width = x;	this.height = y;}
-
-	public void setEditor(LevelEditor lv){this.lv = lv;}
-
 
 	public void checkElement(int x, int y, char inc){
 		if (inc == '+'){
@@ -126,6 +119,9 @@ public class GraphicsLevelEditor extends JPanel implements MouseListener{
 	}
 
 
+	public void setCoord(int x, int y){	this.width = x;	this.height = y;}
+
+	public void setEditor(LevelEditor lv){this.lv = lv;}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
