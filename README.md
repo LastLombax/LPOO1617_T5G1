@@ -37,18 +37,22 @@ SettingScreen: ecrã que mostra opções de jogo, incluindo volume da música e 
 -->Design Patterns
 
 Singleton: 
--> Para objetos usados globalmente, como a variável ChickenVsFood 
+-> Para objetos usados globalmente, como a variável ChickenVsFood.
+
 FlyWeight:
--> Guardar a mesma textura de personagens que são iguais, como o mesmo tipo de galinhas/comida
+-> Guardar a mesma textura de personagens que são iguais, como o mesmo tipo de galinhas/comida.
+
 Object Pool: 
 -> Cada comida utilizada pelo user será reutilizada, tal como as "armas" utilizadas por esta.
-Cada galinha será também reutilizada, dependendo do nível
+Cada galinha será também reutilizada, dependendo do nível.
+
 Prototype: 
 -> A interface Chicken será um protótipo, permitindo que cada galinha faça "spawn".
-State:
--> Utilizado para registar os vários estados de cada inimigo e o estado de jogo
 
-.GUI Design
+State:
+-> Utilizado para registar os vários estados de cada inimigo e o estado de jogo.
+
+GUI Design
 
 Main Menu:
 'New Game' vai para 'Level Menu'
@@ -71,7 +75,7 @@ Settings:
 
 ![new mockup 4](https://cloud.githubusercontent.com/assets/22790772/25526281/c47f09ca-2c0a-11e7-95d3-1c517a4d2b71.png)
 
-.Test Design
+Test Design
 
 ->Jogo começa sem personagens no mapa
 
