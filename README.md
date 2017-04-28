@@ -54,17 +54,21 @@ Main Menu:
 'New Game' vai para 'Level Menu'
 'Settings' vai para 'Settings'
 'Quit' exits the game
+
 ![new mockup 1](https://cloud.githubusercontent.com/assets/22790772/25526246/a493b3ea-2c0a-11e7-888a-44668fe03a1d.png)
 
 Level Menu
 No inicio,o primeiro nível será o único disponivel e se conseguir passar o nível 2 fica disponível ,e assim, sucessivamente.
+
 ![new mockup 2](https://cloud.githubusercontent.com/assets/22790772/25526272/bb02ee20-2c0a-11e7-939a-5be503c15752.png)
 
 Game:
 O Hud terá as as Food's que poderão ser selecionadas
+
 ![new mockup 3](https://cloud.githubusercontent.com/assets/22790772/25526275/c12f95f0-2c0a-11e7-8f1f-3f08ed051977.png)
 
 Settings:
+
 ![new mockup 4](https://cloud.githubusercontent.com/assets/22790772/25526281/c47f09ca-2c0a-11e7-95d3-1c517a4d2b71.png)
 
 .Test Design
