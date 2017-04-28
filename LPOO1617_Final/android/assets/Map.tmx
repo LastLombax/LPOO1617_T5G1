@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="7" tilewidth="128" tileheight="128" nextobjectid="42">
+ <tileset firstgid="1" name="GrassD" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="darkGrass.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="2" name="Relva2" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Relva2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="3" name="Relva3" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Relva3.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="4" name="Fence" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Fence.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="5" name="House" tilewidth="128" tileheight="128" tilecount="18" columns="3">
+  <image source="House.png" width="384" height="768"/>
+ </tileset>
+ <tileset firstgid="23" name="Vert" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Vert.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="24" name="Vert1" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Cornert.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="25" name="vert2" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="18073219_1472073412824462_1555175333_n.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="26" name="Umbrella" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="UmbrellaCopr.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="27" name="Pool" tilewidth="128" tileheight="128" tilecount="3" columns="3">
+  <image source="Pool.png" width="384" height="128"/>
+ </tileset>
+ <tileset firstgid="30" name="Tree1" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Tree1.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="31" name="Tree2" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Tree2.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="32" name="Butter" tilewidth="128" tileheight="128" tilecount="1" columns="1">
+  <image source="Butter.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Grass" width="15" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAeYAJiZiJobAAkzkgEPVzsJQUAAF44AHQ=
+  </data>
+ </layer>
+ <layer name="Stone" width="15" height="7">
+  <data encoding="base64" compression="zlib">
+   eJyTZGBgkIRiFhKxOBJmZCAeiDOMPL2SZGIJIAYAiAYDww==
+  </data>
+ </layer>
+ <layer name="House" width="15" height="7">
+  <data encoding="base64" compression="zlib">
+   eJydy7sRgCAUBdGX8BE1AIVAHei/SzawAe7OnHCHmfXfag4eQXgjNiTh3XHgFN6Mgkt4b1Q04X3x4RHeCUJHAXM=
+  </data>
+ </layer>
+ <objectgroup name="GrassWall">
+  <object id="12" x="-618.182" y="-793.939"/>
+  <object id="36" x="384" y="128" width="128" height="640"/>
+  <object id="40" x="384" y="768" width="1408" height="128"/>
+  <object id="41" x="384" y="0" width="1408" height="128"/>
+ </objectgroup>
+</map>
