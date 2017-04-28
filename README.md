@@ -2,7 +2,7 @@
 Vicente Fernandes Ramada Caldeira Espinha - up201503764 - up201503764@fe.up.pt
 Vitor Emanuel Fernandes Magalhães - up201503447 -  up201503447@fe.up.pt
 
-.Architecture Design
+Architecture Design
 
 StateMachine:
 ![statemachine](https://cloud.githubusercontent.com/assets/22790772/25526284/c675aab8-2c0a-11e7-9327-caddb6d1aba2.png)
