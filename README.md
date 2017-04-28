@@ -74,6 +74,9 @@ Settings:
 .Test Design
 
 ->Jogo começa sem personagens no mapa
+
 ->escolha aleatória de "lanes" das chickens
+
 ->selecionar uma Food e posicionar num espaço livre
+
 ->verificar colisões
