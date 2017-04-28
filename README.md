@@ -3,6 +3,7 @@ Vicente Fernandes Ramada Caldeira Espinha - up201503764 - up201503764@fe.up.pt
 Vitor Emanuel Fernandes Magalhães - up201503447 -  up201503447@fe.up.pt
 
 .Architecture Design
+
 StateMachine:
 ![statemachine](https://cloud.githubusercontent.com/assets/22790772/25526284/c675aab8-2c0a-11e7-9327-caddb6d1aba2.png)
 
@@ -46,6 +47,7 @@ Prototype:
 -> A interface Chicken será um protótipo, permitindo que cada galinha faça "spawn".
 State:
 -> Utilizado para registar os vários estados de cada inimigo e o estado de jogo
+
 .GUI Design
 
 Main Menu:
@@ -66,6 +68,7 @@ Settings:
 ![new mockup 4](https://cloud.githubusercontent.com/assets/22790772/25526281/c47f09ca-2c0a-11e7-95d3-1c517a4d2b71.png)
 
 .Test Design
+
 ->Jogo começa sem personagens no mapa
 ->escolha aleatória de "lanes" das chickens
 ->selecionar uma Food e posicionar num espaço livre
