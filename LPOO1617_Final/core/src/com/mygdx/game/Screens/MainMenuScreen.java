@@ -32,7 +32,7 @@ public class MainMenuScreen implements Screen {
         PlayGameButton.setPosition(720,2*ChickenVsFood.V_HEIGHT/3 + 40);
         PlayGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new PlayScreen(game));
+                game.setScreen(new SelectLevelScreen(game));
                 dispose();
             }
         });
@@ -49,7 +49,6 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(OptionsButton);
-
 
         Texture tex2 = new Texture("Tree1.png");
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
