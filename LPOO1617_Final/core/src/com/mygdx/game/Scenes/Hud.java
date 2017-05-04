@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
@@ -24,7 +25,7 @@ import javax.swing.event.ChangeListener;
  * Created by vitor on 06/04/2017.
  */
 
-public class Hud {
+public class Hud implements Disposable{
     public Stage stage;
     private Viewport viewport;
     public Integer cornCounter;
@@ -81,4 +82,8 @@ public class Hud {
     }
 
 
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
 }

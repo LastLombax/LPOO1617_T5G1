@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -51,22 +52,19 @@ public class PlayScreen implements Screen{
     public PlayScreen(ChickenVsFood game){
         this.game = game;
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT,gameCam);
+        gamePort = new FitViewport(ChickenVsFood.V_WIDTH/ChickenVsFood.PPM,ChickenVsFood.V_HEIGHT/ChickenVsFood.PPM,gameCam);
         hud = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        game.getAssetManager().load("Chicken.png", Texture.class);
-        game.getAssetManager().finishLoading();
-
-        //chicken = new Chicken(game); isto não está a dar
-        //addActor(chicken);
-
+        renderer = new OrthogonalTiledMapRenderer(map,1/ChickenVsFood.PPM);
+        loadAssets();
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,0/ChickenVsFood.PPM),true);
         b2dr = new Box2DDebugRenderer();
+
+        chicken = new Chicken(world,game);
 
         //bodies
         BodyDef bdef = new BodyDef();
@@ -79,7 +77,7 @@ public class PlayScreen implements Screen{
 
             //define body
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() +  rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+            bdef.position.set((rect.getX() +  rect.getWidth()/2)/ChickenVsFood.PPM, (rect.getY() + rect.getHeight()/2)/ChickenVsFood.PPM);
             body = world.createBody(bdef);
 
             //define fixture
@@ -88,12 +86,25 @@ public class PlayScreen implements Screen{
             body.createFixture(fdef);
         }
     }
-    public void handleInput(float dt){
-      // if(Gdx.input.isTouched())
-         //  gameCam.position.x -= 100*dt;
+
+    public void loadAssets(){
+        game.getAssetManager().load("Chicken.png", Texture.class);
+        game.getAssetManager().finishLoading();
     }
+
+    public void handleInput(float dt){
+       if(Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+           chicken.b2body.applyLinearImpulse(new Vector2(-.2f, 0), chicken.b2body.getWorldCenter(), true);
+       }
+    }
+
     public void update(float dt) {
         handleInput(dt);
+
+        world.step(1/60f,6,2);
+
+        chicken.update(dt);
+
         gameCam.update();
         renderer.setView(gameCam);
     }
@@ -145,6 +156,10 @@ public class PlayScreen implements Screen{
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
     }
 }
