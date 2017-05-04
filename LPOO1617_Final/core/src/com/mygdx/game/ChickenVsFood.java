@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Screens.MainMenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
 //implements the game loop
@@ -17,11 +18,16 @@ public class ChickenVsFood extends Game {
 	public SpriteBatch batch;
 	private AssetManager assetManager;
 
+
+	public ChickenVsFood getCVFGame(){
+		return this;
+	}
+
 	@Override
 	public void create () {
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
