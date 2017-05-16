@@ -28,7 +28,7 @@ public class B2WorldCreator {
 
             //define body
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() +  rect.getWidth()/2)/ ChickenVsFood.PPM, (rect.getY() + rect.getHeight()/2)/ChickenVsFood.PPM);
+            bdef.position.set((rect.getX() +  rect.getWidth()/2), (rect.getY() + rect.getHeight()/2));
             body = world.createBody(bdef);
 
             //define fixture

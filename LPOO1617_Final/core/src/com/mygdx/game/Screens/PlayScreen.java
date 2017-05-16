@@ -63,30 +63,11 @@ public class PlayScreen implements Screen{
         loadAssets();
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        world = new World(new Vector2(0,-1f/ChickenVsFood.PPM),true);
+        world = new World(new Vector2(0,0/ChickenVsFood.PPM),true);
         b2dr = new Box2DDebugRenderer();
 
         chicken = new Chicken(world,game);
 
-        //bodies
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-
-        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-            //define body
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() +  rect.getWidth()/2), (rect.getY() + rect.getHeight()/2));
-            body = world.createBody(bdef);
-
-            //define fixture
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
         new B2WorldCreator(world, map);
         //start game
 
