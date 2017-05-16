@@ -43,9 +43,11 @@ public class Chicken extends Sprite{
         shape.setRadius(35/ChickenVsFood.PPM);
 
         fdef.shape = shape;
+
         /*fdef.density = 0.5f;
         fdef.friction = 0.4f;
         fdef.restitution = 0.5f;*/
+
         b2body.createFixture(fdef);
     }
 

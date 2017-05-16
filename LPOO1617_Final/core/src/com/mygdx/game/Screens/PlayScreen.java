@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -25,6 +26,7 @@ import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Chicken;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.mygdx.game.Tools.B2WorldCreator;
 
 import static com.badlogic.gdx.Input.Keys.G;
 
@@ -61,7 +63,7 @@ public class PlayScreen implements Screen{
         loadAssets();
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        world = new World(new Vector2(0,0/ChickenVsFood.PPM),true);
+        world = new World(new Vector2(0,-1f/ChickenVsFood.PPM),true);
         b2dr = new Box2DDebugRenderer();
 
         chicken = new Chicken(world,game);
@@ -85,6 +87,11 @@ public class PlayScreen implements Screen{
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+        new B2WorldCreator(world, map);
+        //start game
+
+        startGame();
+
     }
 
     public void loadAssets(){
@@ -93,9 +100,17 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt){
-       if(Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-           chicken.b2body.applyLinearImpulse(new Vector2(-.2f, 0), chicken.b2body.getWorldCenter(), true);
-       }
+       if(Gdx.input.isKeyJustPressed(Input.Keys.A) && chicken.b2body.getLinearVelocity().x <= 2)
+           chicken.b2body.applyLinearImpulse(new Vector2(-50, 0), chicken.b2body.getWorldCenter(), true);
+
+       if(Gdx.input.isKeyJustPressed(Input.Keys.S) && chicken.b2body.getLinearVelocity().x <= 2)
+            chicken.b2body.applyLinearImpulse(new Vector2(0, -.2f), chicken.b2body.getWorldCenter(), true);
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+            new MainMenuScreen(game);
+
+
+
     }
 
     public void update(float dt) {
@@ -107,6 +122,10 @@ public class PlayScreen implements Screen{
 
         gameCam.update();
         renderer.setView(gameCam);
+    }
+
+    public void startGame(){
+
     }
 
     @Override
@@ -126,12 +145,6 @@ public class PlayScreen implements Screen{
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
-     /*   //opens the batch
-        game.batch.begin();
-        //draws texture in (0,0)
-        game.batch.draw(texture,0,0);
-        //closes the batch and draws into screen
-        game.batch.end();*/
     }
 
     @Override
@@ -156,7 +169,6 @@ public class PlayScreen implements Screen{
 
     @Override
     public void dispose() {
-
         map.dispose();
         renderer.dispose();
         world.dispose();
