@@ -42,7 +42,7 @@ public class Hud implements Disposable{
     Label cornLabel;
     Label progressLevelLabel;
     Label leveLabel;
-    Texture tex;
+    Texture tex,tex1,tex2;
 
     public Hud(SpriteBatch sb){
         cornCounter = 0;
@@ -51,26 +51,53 @@ public class Hud implements Disposable{
         stage = new Stage(viewport, sb);
 
         Gdx.input.setInputProcessor(stage);
+
+        //upper hud
         Table tableT = new Table();
         tableT.top();
         tableT.left();
         tableT.setFillParent(true);
 
         tex = new Texture("butter.png");
-        ButtonImg option1 = new ButtonImg(tex,tex,tex);
+        tex1 = new Texture("UmbrellaCopr.png");
+        tex2 = new Texture("Tree1.png");
 
-        option1.addListener(new ClickListener() {
+        ButtonImg food1 = new ButtonImg(tex,tex1,tex2);
+
+      //  food1.setZIndex();
+
+        food1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso1");
+            }
+        });
+
+        ButtonImg food2 = new ButtonImg(tex1,tex1,tex1);
+
+        food2.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                System.out.println("coiso2");
+            }
+        });
+
+        ButtonImg food3 = new ButtonImg(tex2,tex2,tex2);
+
+        food3.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                System.out.println("coiso3");
             }
         });
 
         cornLabel = new Label(String.format("%04d", cornCounter), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
 
         tableT.add(cornLabel).padLeft(50);
-        tableT.add(option1).padLeft(200);
+        tableT.add(food1).padLeft(300);
+        tableT.add(food2).padLeft(10);
+        tableT.add(food3).padLeft(10);
         stage.addActor(tableT);
 
+
+        //lower hud
         Table tableD = new Table();
         tableD.bottom();
         tableD.right();

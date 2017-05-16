@@ -34,7 +34,7 @@ public class Chicken extends Sprite{
 
     public void defineChicken(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(2000/ChickenVsFood.PPM,570/ChickenVsFood.PPM);
+        bdef.position.set(1500/ChickenVsFood.PPM,570/ChickenVsFood.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -43,6 +43,7 @@ public class Chicken extends Sprite{
         shape.setRadius(35/ChickenVsFood.PPM);
 
         fdef.shape = shape;
+        fdef.density = 1f;
         b2body.createFixture(fdef);
     }
 
