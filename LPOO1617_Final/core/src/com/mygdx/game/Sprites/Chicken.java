@@ -20,6 +20,7 @@ public class Chicken extends Sprite{
     public static final float VELOCITY= 0.2f;
     public World world;
     public Body b2body;
+    
     public ChickenVsFood game;
     private TextureRegion ChickenTexture;
 
