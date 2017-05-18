@@ -14,7 +14,7 @@ import com.mygdx.game.Screens.PlayScreen;
 public class ChickenVsFood extends Game {
 	public static final int V_WIDTH = 1900;
 	public static final int V_HEIGHT = 900;
-	public static final float PPM = 100;
+	//public static final float PPM = 100;
 	public SpriteBatch batch;
 	private AssetManager assetManager;
 

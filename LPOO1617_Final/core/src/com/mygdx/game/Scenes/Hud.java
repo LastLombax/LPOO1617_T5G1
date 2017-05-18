@@ -91,7 +91,7 @@ public class Hud implements Disposable{
         cornLabel = new Label(String.format("%04d", cornCounter), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
 
         tableT.add(cornLabel).padLeft(50);
-        tableT.add(food1).padLeft(300);
+        tableT.add(food1).padLeft(400);
         tableT.add(food2).padLeft(10);
         tableT.add(food3).padLeft(10);
         stage.addActor(tableT);

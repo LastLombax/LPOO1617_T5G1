@@ -17,6 +17,7 @@ import com.mygdx.game.ChickenVsFood;
 
 
 public class Chicken extends Sprite{
+    public static final float VELOCITY= 0.2f;
     public World world;
     public Body b2body;
     public ChickenVsFood game;
@@ -28,19 +29,19 @@ public class Chicken extends Sprite{
         this.game = game;
         defineChicken();
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
-        setBounds(0,0,28/100,40/100);//PPM
+        setBounds(0,0,28,40);
         setRegion(ChickenTexture);
     }
 
     public void defineChicken(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(1500/ChickenVsFood.PPM,570/ChickenVsFood.PPM);
+        bdef.position.set(1500,570);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(35/ChickenVsFood.PPM);
+        shape.setRadius(35);
 
         fdef.shape = shape;
         fdef.density = 1f;

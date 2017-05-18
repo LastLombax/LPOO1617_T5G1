@@ -55,9 +55,9 @@
   </data>
  </layer>
  <objectgroup name="GrassWall">
-  <object id="12" x="-618.182" y="-793.939"/>
   <object id="40" x="384" y="768" width="1408" height="128"/>
   <object id="41" x="384" y="0" width="1408" height="128"/>
   <object id="42" x="256" y="128" width="128" height="640"/>
  </objectgroup>
+ <objectgroup name="Obstacle"/>
 </map>
