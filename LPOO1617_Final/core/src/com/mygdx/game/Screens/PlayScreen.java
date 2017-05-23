@@ -58,11 +58,11 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0,0),true);
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
-        chicken.add(new Chicken(world,game,1500,700));
-        chicken.add(new Chicken(world,game,1500,570));
-        chicken.add(new Chicken(world,game,1500,440));
-        chicken.add(new Chicken(world,game,1500,310));
-        chicken.add(new Chicken(world,game,1500,185));
+        chicken.add(new Chicken(world,game,1800,700));
+        chicken.add(new Chicken(world,game,1800,570));
+        chicken.add(new Chicken(world,game,1800,440));
+        chicken.add(new Chicken(world,game,1800,310));
+        chicken.add(new Chicken(world,game,1800,185));
 
         new B2WorldCreator(world, map);
     }
