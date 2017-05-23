@@ -63,11 +63,11 @@ public class PlayScreen implements Screen{
 
 
 
-        chicken.add(new Chicken(getWorld(),game,1500,700));
-        chicken.add(new Chicken(getWorld(),game,1500,570));
-        chicken.add(new Chicken(getWorld(),game,1500,440));
-        chicken.add(new Chicken(getWorld(),game,1500,310));
-        chicken.add(new Chicken(getWorld(),game,1500,185));
+        chicken.add(new Chicken(getWorld(),game,1800,700));
+        chicken.add(new Chicken(getWorld(),game,1800,570));
+        chicken.add(new Chicken(getWorld(),game,1800,440));
+        chicken.add(new Chicken(getWorld(),game,1800,310));
+        chicken.add(new Chicken(getWorld(),game,1800,185));
 
         new B2WorldCreator(world, map);
     }
