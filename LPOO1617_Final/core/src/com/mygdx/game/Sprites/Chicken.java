@@ -24,19 +24,19 @@ public class Chicken extends Sprite{
     public ChickenVsFood game;
     private TextureRegion ChickenTexture;
 
-    public Chicken(World world,ChickenVsFood game){
+    public Chicken(World world,ChickenVsFood game,int xInicial,int yInicial){
         super(game.getAssetManager().get("Chicken.png",Texture.class));
         this.world = world;
         this.game = game;
-        defineChicken();
+        defineChicken(xInicial,yInicial);
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
         setRegion(ChickenTexture);
     }
 
-    public void defineChicken(){
+    public void defineChicken(int x, int y){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(1500,570);
+        bdef.position.set(x,y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

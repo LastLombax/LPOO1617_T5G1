@@ -19,6 +19,7 @@ import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Chicken;
 import com.mygdx.game.Tools.B2WorldCreator;
 
+import java.util.Vector;
 
 
 /**
@@ -27,7 +28,7 @@ import com.mygdx.game.Tools.B2WorldCreator;
 
 public class PlayScreen implements Screen{
     private ChickenVsFood game;
-    private Chicken chicken;
+    private Vector<Chicken> chicken = new Vector<Chicken>();
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -57,7 +58,11 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0,0),true);
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
-        chicken = new Chicken(world,game);
+        chicken.add(new Chicken(world,game,1500,700));
+        chicken.add(new Chicken(world,game,1500,570));
+        chicken.add(new Chicken(world,game,1500,440));
+        chicken.add(new Chicken(world,game,1500,310));
+        chicken.add(new Chicken(world,game,1500,185));
 
         new B2WorldCreator(world, map);
     }
@@ -68,12 +73,16 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt){
-       if(Gdx.input.isKeyPressed(Input.Keys.A))
-           chicken.b2body.applyLinearImpulse(new Vector2(-chicken.VELOCITY, 0), chicken.b2body.getWorldCenter(), true);
-
-     else  if(Gdx.input.isKeyPressed(Input.Keys.S) && chicken.b2body.getLinearVelocity().x <= 2)
-            chicken.b2body.applyLinearImpulse(new Vector2(0, -chicken.VELOCITY), chicken.b2body.getWorldCenter(), true);
-
+       if(Gdx.input.isKeyPressed(Input.Keys.A)){
+           for(int i = 0; i < this.chicken.size();i++){
+               chicken.get(i).b2body.applyLinearImpulse(new Vector2(-chicken.get(i).VELOCITY, 0), chicken.get(i).b2body.getWorldCenter(), true);
+           }
+       }
+     else  if(Gdx.input.isKeyPressed(Input.Keys.S) /*&& chicken.b2body.getLinearVelocity().x <= 2*/) {
+           for (int i = 0; i < this.chicken.size(); i++) {
+               chicken.get(i).b2body.applyLinearImpulse(new Vector2(0, -chicken.get(i).VELOCITY), chicken.get(i).b2body.getWorldCenter(), true);
+           }
+       }
       else  if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
             new MainMenuScreen(game);
 
@@ -92,7 +101,10 @@ public class PlayScreen implements Screen{
             accumulator -= 1/60f;
         }
 
-        chicken.update(dt);
+        for (int i = 0; i < this.chicken.size(); i++){
+            chicken.get(i).update(dt);
+        }
+
         gameCam.update();
         renderer.setView(gameCam);
     }
@@ -115,7 +127,9 @@ public class PlayScreen implements Screen{
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         game.batch.begin();
-        chicken.draw(game.batch);
+        for (int i = 0; i < this.chicken.size(); i++){
+            chicken.get(i).draw(game.batch);
+        }
         //onde desenhar as cenas, cois.draw();
         game.batch.end();
         hud.stage.draw();
