@@ -45,7 +45,7 @@ public class OptionsScreen implements Screen {
 
         stage.addActor(music);
 
-        Texture tex1 = new Texture("Fence.png");
+        Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg Sound = new ButtonImg(tex1,tex1,tex1);
         Sound.setWidth(Gdx.graphics.getWidth()/3);
         Sound.setPosition(200,ChickenVsFood.V_HEIGHT/2);
@@ -57,7 +57,7 @@ public class OptionsScreen implements Screen {
         });
         stage.addActor(Sound);
 
-        Image sound = new Image(new Texture("Relva2.png"));
+        Image sound = new Image(new Texture(Gdx.files.internal("Relva2.png")));
 
         sound.setWidth(100);
         sound.setPosition(100,ChickenVsFood.V_HEIGHT/2);
@@ -65,7 +65,7 @@ public class OptionsScreen implements Screen {
         stage.addActor(sound);
 
 
-        Texture tex2 = new Texture("Tree1.png");
+        Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(200,ChickenVsFood.V_HEIGHT/3 - 40);

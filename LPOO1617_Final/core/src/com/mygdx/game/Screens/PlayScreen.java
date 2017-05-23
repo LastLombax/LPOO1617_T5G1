@@ -46,7 +46,7 @@ public class PlayScreen implements Screen{
         this.game = game;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT,gameCam);
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, game);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map.tmx");

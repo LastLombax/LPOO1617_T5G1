@@ -20,13 +20,16 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
+    Texture background;
 
     public MainMenuScreen(final ChickenVsFood game){
         this.game = game;
         viewport = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
 
-        Texture tex = new Texture("butter.png");
+        background = new Texture(Gdx.files.internal("Background.jpg"));
+
+        Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);
         PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
         PlayGameButton.setPosition(720,2*ChickenVsFood.V_HEIGHT/3 + 40);
@@ -38,7 +41,7 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(PlayGameButton);
 
-        Texture tex1 = new Texture("Fence.png");
+        Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
         OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
         OptionsButton.setPosition(720, ChickenVsFood.V_HEIGHT/2 );
@@ -50,7 +53,7 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(OptionsButton);
 
-        Texture tex2 = new Texture("Tree1.png");
+        Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(720,ChickenVsFood.V_HEIGHT/3 - 40);
@@ -71,6 +74,11 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        game.batch.begin();
+        game.batch.draw(background, 0,0,game.V_WIDTH,game.V_HEIGHT);
+        game.batch.end();
+
         stage.act();
         stage.draw();
     }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.MainMenuScreen;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -44,7 +45,7 @@ public class Hud implements Disposable{
     Label leveLabel;
     Texture tex,tex1,tex2;
 
-    public Hud(SpriteBatch sb){
+    public Hud(SpriteBatch sb, final ChickenVsFood game){
         cornCounter = 0;
         viewport = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT, new OrthographicCamera());
 
@@ -58,9 +59,9 @@ public class Hud implements Disposable{
         tableT.left();
         tableT.setFillParent(true);
 
-        tex = new Texture("butter.png");
-        tex1 = new Texture("UmbrellaCopr.png");
-        tex2 = new Texture("Tree1.png");
+        tex = new Texture(Gdx.files.internal("butter.png"));
+        tex1 = new Texture(Gdx.files.internal("UmbrellaCopr.png"));
+        tex2 = new Texture(Gdx.files.internal("Tree1.png"));
 
         ButtonImg food1 = new ButtonImg(tex,tex1,tex2);
 
@@ -84,7 +85,8 @@ public class Hud implements Disposable{
 
         food3.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                System.out.println("coiso3");
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
             }
         });
 
