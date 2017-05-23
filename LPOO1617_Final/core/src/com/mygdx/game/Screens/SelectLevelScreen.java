@@ -87,7 +87,7 @@ public class SelectLevelScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(lvlSelector, 0,0,game.V_WIDTH,game.V_HEIGHT);
+        game.batch.draw(lvlSelector, 0,0, ChickenVsFood.V_WIDTH, ChickenVsFood.V_HEIGHT);
         game.batch.end();
 
        // stage.act();

@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Chicken;
+import com.mygdx.game.Sprites.Food;
 import com.mygdx.game.Tools.B2WorldCreator;
 
 import java.util.Vector;
@@ -30,6 +31,7 @@ public class PlayScreen implements Screen{
     private ChickenVsFood game;
     private Vector<Chicken> chicken = new Vector<Chicken>();
 
+    private Vector<Chicken> foods = new Vector<Chicken>();
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -55,16 +57,27 @@ public class PlayScreen implements Screen{
         loadAssets();
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        world = new World(new Vector2(0,0),true);
+        setWorld();
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
-        chicken.add(new Chicken(world,game,1500,700));
-        chicken.add(new Chicken(world,game,1500,570));
-        chicken.add(new Chicken(world,game,1500,440));
-        chicken.add(new Chicken(world,game,1500,310));
-        chicken.add(new Chicken(world,game,1500,185));
+
+
+
+        chicken.add(new Chicken(getWorld(),game,1500,700));
+        chicken.add(new Chicken(getWorld(),game,1500,570));
+        chicken.add(new Chicken(getWorld(),game,1500,440));
+        chicken.add(new Chicken(getWorld(),game,1500,310));
+        chicken.add(new Chicken(getWorld(),game,1500,185));
 
         new B2WorldCreator(world, map);
+    }
+
+    public World getWorld(){
+        return world;
+    }
+
+    public void setWorld(){
+        world = new World(new Vector2(0,0),true);
     }
 
     public void loadAssets(){
@@ -76,17 +89,41 @@ public class PlayScreen implements Screen{
        if(Gdx.input.isKeyPressed(Input.Keys.A)){
            for(int i = 0; i < this.chicken.size();i++){
                chicken.get(i).b2body.applyLinearImpulse(new Vector2(-chicken.get(i).VELOCITY, 0), chicken.get(i).b2body.getWorldCenter(), true);
-           }
+       }
        }
      else  if(Gdx.input.isKeyPressed(Input.Keys.S) /*&& chicken.b2body.getLinearVelocity().x <= 2*/) {
            for (int i = 0; i < this.chicken.size(); i++) {
                chicken.get(i).b2body.applyLinearImpulse(new Vector2(0, -chicken.get(i).VELOCITY), chicken.get(i).b2body.getWorldCenter(), true);
            }
        }
-      else  if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
-            new MainMenuScreen(game);
+      else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+           System.out.println("devia sair");
+           new MainMenuScreen(game);
+           dispose();
+       }
+       else if (hud.isSelected) //puts food in selected location
+            if (Gdx.input.isTouched()) {
+                System.out.println("x: " +Gdx.input.getX());
+                System.out.println("y: "+ Gdx.input.getY());
 
+                System.out.println(hud.selectedFood);
 
+                switch (hud.selectedFood) {
+                    case 1:
+                        System.out.println("1st chicken");
+                        foods.add(new Chicken(getWorld(), game, Gdx.input.getX(), Gdx.input.getY()));
+                        System.out.println("PosX: " + foods.get(0).getX());
+                        System.out.println("PosY: " + Gdx.input.getY());
+                        break;
+                    case 2:
+                        System.out.println("2nd chicken");
+
+                        foods.add(new Chicken(getWorld(), game, Gdx.input.getX(), Gdx.input.getY()));
+                        break;
+                }
+                hud.selectedFood = 0;
+                hud.isSelected = false;
+            }
 
     }
 
@@ -129,6 +166,9 @@ public class PlayScreen implements Screen{
         game.batch.begin();
         for (int i = 0; i < this.chicken.size(); i++){
             chicken.get(i).draw(game.batch);
+        }
+        for (int i = 0; i < this.foods.size(); i++){
+            foods.get(i).draw(game.batch);
         }
         //onde desenhar as cenas, cois.draw();
         game.batch.end();

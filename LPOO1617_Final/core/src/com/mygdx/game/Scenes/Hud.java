@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -18,9 +17,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.MainMenuScreen;
+import com.mygdx.game.Sprites.Chicken;
+import com.mygdx.game.Sprites.Food;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import java.util.Vector;
 
 /**
  * Created by vitor on 06/04/2017.
@@ -30,6 +30,9 @@ public class Hud implements Disposable{
     public Stage stage;
     private Viewport viewport;
     public Integer cornCounter;
+
+    public Integer selectedFood = 0;
+    public boolean isSelected = false;
 
     //progress
    /* textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("barGreen_horizontalMid.png"))));
@@ -70,6 +73,9 @@ public class Hud implements Disposable{
         food1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso1");
+                selectedFood = 1;
+                isSelected = true;
+
             }
         });
 
@@ -78,6 +84,8 @@ public class Hud implements Disposable{
         food2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso2");
+               selectedFood = 2;
+               isSelected = true;
             }
         });
 
@@ -109,7 +117,6 @@ public class Hud implements Disposable{
         tableD.add(leveLabel).padRight(50);
         stage.addActor(tableD);
     }
-
 
     @Override
     public void dispose() {
