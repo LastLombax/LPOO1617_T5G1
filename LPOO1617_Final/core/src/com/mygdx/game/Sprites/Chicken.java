@@ -17,7 +17,7 @@ import com.mygdx.game.ChickenVsFood;
 
 
 public class Chicken extends Sprite{
-    public static final float VELOCITY= 0.2f;
+    public static final float VELOCITY= 2.5f;
     public World world;
     public Body b2body;
 
