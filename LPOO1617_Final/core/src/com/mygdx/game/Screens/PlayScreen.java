@@ -48,10 +48,12 @@ public class PlayScreen implements Screen{
     protected float accumulator;
 
     //placement variables
-    int placeOriginX = 580;
-    int placeOriginY = 190;
+    int ORIGINAL_X_MID = 575;
+    int FINAL_X_MID = 1855;
+    int GAP = 60;
+    int ORIGINAL_Y_MID = 185;
+    int FINAL_Y_MID = 793;
     int tileSize = 128;
-    int screenTileSize = 80;
 
     public PlayScreen(ChickenVsFood game){
         this.game = game;
@@ -114,11 +116,28 @@ public class PlayScreen implements Screen{
                 int x = (int) v.x;
                 int y = (int) v.y - 20;
 
-                if (checkPlacingBounds(x, y)) {
+                if (checkPlacingBounds(x , y)) {
+
+                    for (int m = ORIGINAL_X_MID; m <FINAL_X_MID; m+=tileSize){
+                        if ( x-m < GAP) { //found
+                            x = m;
+                            System.out.println("here");
+                            break;
+                        }
+                    }
+
+                   for (int m = ORIGINAL_Y_MID; m <FINAL_Y_MID; m+=tileSize){
+                        if ( y-m < GAP-10) { //found
+                            y = m;
+                            break;
+                        }
+                    }
 
                     switch (hud.selectedFood) {
                         case 1:
-                            chicken.add(new Chicken(getWorld(), game, x, y));
+                             chicken.add(new Chicken(getWorld(), game, x, y));
+                            //chicken.add(new Chicken(getWorld(), game, x, y));
+
                             //  foods.add(new Food(getWorld(), game, placeX, placeY));
                             break;
                         case 2:
