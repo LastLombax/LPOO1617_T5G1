@@ -22,6 +22,8 @@ import com.mygdx.game.Tools.B2WorldCreator;
 
 import java.util.Vector;
 
+import static com.badlogic.gdx.math.MathUtils.floor;
+
 
 /**
  * Created by vitor on 06/04/2017.
@@ -44,9 +46,15 @@ public class PlayScreen implements Screen{
     private Box2DDebugRenderer b2dr;
     protected float accumulator;
 
+    //placement variables
+    int placeOriginX = 580;
+    int placeOriginY = 190;
+    int tileSize = 128;
+    int screenTileSize = 80;
 
     public PlayScreen(ChickenVsFood game){
         this.game = game;
+
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT,gameCam);
         hud = new Hud(game.batch, game);
@@ -61,10 +69,8 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
 
-
-
-        chicken.add(new Chicken(getWorld(),game,1800,700));
-        chicken.add(new Chicken(getWorld(),game,1800,570));
+        chicken.add(new Chicken(getWorld(),game,1800,690));
+        chicken.add(new Chicken(getWorld(),game,1800,565));
         chicken.add(new Chicken(getWorld(),game,1800,440));
         chicken.add(new Chicken(getWorld(),game,1800,310));
         chicken.add(new Chicken(getWorld(),game,1800,185));
@@ -86,45 +92,55 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt){
-       if(Gdx.input.isKeyPressed(Input.Keys.A)){
-           for(int i = 0; i < this.chicken.size();i++){
-               chicken.get(i).b2body.applyLinearImpulse(new Vector2(-chicken.get(i).VELOCITY, 0), chicken.get(i).b2body.getWorldCenter(), true);
-       }
-       }
-     else  if(Gdx.input.isKeyPressed(Input.Keys.S) /*&& chicken.b2body.getLinearVelocity().x <= 2*/) {
-           for (int i = 0; i < this.chicken.size(); i++) {
-               chicken.get(i).b2body.applyLinearImpulse(new Vector2(0, -chicken.get(i).VELOCITY), chicken.get(i).b2body.getWorldCenter(), true);
-           }
-       }
-      else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-           System.out.println("devia sair");
-           new MainMenuScreen(game);
-           dispose();
-       }
-       else if (hud.isSelected) //puts food in selected location
+        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            for(int i = 0; i < this.chicken.size();i++){
+                chicken.get(i).b2body.applyLinearImpulse(new Vector2(-chicken.get(i).VELOCITY, 0), chicken.get(i).b2body.getWorldCenter(), true);
+            }
+        }
+        else  if(Gdx.input.isKeyPressed(Input.Keys.S) /*&& chicken.b2body.getLinearVelocity().x <= 2*/) {
+            for (int i = 0; i < this.chicken.size(); i++) {
+                chicken.get(i).b2body.applyLinearImpulse(new Vector2(0, -chicken.get(i).VELOCITY), chicken.get(i).b2body.getWorldCenter(), true);
+            }
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            System.out.println("devia sair");
+            new MainMenuScreen(game);
+            dispose();
+        }
+
+        else if (hud.isSelected) //puts food in selected location
             if (Gdx.input.isTouched()) {
-                System.out.println("x: " +Gdx.input.getX());
-                System.out.println("y: "+ Gdx.input.getY());
 
-                System.out.println(hud.selectedFood);
+                double posX = Gdx.input.getX() / screenTileSize - 4;
+                double posY = 6 - Gdx.input.getY() / screenTileSize;
 
-                switch (hud.selectedFood) {
-                    case 1:
-                        System.out.println("1st chicken");
-                        foods.add(new Chicken(getWorld(), game, Gdx.input.getX(), Gdx.input.getY()));
-                        System.out.println("PosX: " + foods.get(0).getX());
-                        System.out.println("PosY: " + Gdx.input.getY());
-                        break;
-                    case 2:
-                        System.out.println("2nd chicken");
+                if (checkPlacingBounds(posX, posY)) {
 
-                        foods.add(new Chicken(getWorld(), game, Gdx.input.getX(), Gdx.input.getY()));
-                        break;
+                    int placeX = placeOriginX + (int) (tileSize * posX);
+                    int placeY = placeOriginY + (int) (tileSize * posY);
+
+                    switch (hud.selectedFood) {
+                        case 1:
+                            chicken.add(new Chicken(getWorld(), game, placeX, placeY));
+                          //  foods.add(new Food(getWorld(), game, placeX, placeY));
+                            break;
+                        case 2:
+                            foods.add(new Chicken(getWorld(), game,  placeX, placeY));
+                            break;
+                    }
+                    hud.selectedFood = 0;
+                    hud.isSelected = false;
                 }
-                hud.selectedFood = 0;
-                hud.isSelected = false;
+                else
+                    System.out.println("You can't put it there");
             }
 
+    }
+
+    public boolean checkPlacingBounds(double px, double py){
+        if (px >= 0 && px <= 9 && py >= 0 && py <=4)
+            return true;
+        return false;
     }
 
     public void update(float dt) {
@@ -138,9 +154,12 @@ public class PlayScreen implements Screen{
             accumulator -= 1/60f;
         }
 
-        for (int i = 0; i < this.chicken.size(); i++){
+        for (int i = 0; i < this.chicken.size(); i++)
             chicken.get(i).update(dt);
-        }
+
+        for (int i = 0; i < this.foods.size(); i++)
+            foods.get(i).update(dt);
+
 
         gameCam.update();
         renderer.setView(gameCam);
@@ -167,6 +186,7 @@ public class PlayScreen implements Screen{
         for (int i = 0; i < this.chicken.size(); i++){
             chicken.get(i).draw(game.batch);
         }
+
         for (int i = 0; i < this.foods.size(); i++){
             foods.get(i).draw(game.batch);
         }

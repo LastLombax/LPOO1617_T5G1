@@ -17,10 +17,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.MainMenuScreen;
-import com.mygdx.game.Sprites.Chicken;
-import com.mygdx.game.Sprites.Food;
-
-import java.util.Vector;
 
 /**
  * Created by vitor on 06/04/2017.

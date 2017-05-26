@@ -1,10 +1,7 @@
 package com.mygdx.game.Sprites;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.ChickenVsFood;
 
 
@@ -53,7 +49,15 @@ public class Chicken extends Sprite{
         b2body.createFixture(fdef);
     }
 
+  /*  public void setNewPosition(){
+        double x = 0.5*1;//+dx; (4,1) mais tarde
+        double y = 0.5*1;//+dx;
+        b2body.setTransform((float)x,(float)y,0); //translate
+
+    }*/
+
     public void update(float dt){
+    //    setNewPosition();
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getWidth()/2);
     }
 }
