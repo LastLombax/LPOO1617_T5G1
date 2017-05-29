@@ -35,6 +35,7 @@ public class Peashooter extends Sprite implements Food {
         bdef.position.set(x,y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+        b2body.setUserData("Food");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();

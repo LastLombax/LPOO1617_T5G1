@@ -176,8 +176,9 @@ public class PlayScreen implements Screen{
             world.step(1/60f, 6, 2);
             accumulator -= 1/60f;
         }
-
+        if(chicken.size() <20)
         GenerateChickens();
+
         updateCharacters(dt);
 
         gameCam.update();
