@@ -11,10 +11,12 @@ import com.mygdx.game.ChickenVsFood;
  */
 
 public class KFChicken implements Chicken {
-    public static final float VELOCITY = 2.5f;
-    public World world;
-    public Body b2body;
-    public ChickenVsFood game;
+    private static final float VELOCITY = 2.5f;
+    private int HEALTH = 5;
+    private int DMG = 1;
+    private World world;
+    private Body b2body;
+    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     @Override
     public void defineChicken(int i, int i1) {
@@ -40,4 +42,15 @@ public class KFChicken implements Chicken {
     public void draw(SpriteBatch spriteBatch) {
 
     }
+
+    @Override
+    public int getHealth() {
+        return HEALTH;
+    }
+
+    @Override
+    public int getDmg() {
+        return DMG;
+    }
+
 }

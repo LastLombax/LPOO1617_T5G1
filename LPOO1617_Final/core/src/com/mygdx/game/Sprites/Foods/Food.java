@@ -16,4 +16,8 @@ public interface Food {
     Body getBody();
 
     void draw(SpriteBatch batch);
+
+    int getHealth();
+
+
 }

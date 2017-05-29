@@ -25,7 +25,7 @@ import com.mygdx.game.Screens.MainMenuScreen;
 public class Hud implements Disposable{
     private Stage stage;
     private Viewport viewport;
-    private Integer cornCounter;
+    private static Integer cornCounter;
 
     private Integer selectedFood;
     private boolean isSelected;
@@ -39,7 +39,7 @@ public class Hud implements Disposable{
     bar.setAnimateDuration(2);
     stage.addActor(bar);*/
 
-    Label cornLabel;
+    private static Label cornLabel;
     Label progressLevelLabel;
     Label leveLabel;
     Texture tex,tex1,tex2;
@@ -128,6 +128,7 @@ public class Hud implements Disposable{
     public void setSelectedFood(int food){
         selectedFood = food;
     }
+
     public boolean isSelected(){
         return isSelected;
     }
@@ -136,7 +137,10 @@ public class Hud implements Disposable{
         isSelected = b;
     }
 
-
+    public static void addCorn(int counter){
+        cornCounter+=counter;
+        cornLabel.setText(String.format("%04d", cornCounter));
+    }
 
     @Override
     public void dispose() {

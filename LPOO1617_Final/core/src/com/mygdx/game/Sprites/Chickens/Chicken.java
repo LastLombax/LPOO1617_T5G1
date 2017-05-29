@@ -18,4 +18,10 @@ public interface Chicken{
     float getVelocity();
 
     void draw(SpriteBatch batch);
+
+    int getHealth();
+
+    int getDmg();
+
+
 }

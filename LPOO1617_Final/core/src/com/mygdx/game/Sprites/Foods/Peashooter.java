@@ -15,13 +15,15 @@ import com.mygdx.game.ChickenVsFood;
 
 
 public class Peashooter extends Sprite implements Food {
-    public World world;
-    public Body b2body;
-    public ChickenVsFood game;
+    private World world;
+    private Body b2body;
+    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
-
+    private int HEALTH = 5;
+    private int timer;
     public Peashooter(World world,ChickenVsFood game,int xInicial,int yInicial){
         super(game.getAssetManager().get("Chicken.png",Texture.class));
+        this.timer = 0;
         this.world = world;
         this.game = game;
         defineFood(xInicial,yInicial);
@@ -52,6 +54,11 @@ public class Peashooter extends Sprite implements Food {
 
     public void update(float dt){
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getWidth()/2);
+        timer++;
+        //implement a thread for each unicorn to send corns
+        if(timer%100 == 0) { // every second
+            System.out.println("bala incoming");
+        }
     }
 
     @Override
@@ -62,5 +69,10 @@ public class Peashooter extends Sprite implements Food {
     @Override
     public void draw(SpriteBatch batch) {
         this.draw( (Batch) batch);
+    }
+
+    @Override
+    public int getHealth() {
+        return HEALTH;
     }
 }

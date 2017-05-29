@@ -11,10 +11,12 @@ import com.mygdx.game.ChickenVsFood;
  */
 
 public class Carrot implements Food {
-    public World world;
-    public Body b2body;
-    public ChickenVsFood game;
+    private World world;
+    private Body b2body;
+    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
+    private int HEALTH = 5;
+
     @Override
     public void defineFood(int i, int i1) {
 
@@ -33,5 +35,10 @@ public class Carrot implements Food {
     @Override
     public void draw(SpriteBatch spriteBatch) {
 
+    }
+
+    @Override
+    public int getHealth() {
+        return 0;
     }
 }
