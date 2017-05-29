@@ -24,14 +24,14 @@ public class SelectLevelScreen implements Screen {
 
     public SelectLevelScreen(final ChickenVsFood game){
         this.game = game;
-        viewport = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, game.batch);
+        viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
+        stage = new Stage(viewport, game.getBatch());
 
         lvlSelector = new Texture(Gdx.files.internal("LevelScreen.png"));
         Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
         PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel1.setPosition(200,ChickenVsFood.V_HEIGHT/2 );
+        PlayLevel1.setPosition(200,game.getvHeight()/2 );
         PlayLevel1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game));
@@ -43,7 +43,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg PlayLevel2 = new ButtonImg(tex1,tex1,tex1);
         PlayLevel2.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel2.setPosition(400, ChickenVsFood.V_HEIGHT/2 );
+        PlayLevel2.setPosition(400, game.getvHeight()/2 );
         PlayLevel2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
 
@@ -54,7 +54,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex2 = new Texture(Gdx.files.internal("Relva1.png"));
         ButtonImg PlayLevel3 = new ButtonImg(tex2,tex2,tex2);
         PlayLevel3.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel3.setPosition(600, ChickenVsFood.V_HEIGHT/2 );
+        PlayLevel3.setPosition(600, game.getvHeight()/2 );
         PlayLevel3.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
 
@@ -65,7 +65,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex3 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex3,tex3,tex3);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(800,ChickenVsFood.V_HEIGHT/2 );
+        ExitButton.setPosition(800,game.getvHeight()/2 );
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
@@ -85,9 +85,9 @@ public class SelectLevelScreen implements Screen {
         Gdx.gl.glClearColor(0,0,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.begin();
-        game.batch.draw(lvlSelector, 0,0, ChickenVsFood.V_WIDTH, ChickenVsFood.V_HEIGHT);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getBatch().draw(lvlSelector, 0,0, game.getvWidth(), game.getvHeight());
+        game.getBatch().end();
 
        // stage.act();
         stage.draw();

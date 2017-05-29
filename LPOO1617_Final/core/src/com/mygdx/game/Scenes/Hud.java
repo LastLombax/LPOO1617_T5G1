@@ -23,12 +23,12 @@ import com.mygdx.game.Screens.MainMenuScreen;
  */
 
 public class Hud implements Disposable{
-    public Stage stage;
+    private Stage stage;
     private Viewport viewport;
-    public Integer cornCounter;
+    private Integer cornCounter;
 
-    public Integer selectedFood = 0;
-    public boolean isSelected = false;
+    private Integer selectedFood;
+    private boolean isSelected;
 
     //progress
    /* textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("barGreen_horizontalMid.png"))));
@@ -45,8 +45,11 @@ public class Hud implements Disposable{
     Texture tex,tex1,tex2;
 
     public Hud(SpriteBatch sb, final ChickenVsFood game){
+
+        setSelectedFood(0);
+        setSelected(false);
         cornCounter = 0;
-        viewport = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
 
         stage = new Stage(viewport, sb);
 
@@ -69,8 +72,8 @@ public class Hud implements Disposable{
         food1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso1");
-                selectedFood = 1;
-                isSelected = true;
+                setSelectedFood(1);
+                setSelected(true);
 
             }
         });
@@ -80,8 +83,8 @@ public class Hud implements Disposable{
         food2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso2");
-               selectedFood = 2;
-               isSelected = true;
+                setSelectedFood(2);
+                setSelected(true);
             }
         });
 
@@ -113,6 +116,27 @@ public class Hud implements Disposable{
         tableD.add(leveLabel).padRight(50);
         stage.addActor(tableD);
     }
+
+    public Stage getStage(){
+        return stage;
+    }
+
+    public Integer getSelectedFood(){
+        return selectedFood;
+    }
+
+    public void setSelectedFood(int food){
+        selectedFood = food;
+    }
+    public boolean isSelected(){
+        return isSelected;
+    }
+
+    public void setSelected(boolean b){
+        isSelected = b;
+    }
+
+
 
     @Override
     public void dispose() {

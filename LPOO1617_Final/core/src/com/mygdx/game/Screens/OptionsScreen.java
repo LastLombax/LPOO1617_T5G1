@@ -25,13 +25,13 @@ public class OptionsScreen implements Screen {
 
     public OptionsScreen(final ChickenVsFood game){
         this.game = game;
-        viewport = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, game.batch);
+        viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
+        stage = new Stage(viewport, game.getBatch());
 
         Texture tex = new Texture("Fence.png");
         ButtonImg Music = new ButtonImg(tex,tex,tex);
         Music.setWidth(Gdx.graphics.getWidth()/3);
-        Music.setPosition(200,2*ChickenVsFood.V_HEIGHT/3 + 40);
+        Music.setPosition(200,2*game.getvHeight()/3 + 40);
         Music.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
             }
@@ -41,14 +41,14 @@ public class OptionsScreen implements Screen {
         Image music = new Image(new Texture("Relva1.png"));
 
         music.setWidth(100);
-        music.setPosition(100,2*ChickenVsFood.V_HEIGHT/3 + 40);
+        music.setPosition(100,2*game.getvHeight()/3 + 40);
 
         stage.addActor(music);
 
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg Sound = new ButtonImg(tex1,tex1,tex1);
         Sound.setWidth(Gdx.graphics.getWidth()/3);
-        Sound.setPosition(200,ChickenVsFood.V_HEIGHT/2);
+        Sound.setPosition(200,game.getvHeight()/2);
         Sound.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new OptionsScreen(game));
@@ -60,7 +60,7 @@ public class OptionsScreen implements Screen {
         Image sound = new Image(new Texture(Gdx.files.internal("Relva2.png")));
 
         sound.setWidth(100);
-        sound.setPosition(100,ChickenVsFood.V_HEIGHT/2);
+        sound.setPosition(100,game.getvHeight()/2);
 
         stage.addActor(sound);
 
@@ -68,7 +68,7 @@ public class OptionsScreen implements Screen {
         Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(200,ChickenVsFood.V_HEIGHT/3 - 40);
+        ExitButton.setPosition(200,game.getvHeight()/3 - 40);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));

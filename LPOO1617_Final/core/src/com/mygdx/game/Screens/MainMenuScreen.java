@@ -23,16 +23,16 @@ public class MainMenuScreen implements Screen {
     Texture background;
 
     public MainMenuScreen(final ChickenVsFood game){
-        this.game = game;
-        viewport = new FitViewport(ChickenVsFood.V_WIDTH,ChickenVsFood.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, game.batch);
+        this.game = game.getGame();
+        viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
+        stage = new Stage(viewport, game.getBatch());
 
         background = new Texture(Gdx.files.internal("Background.jpg"));
 
-        Texture tex = new Texture(Gdx.files.internal("butter.png"));
+        Texture tex = new Texture("Butter.png");
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);
         PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
-        PlayGameButton.setPosition(720,2*ChickenVsFood.V_HEIGHT/3 + 40);
+        PlayGameButton.setPosition(720,2*game.getvHeight()/3 + 40);
         PlayGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new SelectLevelScreen(game));
@@ -44,7 +44,7 @@ public class MainMenuScreen implements Screen {
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
         OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
-        OptionsButton.setPosition(720, ChickenVsFood.V_HEIGHT/2 );
+        OptionsButton.setPosition(720, game.getvHeight()/2 );
         OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new OptionsScreen(game));
@@ -56,7 +56,7 @@ public class MainMenuScreen implements Screen {
         Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(720,ChickenVsFood.V_HEIGHT/3 - 40);
+        ExitButton.setPosition(720,game.getvHeight()/3 - 40);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.exit(0);
@@ -75,9 +75,9 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.begin();
-        game.batch.draw(background, 0,0, ChickenVsFood.V_WIDTH, ChickenVsFood.V_HEIGHT);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
+        game.getBatch().end();
 
         stage.act();
         stage.draw();
