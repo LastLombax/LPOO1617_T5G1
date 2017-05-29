@@ -1,7 +1,10 @@
-package com.mygdx.game.Sprites;
+package com.mygdx.game.Sprites.Foods;
+
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -10,26 +13,21 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
 
-/**
- * Created by vitor on 16/05/2017.
- */
 
-public class Food extends Sprite {
-    public static final float VELOCITY= 2.5f;
+public class Peashooter extends Sprite implements Food {
     public World world;
     public Body b2body;
-
     public ChickenVsFood game;
-    private TextureRegion FoodTexture;
+    private TextureRegion ChickenTexture;
 
-    public Food(World world,ChickenVsFood game,int xInicial,int yInicial){
+    public Peashooter(World world,ChickenVsFood game,int xInicial,int yInicial){
         super(game.getAssetManager().get("Chicken.png",Texture.class));
         this.world = world;
         this.game = game;
         defineFood(xInicial,yInicial);
-        FoodTexture = new TextureRegion(getTexture(),0,0,28,40);
+        ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
-        setRegion(FoodTexture);
+        setRegion(ChickenTexture);
     }
 
     public void defineFood(int x, int y){
@@ -55,10 +53,13 @@ public class Food extends Sprite {
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getWidth()/2);
     }
 
-    public void setNewPosition(){
-        double x = 0.5*1;//+dx;
-        double y = 0.5*1;//+dx;
-        b2body.setTransform((float)x,(float)y,0); //translate
+    @Override
+    public Body getBody() {
+        return b2body;
+    }
 
+    @Override
+    public void draw(SpriteBatch batch) {
+        this.draw( (Batch) batch);
     }
 }

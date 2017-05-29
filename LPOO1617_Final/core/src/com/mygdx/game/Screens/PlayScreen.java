@@ -17,13 +17,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
-import com.mygdx.game.Sprites.Chicken;
-import com.mygdx.game.Sprites.Food;
+import com.mygdx.game.Sprites.Chickens.Chicken;
+import com.mygdx.game.Sprites.Foods.Food;
+import com.mygdx.game.Sprites.Chickens.NormalChicken;
+import com.mygdx.game.Sprites.Foods.Peashooter;
 import com.mygdx.game.Tools.B2WorldCreator;
 
 import java.util.Vector;
-
-import static com.badlogic.gdx.math.MathUtils.floor;
 
 
 /**
@@ -34,7 +34,7 @@ public class PlayScreen implements Screen{
     private ChickenVsFood game;
     private Vector<Chicken> chicken = new Vector<Chicken>();
 
-    private Vector<Chicken> foods = new Vector<Chicken>();
+    private Vector<Food> foods = new Vector<Food>();
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -50,9 +50,9 @@ public class PlayScreen implements Screen{
     //placement variables
     int ORIGINAL_X_MID = 575;
     int FINAL_X_MID = 1855;
-    int GAP = 60;
     int ORIGINAL_Y_MID = 185;
     int FINAL_Y_MID = 793;
+    int GAP = 60;
     int tileSize = 128;
 
     public PlayScreen(ChickenVsFood game){
@@ -72,11 +72,11 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
 
-        chicken.add(new Chicken(getWorld(),game,1800,690));
-        chicken.add(new Chicken(getWorld(),game,1800,565));
-        chicken.add(new Chicken(getWorld(),game,1800,440));
-        chicken.add(new Chicken(getWorld(),game,1800,310));
-        chicken.add(new Chicken(getWorld(),game,1800,185));
+        chicken.add(new NormalChicken(getWorld(),game,1800,690));
+        chicken.add(new NormalChicken(getWorld(),game,1800,565));
+        chicken.add(new NormalChicken(getWorld(),game,1800,440));
+        chicken.add(new NormalChicken(getWorld(),game,1800,310));
+        chicken.add(new NormalChicken(getWorld(),game,1800,185));
 
         new B2WorldCreator(world, map);
     }
@@ -97,16 +97,19 @@ public class PlayScreen implements Screen{
     public void handleInput(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             for (int i = 0; i < this.chicken.size(); i++) {
-                chicken.get(i).b2body.applyLinearImpulse(new Vector2(-chicken.get(i).VELOCITY, 0), chicken.get(i).b2body.getWorldCenter(), true);
+                chicken.get(i).getBody().applyLinearImpulse(new Vector2(-chicken.get(i).getVelocity(), 0), chicken.get(i).getBody().getWorldCenter(), true);
             }
+
         } else if (Gdx.input.isKeyPressed(Input.Keys.S) /*&& chicken.b2body.getLinearVelocity().x <= 2*/) {
             for (int i = 0; i < this.chicken.size(); i++) {
-                chicken.get(i).b2body.applyLinearImpulse(new Vector2(0, -chicken.get(i).VELOCITY), chicken.get(i).b2body.getWorldCenter(), true);
+                chicken.get(i).getBody().applyLinearImpulse(new Vector2(0, -chicken.get(i).getVelocity()), chicken.get(i).getBody().getWorldCenter(), true);
             }
+
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("devia sair");
             new MainMenuScreen(game);
             dispose();
+
         } else if (hud.isSelected) //puts food in selected location
             if (Gdx.input.isTouched()) {
 
@@ -121,7 +124,6 @@ public class PlayScreen implements Screen{
                     for (int m = ORIGINAL_X_MID; m <FINAL_X_MID; m+=tileSize){
                         if ( x-m < GAP) { //found
                             x = m;
-                            System.out.println("here");
                             break;
                         }
                     }
@@ -135,13 +137,10 @@ public class PlayScreen implements Screen{
 
                     switch (hud.selectedFood) {
                         case 1:
-                             chicken.add(new Chicken(getWorld(), game, x, y));
-                            //chicken.add(new Chicken(getWorld(), game, x, y));
-
-                            //  foods.add(new Food(getWorld(), game, placeX, placeY));
+                            foods.add(new Peashooter(getWorld(), game, x, y));
                             break;
                         case 2:
-                            foods.add(new Chicken(getWorld(), game, x, y));
+                            foods.add(new Peashooter(getWorld(), game, x, y));
                             break;
                     }
                     hud.selectedFood = 0;
@@ -157,6 +156,14 @@ public class PlayScreen implements Screen{
         return false;
     }
 
+    public void updateCharacters(float dt){
+        for (int i = 0; i < this.chicken.size(); i++)
+            chicken.get(i).update(dt);
+
+        for (int i = 0; i < this.foods.size(); i++)
+            foods.get(i).update(dt);
+    }
+
     public void update(float dt) {
         handleInput(dt);
 
@@ -168,12 +175,7 @@ public class PlayScreen implements Screen{
             accumulator -= 1/60f;
         }
 
-        for (int i = 0; i < this.chicken.size(); i++)
-            chicken.get(i).update(dt);
-
-        for (int i = 0; i < this.foods.size(); i++)
-            foods.get(i).update(dt);
-
+        updateCharacters(dt);
 
         gameCam.update();
         renderer.setView(gameCam);
@@ -197,6 +199,7 @@ public class PlayScreen implements Screen{
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         game.batch.begin();
+
         for (int i = 0; i < this.chicken.size(); i++){
             chicken.get(i).draw(game.batch);
         }
