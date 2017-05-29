@@ -23,6 +23,7 @@ import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Peashooter;
 import com.mygdx.game.Tools.B2WorldCreator;
 
+import java.util.Random;
 import java.util.Vector;
 
 
@@ -54,6 +55,7 @@ public class PlayScreen implements Screen{
     int FINAL_Y_MID = 793;
     int GAP = 60;
     int tileSize = 128;
+    private int timer = 0;
 
     public PlayScreen(ChickenVsFood game){
         this.game = game;
@@ -72,11 +74,11 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
 
-        chicken.add(new NormalChicken(getWorld(),game,1800,690));
+        /*chicken.add(new NormalChicken(getWorld(),game,1800,690));
         chicken.add(new NormalChicken(getWorld(),game,1800,565));
         chicken.add(new NormalChicken(getWorld(),game,1800,440));
         chicken.add(new NormalChicken(getWorld(),game,1800,310));
-        chicken.add(new NormalChicken(getWorld(),game,1800,185));
+        chicken.add(new NormalChicken(getWorld(),game,1800,185));*/
 
         new B2WorldCreator(world, map);
     }
@@ -175,6 +177,7 @@ public class PlayScreen implements Screen{
             accumulator -= 1/60f;
         }
 
+        GenerateChickens();
         updateCharacters(dt);
 
         gameCam.update();
@@ -211,6 +214,30 @@ public class PlayScreen implements Screen{
         game.batch.end();
         hud.stage.draw();
 
+    }
+
+    public void GenerateChickens(){
+        timer++;
+        if(timer%300 == 0){ // a cada +- 3 segundos
+            Random rn = new Random();
+                switch (rn.nextInt(Integer.SIZE -1)%5) {
+                    case 0:
+                        chicken.add(new NormalChicken(getWorld(), game, 1800, 700));
+                        break;
+                    case 1:
+                        chicken.add(new NormalChicken(getWorld(), game, 1800, 570));
+                        break;
+                    case 2:
+                        chicken.add(new NormalChicken(getWorld(), game, 1800, 440));
+                        break;
+                    case 3:
+                        chicken.add(new NormalChicken(getWorld(), game, 1800, 310));
+                        break;
+                    case 4:
+                        chicken.add(new NormalChicken(getWorld(), game, 1800, 185));
+                        break;
+                }
+        }
     }
 
     @Override
