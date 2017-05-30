@@ -46,8 +46,17 @@ public class Cabbage extends Food {
         return HEALTH;
     }
 
-    @Override
-    public void hit() {
+    public void hit() {}
 
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
     }
 }

@@ -77,14 +77,9 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
 
-        /*chicken.add(new NormalChicken(getWorld(),game,1800,690));
-        chicken.add(new NormalChicken(getWorld(),game,1800,565));
-        chicken.add(new NormalChicken(getWorld(),game,1800,440));
-        chicken.add(new NormalChicken(getWorld(),game,1800,310));
-        chicken.add(new NormalChicken(getWorld(),game,1800,185));*/
-
         new B2WorldCreator(world, map);
         world.setContactListener(new WorldContactListener());
+
     }
 
     public void loadAssets(){
@@ -204,7 +199,7 @@ public class PlayScreen implements Screen{
     public void updateCharacters(float dt){
         for (int i = 0; i < this.chicken.size(); i++) {
             //Dead Chicken
-            if (chicken.get(i).getHealth() == 0)
+            if (chicken.get(i).isDead())
                 chicken.remove(i);
             else{
                 //collision detection
@@ -213,14 +208,12 @@ public class PlayScreen implements Screen{
         }
 
         for (int i = 0; i < this.foods.size(); i++) {
-            if (foods.get(i).getHealth() == 0)
+            if (foods.get(i).isDead())
                 foods.remove(i);
             else{
                 //collision detection
                 foods.get(i).update(dt);
                }
-
-
         }
     }
 
@@ -242,13 +235,8 @@ public class PlayScreen implements Screen{
         return world;
     }
 
-    public void setWorld(){
-        world = new World(new Vector2(0,0),true);
-    }
+    public void setWorld(){world = new World(new Vector2(0,0),true);}
 
-    public Hud getHud(){
-        return hud;
-    }
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);

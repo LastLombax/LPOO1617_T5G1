@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
 
 
+
 public class NormalChicken extends Chicken {
     private float VELOCITY = 10f;
     private int HEALTH = 5;
@@ -42,7 +43,11 @@ public class NormalChicken extends Chicken {
         bdef.position.set(x, y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+<<<<<<< HEAD
         //b2body.setUserData("Chicken");
+=======
+        b2body.setUserData("Normal Chicken");
+>>>>>>> origin/master
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -61,10 +66,15 @@ public class NormalChicken extends Chicken {
     }
 
     public void update(float dt) {
-        setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getWidth() / 2);
+
+        setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
+
+        //movement
+        super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
+
 
         if(this.hiting){
-            getBody().setLinearVelocity(new Vector2(0,0));
+            super.getBody().setLinearVelocity(new Vector2(0,0));
             this.VELOCITY = 0f;
         }
     }
@@ -78,7 +88,7 @@ public class NormalChicken extends Chicken {
 
     @Override
     public void draw(SpriteBatch batch) {
-        this.draw( (Batch) batch);
+        this.draw((Batch) batch);
     }
 
     @Override
@@ -91,4 +101,16 @@ public class NormalChicken extends Chicken {
         return DMG;
     }
 
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+        System.out.println("decrementou");
+    }
 }

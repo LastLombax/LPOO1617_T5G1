@@ -58,4 +58,10 @@ public abstract class Food extends Sprite {
 
     public Body getBody(){return this.b2body;}
 
+    public abstract boolean isDead();
+
+    public abstract void decreaseHealth();
+
+
+
 }

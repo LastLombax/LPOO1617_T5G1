@@ -62,4 +62,9 @@ public abstract class Chicken extends Sprite{
     public World getWorld(){return this.world;}
 
     public Body getBody(){return this.b2body;}
+
+    public abstract boolean isDead();
+
+    public abstract void decreaseHealth();
+
 }

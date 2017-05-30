@@ -58,8 +58,22 @@ public class MadChicken extends Chicken {
         return DMG;
     }
 
+
+
+    public void hit() {}
+
+
     @Override
-    public void hit() {
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+        System.out.println("decrementou");
 
     }
 

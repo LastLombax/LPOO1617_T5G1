@@ -10,36 +10,45 @@ import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Food;
 import com.mygdx.game.Sprites.Foods.Peashooter;
+import com.mygdx.game.Sprites.PeaBullet;
 
 import java.awt.event.ContainerListener;
 
-/**
- * Created by vicen on 30/05/2017.
- */
 
-public class WorldContactListener implements ContactListener{
-
+public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
+        System.out.println("begin contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-        int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-        switch (cDef){
-            case ChickenVsFood.CHICKEN_BIT | ChickenVsFood.FOOD_BIT:
-                if(fixA.getFilterData().categoryBits == ChickenVsFood.CHICKEN_BIT){
-                    ((Chicken)fixA.getUserData()).hit();
-                    ((Food)fixB.getUserData()).hit();
-                }else if(fixB.getFilterData().categoryBits == ChickenVsFood.CHICKEN_BIT){
-                    ((Chicken)fixB.getUserData()).hit();
-                    ((Food)fixA.getUserData()).hit();
-                }
+
+        if (fixA.getUserData() instanceof Chicken){
+            //chicken and food
+            if (fixB.getUserData() instanceof Food){
+                ((Chicken)fixA.getUserData()).hit();
+                ((Food)fixB.getUserData()).hit();
+                ((Food) fixB.getUserData()).decreaseHealth();}
+            else if (fixB.getUserData() instanceof PeaBullet)
+                ((Chicken) fixA.getUserData()).decreaseHealth();
         }
+        else if (fixB.getUserData() instanceof Chicken){
+            //chicken and pea
+            if (fixA.getUserData() instanceof Food)
+                ((Food) fixA.getUserData()).decreaseHealth();
+            else if (fixB.getUserData() instanceof PeaBullet)
+                ((Chicken) fixB.getUserData()).decreaseHealth();
+        }
+
+
     }
 
     @Override
     public void endContact(Contact contact) {
+
+        System.out.println("end contact");
+
 
     }
 

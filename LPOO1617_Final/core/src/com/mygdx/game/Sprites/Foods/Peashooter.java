@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Sprites.PeaBullet;
 
 
 public class Peashooter extends Food {
@@ -22,10 +23,15 @@ public class Peashooter extends Food {
     private int HEALTH = 5;
     private int timer;
     private boolean hiting = false;
+    private int x;
+    private int y;
+
     public Peashooter(World world,ChickenVsFood game,int xInicial,int yInicial){
         super(world,game);
         this.timer = 0;
         this.game = game;
+        this.x = xInicial;
+        this.y = yInicial;
         super.defineFood(xInicial,yInicial);
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
@@ -35,7 +41,7 @@ public class Peashooter extends Food {
     public void defineFood(int x, int y){
         /*BodyDef bdef = new BodyDef();
         bdef.position.set(x,y);
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
 
 
@@ -59,7 +65,9 @@ public class Peashooter extends Food {
         timer++;
         //implement a thread for each unicorn to send corns
         if(timer%100 == 0) { // every second
+           // new PeaBullet(this.world,this.game,this.x,this.y);
             System.out.println("bala incoming");
+
         }
 
         if(this.hiting){
@@ -78,5 +86,17 @@ public class Peashooter extends Food {
     @Override
     public int getHealth() {
         return HEALTH;
+    }
+
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
@@ -29,16 +30,16 @@ public class Hud implements Disposable{
 
     private Integer selectedFood;
     private boolean isSelected;
-
+   // private Texture tex = new Texture("butter.png");
     //progress
-   /* textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("barGreen_horizontalMid.png"))));
-    barStyle = new ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), textureBar);
-    bar = new ProgressBar(0, 10, 0.5f, false, barStyle);
+    //textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("barGreen_horizontalMid.png"))));
+   /* ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(tex);
+    ProgressBar lvlProgress = new ProgressBar(0,100, 5,false,barStyle);
     bar.setPosition(10, 10);
     bar.setSize(290, bar.getPrefHeight());
     bar.setAnimateDuration(2);
-    stage.addActor(bar);*/
-
+    stage.addActor(bar);
+*/
     private static Label cornLabel;
     Label progressLevelLabel;
     Label leveLabel;
@@ -98,9 +99,9 @@ public class Hud implements Disposable{
         });
 
         cornLabel = new Label(String.format("%04d", cornCounter), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-
-        tableT.add(cornLabel).padLeft(50);
-        tableT.add(food1).padLeft(400);
+        cornLabel.setFontScale(3); //change size
+        tableT.add(cornLabel).padLeft(150);
+        tableT.add(food1).padLeft(375);
         tableT.add(food2).padLeft(10);
         tableT.add(food3).padLeft(10);
         stage.addActor(tableT);
@@ -113,6 +114,7 @@ public class Hud implements Disposable{
         tableD.setFillParent(true);
 
         leveLabel = new Label("Level 1-1", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        leveLabel.setFontScale(3); //change size
         tableD.add(leveLabel).padRight(50);
         stage.addActor(tableD);
     }
