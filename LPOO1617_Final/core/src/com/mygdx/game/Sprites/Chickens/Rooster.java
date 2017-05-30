@@ -53,4 +53,11 @@ public class Rooster implements Chicken {
         return DMG;
     }
 
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
+
 }

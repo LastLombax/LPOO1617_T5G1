@@ -19,5 +19,7 @@ public interface Food {
 
     int getHealth();
 
+    boolean isDead();
+
 
 }

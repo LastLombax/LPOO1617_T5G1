@@ -41,4 +41,11 @@ public class Avocado implements Food {
     public int getHealth() {
         return HEALTH;
     }
+
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
 }

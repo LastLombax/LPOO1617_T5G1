@@ -10,41 +10,41 @@ import com.mygdx.game.Screens.MainMenuScreen;
 public class ChickenVsFood extends Game {
 	private static final int V_WIDTH = 1900;
 	private static final int V_HEIGHT = 900;
-	public static final float ASPECT_RATIO = (float) V_WIDTH/(float) V_HEIGHT;
+	public static final float ASPECT_RATIO = (float) V_WIDTH / (float) V_HEIGHT;
 	//public static final float PPM = 100;
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 
-	public int getvWidth(){
+	public int getvWidth() {
 		return V_WIDTH;
 	}
 
-	public int getvHeight(){
+	public int getvHeight() {
 		return V_HEIGHT;
 	}
 
-	public SpriteBatch getBatch(){
+	public SpriteBatch getBatch() {
 		return batch;
 	}
 
-	public ChickenVsFood getGame(){
+	public ChickenVsFood getGame() {
 		return this;
 	}
 
 	@Override
-	public void create () {
+	public void create() {
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
 		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		super.render();
 	}
-	
+
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
 		assetManager.dispose();
 	}
@@ -53,7 +53,4 @@ public class ChickenVsFood extends Game {
 		return assetManager;
 	}
 
-	public Screen getScreen(){
-		return this.screen;
-	}
 }

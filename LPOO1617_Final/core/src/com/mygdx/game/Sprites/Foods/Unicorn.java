@@ -63,9 +63,9 @@ public class Unicorn extends Sprite implements Food {
     public void update(float v) {
         setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getWidth()/2);
         timer++;
-        //implement a thread for each unicorn to send corns
+        //Unicorn's special ability
         if(timer%500 == 0) { // every 5 seconds
-            System.out.println("merdices");
+            System.out.println("New Corn");
             Hud.addCorn(1);
             timer = 0;
         }
@@ -84,6 +84,13 @@ public class Unicorn extends Sprite implements Food {
     @Override
     public int getHealth() {
         return HEALTH;
+    }
+
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
     }
 
     public boolean getCornInc(){

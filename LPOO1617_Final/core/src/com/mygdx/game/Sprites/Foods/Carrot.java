@@ -41,4 +41,11 @@ public class Carrot implements Food {
     public int getHealth() {
         return 0;
     }
+
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
 }

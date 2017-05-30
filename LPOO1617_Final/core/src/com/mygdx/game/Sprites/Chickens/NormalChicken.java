@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -20,7 +21,7 @@ import com.mygdx.game.ChickenVsFood;
 
 
 public class NormalChicken extends Sprite implements Chicken {
-    private static final float VELOCITY = 2.5f;
+    private static final float VELOCITY = 0.5f;
     private int HEALTH = 5;
     private int DMG = 1;
     private World world;
@@ -59,6 +60,10 @@ public class NormalChicken extends Sprite implements Chicken {
     }
 
     public void update(float dt) {
+        //movement
+        this.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0),this.getBody().getWorldCenter(), true);
+
+        //position
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getWidth() / 2);
     }
 
@@ -85,4 +90,10 @@ public class NormalChicken extends Sprite implements Chicken {
         return DMG;
     }
 
+    @Override
+    public boolean isDead() {
+        if (getHealth() == 0)
+            return true;
+        return false;
+    }
 }

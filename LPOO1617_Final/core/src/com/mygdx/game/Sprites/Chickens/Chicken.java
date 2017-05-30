@@ -23,5 +23,7 @@ public interface Chicken{
 
     int getDmg();
 
+    boolean isDead();
+
 
 }
