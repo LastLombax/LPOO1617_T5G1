@@ -10,12 +10,17 @@ import com.mygdx.game.ChickenVsFood;
  * Created by vitor on 29/05/2017.
  */
 
-public class Cabbage implements Food {
+public class Cabbage extends Food {
     private World world;
     private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int HEALTH = 5;
+
+    public Cabbage(World world, ChickenVsFood game) {
+        super(world, game);
+    }
+
     @Override
     public void defineFood(int i, int i1) {
 
@@ -39,5 +44,10 @@ public class Cabbage implements Food {
     @Override
     public int getHealth() {
         return HEALTH;
+    }
+
+    @Override
+    public void hit() {
+
     }
 }

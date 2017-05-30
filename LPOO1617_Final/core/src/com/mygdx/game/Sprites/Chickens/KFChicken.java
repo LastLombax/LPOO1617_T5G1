@@ -10,14 +10,19 @@ import com.mygdx.game.ChickenVsFood;
  * Created by vitor on 29/05/2017.
  */
 
-public class KFChicken implements Chicken {
-    private static final float VELOCITY = 2.5f;
+public class KFChicken extends Chicken {
+    private float VELOCITY = 2.5f;
     private int HEALTH = 5;
     private int DMG = 1;
     private World world;
     private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
+
+    public KFChicken(World world, ChickenVsFood game) {
+        super(world, game);
+    }
+
     @Override
     public void defineChicken(int i, int i1) {
 
@@ -51,6 +56,11 @@ public class KFChicken implements Chicken {
     @Override
     public int getDmg() {
         return DMG;
+    }
+
+    @Override
+    public void hit() {
+
     }
 
 }

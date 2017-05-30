@@ -17,9 +17,7 @@ import com.mygdx.game.Scenes.Hud;
  * Created by vitor on 29/05/2017.
  */
 
-public class Unicorn extends Sprite implements Food {
-    private World world;
-    private Body b2body;
+public class Unicorn extends  Food {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int HEALTH = 5;
@@ -27,12 +25,11 @@ public class Unicorn extends Sprite implements Food {
     private boolean cornInc;
 
     public Unicorn(World world, ChickenVsFood game, int x, int y) {
-        super(game.getAssetManager().get("Chicken.png",Texture.class));
+        super(world,game);
         setCornInc(false);
         this.timer = 0;
-        this.world = world;
         this.game = game;
-        defineFood(x,y);
+        super.defineFood(x,y);
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
         setRegion(ChickenTexture);
@@ -40,28 +37,30 @@ public class Unicorn extends Sprite implements Food {
 
     @Override
     public void defineFood(int i, int i1) {
-        BodyDef bdef = new BodyDef();
+       /* BodyDef bdef = new BodyDef();
         bdef.position.set(i,i1);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-        b2body.setUserData("Food");
+        b2body = super.getWorld().createBody(bdef);
+        //b2body.setUserData("Food");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(35);
 
         fdef.shape = shape;
+        fdef.filter.categoryBits = ChickenVsFood.FOOD_BIT;
+        fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT | ChickenVsFood.FOOD_BIT;
 
         /*fdef.density = 0.5f;
         fdef.friction = 0.4f;
         fdef.restitution = 0.5f;*/
-
-        b2body.createFixture(fdef);
+/*
+        b2body.createFixture(fdef);*/
     }
 
     @Override
     public void update(float v) {
-        setPosition(b2body.getPosition().x-getWidth()/2,b2body.getPosition().y-getWidth()/2);
+        setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
         timer++;
         //implement a thread for each unicorn to send corns
         if(timer%500 == 0) { // every 5 seconds
@@ -72,11 +71,6 @@ public class Unicorn extends Sprite implements Food {
     }
 
     @Override
-    public Body getBody() {
-        return b2body;
-    }
-
-    @Override
     public void draw(SpriteBatch batch) {
         this.draw( (Batch) batch);
     }
@@ -84,6 +78,11 @@ public class Unicorn extends Sprite implements Food {
     @Override
     public int getHealth() {
         return HEALTH;
+    }
+
+    @Override
+    public void hit() {
+
     }
 
     public boolean getCornInc(){

@@ -23,6 +23,7 @@ import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Peashooter;
 import com.mygdx.game.Sprites.Foods.Unicorn;
 import com.mygdx.game.Tools.B2WorldCreator;
+import com.mygdx.game.Tools.WorldContactListener;
 
 import java.util.Random;
 import java.util.Vector;
@@ -83,6 +84,7 @@ public class PlayScreen implements Screen{
         chicken.add(new NormalChicken(getWorld(),game,1800,185));*/
 
         new B2WorldCreator(world, map);
+        world.setContactListener(new WorldContactListener());
     }
 
     public void loadAssets(){
@@ -226,11 +228,13 @@ public class PlayScreen implements Screen{
     public void GenerateChickens(){
         int diffY[] = {700,570,440,310,185}; //array with different initial Y values for each lane
         timer++;
-        if(timer%300 == 0){ // every 3 seconds
+        if(timer%500 == 0){ // every 5 seconds
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
-            chicken.add(new NormalChicken(getWorld(), game, 1800, y));
+            Chicken c = new NormalChicken(getWorld(), game, 2000, y);
+            c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
+            chicken.add(c);
         }
     }
 

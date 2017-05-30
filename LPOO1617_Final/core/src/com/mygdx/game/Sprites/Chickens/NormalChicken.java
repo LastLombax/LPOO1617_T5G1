@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -19,56 +20,61 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
 
 
-public class NormalChicken extends Sprite implements Chicken {
-    private static final float VELOCITY = 2.5f;
+public class NormalChicken extends Chicken {
+    private float VELOCITY = 10f;
     private int HEALTH = 5;
     private int DMG = 1;
-    private World world;
-    private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
+    private boolean hiting = false;
 
     public NormalChicken(World world, ChickenVsFood game, int xInicial, int yInicial) {
-        super(game.getAssetManager().get("Chicken.png", Texture.class));
-        this.world = world;
+        super(world,game);
         this.game = game;
-        defineChicken(xInicial, yInicial);
+        super.defineChicken(xInicial, yInicial);
         ChickenTexture = new TextureRegion(getTexture(), 0, 0, 28, 40);
         setBounds(0, 0, 28, 40);
         setRegion(ChickenTexture);
     }
 
     public void defineChicken(int x, int y) {
-        BodyDef bdef = new BodyDef();
+        /*BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-        b2body.setUserData("Chicken");
+        //b2body.setUserData("Chicken");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(35);
 
+
         fdef.shape = shape;
+        fdef.filter.categoryBits = ChickenVsFood.CHICKEN_BIT;
+        fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT | ChickenVsFood.BUTTER_BIT | ChickenVsFood.FOOD_BIT;
 
         /*fdef.density = 0.5f;
         fdef.friction = 0.4f;
         fdef.restitution = 0.5f;*/
 
-        b2body.createFixture(fdef);
+       /* b2body.createFixture(fdef).setUserData(this);*/
     }
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getWidth() / 2);
-    }
+        setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getWidth() / 2);
 
-    public Body getBody() {
-        return b2body;
+        if(this.hiting){
+            getBody().setLinearVelocity(new Vector2(0,0));
+            this.VELOCITY = 0f;
+        }
     }
 
     public float getVelocity() {
         return VELOCITY;
     }
+
+    public void hit(){this.hiting = true;}
+    public void Nothit(){this.hiting = false;}
 
     @Override
     public void draw(SpriteBatch batch) {

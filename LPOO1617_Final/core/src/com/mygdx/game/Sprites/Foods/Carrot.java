@@ -10,12 +10,16 @@ import com.mygdx.game.ChickenVsFood;
  * Created by vitor on 29/05/2017.
  */
 
-public class Carrot implements Food {
+public class Carrot extends Food {
     private World world;
     private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int HEALTH = 5;
+
+    public Carrot(World world, ChickenVsFood game) {
+        super(world, game);
+    }
 
     @Override
     public void defineFood(int i, int i1) {
@@ -40,5 +44,10 @@ public class Carrot implements Food {
     @Override
     public int getHealth() {
         return 0;
+    }
+
+    @Override
+    public void hit() {
+
     }
 }
