@@ -27,7 +27,7 @@ public abstract class Food extends Sprite {
      public  void  defineFood(int x, int y){
          BodyDef bdef = new BodyDef();
          bdef.position.set(x,y);
-         bdef.type = BodyDef.BodyType.DynamicBody;
+         bdef.type = BodyDef.BodyType.StaticBody;
          this.b2body = world.createBody(bdef);
          //this.b2body.setUserData("Food");
 
