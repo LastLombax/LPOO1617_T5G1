@@ -25,5 +25,5 @@ public interface Chicken{
 
     boolean isDead();
 
-
+    void decreaseHealth();
 }

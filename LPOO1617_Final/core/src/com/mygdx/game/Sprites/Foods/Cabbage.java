@@ -47,4 +47,9 @@ public class Cabbage implements Food {
             return true;
         return false;
     }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+    }
 }

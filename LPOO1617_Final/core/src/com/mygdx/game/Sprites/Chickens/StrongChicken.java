@@ -60,4 +60,10 @@ public class StrongChicken implements Chicken {
         return false;
     }
 
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+        System.out.println("decrementou");
+    }
+
 }

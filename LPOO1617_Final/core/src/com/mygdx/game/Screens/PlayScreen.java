@@ -23,6 +23,7 @@ import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Peashooter;
 import com.mygdx.game.Sprites.Foods.Unicorn;
 import com.mygdx.game.Tools.B2WorldCreator;
+import com.mygdx.game.Tools.WorldContactListener;
 
 import java.util.Random;
 import java.util.Vector;
@@ -76,13 +77,9 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         b2dr.SHAPE_STATIC.set(1,0,0,1);
 
-        /*chicken.add(new NormalChicken(getWorld(),game,1800,690));
-        chicken.add(new NormalChicken(getWorld(),game,1800,565));
-        chicken.add(new NormalChicken(getWorld(),game,1800,440));
-        chicken.add(new NormalChicken(getWorld(),game,1800,310));
-        chicken.add(new NormalChicken(getWorld(),game,1800,185));*/
-
         new B2WorldCreator(world, map);
+
+        world.setContactListener( new WorldContactListener());
     }
 
     public void loadAssets(){

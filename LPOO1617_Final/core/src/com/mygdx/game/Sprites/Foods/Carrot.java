@@ -48,4 +48,9 @@ public class Carrot implements Food {
             return true;
         return false;
     }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+    }
 }

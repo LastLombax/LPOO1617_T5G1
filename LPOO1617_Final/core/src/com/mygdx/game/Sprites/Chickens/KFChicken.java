@@ -60,4 +60,10 @@ public class KFChicken implements Chicken {
         return false;
     }
 
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+        System.out.println("decrementou");
+    }
+
 }

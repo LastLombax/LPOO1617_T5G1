@@ -21,7 +21,7 @@ import com.mygdx.game.ChickenVsFood;
 
 
 public class NormalChicken extends Sprite implements Chicken {
-    private static final float VELOCITY = 0.5f;
+    private static final float VELOCITY = 0.2f;
     private int HEALTH = 5;
     private int DMG = 1;
     private World world;
@@ -44,7 +44,7 @@ public class NormalChicken extends Sprite implements Chicken {
         bdef.position.set(x, y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-        b2body.setUserData("Chicken");
+        b2body.setUserData("Normal Chicken");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -61,7 +61,7 @@ public class NormalChicken extends Sprite implements Chicken {
 
     public void update(float dt) {
         //movement
-        this.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0),this.getBody().getWorldCenter(), true);
+        this.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), this.getBody().getWorldCenter(), true);
 
         //position
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getWidth() / 2);
@@ -77,7 +77,7 @@ public class NormalChicken extends Sprite implements Chicken {
 
     @Override
     public void draw(SpriteBatch batch) {
-        this.draw( (Batch) batch);
+        this.draw((Batch) batch);
     }
 
     @Override
@@ -95,5 +95,11 @@ public class NormalChicken extends Sprite implements Chicken {
         if (getHealth() == 0)
             return true;
         return false;
+    }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+        System.out.println("decrementou");
     }
 }

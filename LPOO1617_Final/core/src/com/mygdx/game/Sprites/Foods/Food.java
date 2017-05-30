@@ -21,5 +21,7 @@ public interface Food {
 
     boolean isDead();
 
+    void decreaseHealth();
+
 
 }

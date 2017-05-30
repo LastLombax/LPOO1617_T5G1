@@ -60,4 +60,10 @@ public class MadChicken implements Chicken {
         return false;
     }
 
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
+        System.out.println("decrementou");
+    }
+
 }

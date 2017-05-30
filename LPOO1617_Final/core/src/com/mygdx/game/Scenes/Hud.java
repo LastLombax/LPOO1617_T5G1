@@ -114,6 +114,7 @@ public class Hud implements Disposable{
         tableD.setFillParent(true);
 
         leveLabel = new Label("Level 1-1", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        leveLabel.setFontScale(3); //change size
         tableD.add(leveLabel).padRight(50);
         stage.addActor(tableD);
     }

@@ -42,9 +42,9 @@ public class Unicorn extends Sprite implements Food {
     public void defineFood(int i, int i1) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(i,i1);
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
-        b2body.setUserData("Food");
+        b2body.setUserData("Unicorn");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -91,6 +91,11 @@ public class Unicorn extends Sprite implements Food {
         if (getHealth() == 0)
             return true;
         return false;
+    }
+
+    @Override
+    public void decreaseHealth() {
+        this.HEALTH--;
     }
 
     public boolean getCornInc(){
