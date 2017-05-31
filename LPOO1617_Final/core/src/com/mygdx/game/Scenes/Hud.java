@@ -30,7 +30,13 @@ public class Hud implements Disposable{
 
     private Integer selectedFood;
     private boolean isSelected;
-   // private Texture tex = new Texture("butter.png");
+
+    private static int FOOD_1 = 100;
+    private static int FOOD_2 = 50;
+    private static int cost[] = {FOOD_1,FOOD_2};
+    private int INITIAL_CORN = 50;
+
+    // private Texture tex = new Texture("butter.png");
     //progress
     //textureBar = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("barGreen_horizontalMid.png"))));
    /* ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(tex);
@@ -49,7 +55,7 @@ public class Hud implements Disposable{
 
         setSelectedFood(0);
         setSelected(false);
-        cornCounter = 0;
+        cornCounter = INITIAL_CORN;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
 
         stage = new Stage(viewport, sb);
@@ -68,13 +74,13 @@ public class Hud implements Disposable{
 
         ButtonImg food1 = new ButtonImg(tex,tex1,tex2);
 
-      //  food1.setZIndex();
+        //  food1.setZIndex();
 
         food1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso1");
-                setSelectedFood(1);
-                setSelected(true);
+               if (!canSelect(1))
+                   System.out.println("Get more coin");
 
             }
         });
@@ -84,8 +90,8 @@ public class Hud implements Disposable{
         food2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.out.println("coiso2");
-                setSelectedFood(2);
-                setSelected(true);
+                if (!canSelect(2))
+                    System.out.println("Get more coin");
             }
         });
 
@@ -141,7 +147,27 @@ public class Hud implements Disposable{
 
     public static void addCorn(int counter){
         cornCounter+=counter;
+        setCornText();
+    }
+
+    public static void removeCorn(int counter){
+        cornCounter-=counter;
+        setCornText();
+    }
+
+    public static void setCornText(){
         cornLabel.setText(String.format("%04d", cornCounter));
+    }
+
+    public boolean canSelect(int food){
+        if (cornCounter >= cost[food-1]){
+            setSelectedFood(food);
+            setSelected(true);
+            removeCorn(cost[food-1]);
+            return true;
+        }
+        return false;
+
     }
 
     @Override

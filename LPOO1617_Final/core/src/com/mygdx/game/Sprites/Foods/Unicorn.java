@@ -44,8 +44,8 @@ public class Unicorn extends  Food {
 <<<<<<< HEAD
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = super.getWorld().createBody(bdef);
-        //b2body.setUserData("Food");
-=======
+        //b2body.setUerData("Food");
+=======s
         bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
         b2body.setUserData("Unicorn");
@@ -73,7 +73,7 @@ public class Unicorn extends  Food {
         //Unicorn's special ability
         if(timer%500 == 0) { // every 5 seconds
             System.out.println("New Corn");
-            Hud.addCorn(1);
+            Hud.addCorn(50);
             timer = 0;
         }
 

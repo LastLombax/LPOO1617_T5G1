@@ -10,7 +10,7 @@ import com.mygdx.game.Screens.MainMenuScreen;
 public class ChickenVsFood extends Game {
 	private static final int V_WIDTH = 1900;
 	private static final int V_HEIGHT = 900;
-	public static final float ASPECT_RATIO = (float) V_WIDTH/(float) V_HEIGHT;
+	//public static final float ASPECT_RATIO = (float) V_WIDTH/(float) V_HEIGHT;
 	public static final short CHICKEN_BIT = 1;
 	public static final short FOOD_BIT = 2;
 	public static final short BUTTER_BIT = 1;

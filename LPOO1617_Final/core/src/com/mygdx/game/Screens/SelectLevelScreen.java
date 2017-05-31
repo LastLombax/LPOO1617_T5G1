@@ -20,6 +20,7 @@ public class SelectLevelScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
+    private int BUTTON_X = 200;
     Texture lvlSelector;
 
     public SelectLevelScreen(final ChickenVsFood game){
@@ -31,7 +32,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
         PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel1.setPosition(200,game.getvHeight()/2 );
+        PlayLevel1.setPosition(BUTTON_X,game.getvHeight()/2 );
         PlayLevel1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game));
@@ -43,7 +44,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg PlayLevel2 = new ButtonImg(tex1,tex1,tex1);
         PlayLevel2.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel2.setPosition(400, game.getvHeight()/2 );
+        PlayLevel2.setPosition(2*BUTTON_X, game.getvHeight()/2 );
         PlayLevel2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
 
@@ -54,7 +55,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex2 = new Texture(Gdx.files.internal("Relva1.png"));
         ButtonImg PlayLevel3 = new ButtonImg(tex2,tex2,tex2);
         PlayLevel3.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel3.setPosition(600, game.getvHeight()/2 );
+        PlayLevel3.setPosition(3*BUTTON_X, game.getvHeight()/2 );
         PlayLevel3.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
 
@@ -65,7 +66,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex3 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex3,tex3,tex3);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(800,game.getvHeight()/2 );
+        ExitButton.setPosition(4*BUTTON_X,game.getvHeight()/2 );
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));

@@ -35,9 +35,7 @@ import java.util.Vector;
 
 public class PlayScreen implements Screen{
     private ChickenVsFood game;
-    private Vector<Chicken> chicken = new Vector<Chicken>();
 
-    private Vector<Food> foods = new Vector<Food>();
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
@@ -48,17 +46,28 @@ public class PlayScreen implements Screen{
 
     private World world;
     private Box2DDebugRenderer b2dr;
+
     private float accumulator;
+    private float FPS = 1/60f;
 
     //placement variables
+    private int MIN_WORLD_X = 512;
+    private int MAX_WORLD_X = 1790;
+    private int MIN_WORLD_Y = 180;
+    private int MAX_WORLD_Y = 695;
     private int ORIGINAL_X_MID = 575;
     private int FINAL_X_MID = 1855;
     private int ORIGINAL_Y_MID = 185;
     private int FINAL_Y_MID = 793;
     private int GAP = 60;
     private int tileSize = 128;
+
     private int MAX_CHICKEN = 20;
+    private int INITIAL_CHICKEN_X = 2000;
     private int timer = 0;
+
+    private Vector<Chicken> chicken = new Vector<Chicken>();
+    private Vector<Food> foods = new Vector<Food>();
 
     public PlayScreen(ChickenVsFood game){
         this.game = game;
@@ -121,9 +130,9 @@ public class PlayScreen implements Screen{
         //takes 1 step in the physics simulation (60 times per second)
         float frameTime = Math.min(dt, 0.25f);
         accumulator += frameTime;
-        while (accumulator >= 1/60f) {
-            world.step(1/60f, 6, 2);
-            accumulator -= 1/60f;
+        while (accumulator >= FPS) {
+            world.step(FPS, 6, 2);
+            accumulator -= FPS;
         }
 
         if(chicken.size() < MAX_CHICKEN)
@@ -191,9 +200,7 @@ public class PlayScreen implements Screen{
     }
 
     public boolean checkPlacingBounds(double px, double py){
-        if (px >= 512 && px <= 1790 && py >= 180 && py <=695)
-            return true;
-        return false;
+        return (px >= MIN_WORLD_X && px <= MAX_WORLD_X && py >= MIN_WORLD_Y && py <=MAX_WORLD_Y);
     }
 
     public void updateCharacters(float dt){
@@ -225,7 +232,7 @@ public class PlayScreen implements Screen{
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
-            Chicken c = new NormalChicken(getWorld(), game, 2000, y);
+            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y);
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);
         }

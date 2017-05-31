@@ -22,8 +22,6 @@ public class WorldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-
-
         if (fixA.getUserData() instanceof Chicken){
             //chicken and food
             if (fixB.getUserData() instanceof Food){
