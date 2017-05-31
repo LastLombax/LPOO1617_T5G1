@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
+import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Foods.Food;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
@@ -66,8 +67,18 @@ public class PlayScreen implements Screen{
     private int INITIAL_CHICKEN_X = 2000;
     private int timer = 0;
 
+    private int LANE_1_Y = 700;
+    private int LANE_2_Y = 570;
+    private int LANE_3_Y = 440;
+    private int LANE_4_Y = 310;
+    private int LANE_5_Y = 185;
+    private int BUTTER_X = 450;
+
+    private int diffY[] = {LANE_1_Y,LANE_2_Y,LANE_3_Y,LANE_4_Y,LANE_5_Y}; //array with different initial Y values for each lane
+
     private Vector<Chicken> chicken = new Vector<Chicken>();
     private Vector<Food> foods = new Vector<Food>();
+    private Vector<Butter> butters = new Vector<Butter>();
 
     public PlayScreen(ChickenVsFood game){
         this.game = game;
@@ -89,11 +100,20 @@ public class PlayScreen implements Screen{
         new B2WorldCreator(world, map);
         world.setContactListener(new WorldContactListener());
 
+        loadButters();
+
     }
 
     public void loadAssets(){
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
+    }
+    //continuar a tratar da manteiga
+    public void loadButters(){
+        for (int i = 0; i < diffY.length; i++){
+            Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
+            butters.add(b);
+        }
     }
     @Override
     public void render(float delta) {
@@ -226,7 +246,6 @@ public class PlayScreen implements Screen{
 
 
     public void GenerateChickens(){
-        int diffY[] = {700,570,440,310,185}; //array with different initial Y values for each lane
         timer++;
         if(timer%500 == 0){ // every 5 seconds
             Random rn = new Random();
