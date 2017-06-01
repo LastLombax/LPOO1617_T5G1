@@ -1,6 +1,7 @@
 package com.mygdx.game.Sprites.Foods;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,23 +19,34 @@ import com.mygdx.game.Scenes.Hud;
  * Created by vitor on 29/05/2017.
  */
 
-public class Unicorn extends  Food {
+public class Unicorn extends Food {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int HEALTH = 5;
     private int timer;
     private boolean cornInc;
     private boolean hiting = false;
+    private boolean animateC = false;
+    private Sprite corn;
+    private Vector2 cornMovDir;
+    private int x;
+    private int y;
 
-    public Unicorn(World world, ChickenVsFood game, int x, int y) {
+    public Unicorn(World world, ChickenVsFood game, int x, int y){
         super(world,game);
         setCornInc(false);
         this.timer = 0;
         this.game = game;
+        this.x = x;
+        this.y = y;
         super.defineFood(x,y);
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
         setRegion(ChickenTexture);
+        corn = new Sprite(new Texture("corn.png"),0,0,20,20);
+        cornMovDir = new Vector2(Hud.getCornLabel().getX() - super.getBody().getPosition().x,Hud.getCornLabel().getY() - super.getBody().getPosition().y);
+        cornMovDir.nor();
+
     }
 
     @Override
@@ -71,10 +83,14 @@ public class Unicorn extends  Food {
         setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
         timer++;
         //Unicorn's special ability
+        if (animateC)
+            animateCorn(v);
         if(timer%500 == 0) { // every 5 seconds
-            System.out.println("New Corn");
-            Hud.addCorn(50);
             timer = 0;
+            System.out.println("New Corn");
+            animateC = true;
+            corn.setPosition(this.x, this.y);
+            animateCorn(v);
         }
 
         if(this.hiting){
@@ -84,6 +100,9 @@ public class Unicorn extends  Food {
 
     @Override
     public void draw(SpriteBatch batch) {
+        if (animateC)
+            corn.draw((Batch) batch);
+
         this.draw( (Batch) batch);
     }
 
@@ -114,6 +133,24 @@ public class Unicorn extends  Food {
 
     public void setCornInc(boolean b){
         this.cornInc = b;
+    }
+
+    public void animateCorn(float dt){
+        if (corn.getX() > Hud.getCornLabel().getX() && corn.getY() < Hud.getCornLabel().getY()){
+            corn.setPosition(corn.getX() + 5*cornMovDir.x, corn.getY() + 5*cornMovDir.y);
+            System.out.println(corn.getX());
+            System.out.println(corn.getY());
+
+            game.getBatch().begin();
+            corn.draw(game.getBatch());
+            game.getBatch().end();
+        }
+        else {
+            System.out.println("chegou");
+            Hud.addCorn(50);
+            animateC = false;
+            corn.setPosition(this.x,this.y);
+        }
     }
 
 }

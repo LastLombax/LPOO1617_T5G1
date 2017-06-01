@@ -170,6 +170,10 @@ public class Hud implements Disposable{
 
     }
 
+    public static Label getCornLabel(){
+        return cornLabel;
+    }
+
     @Override
     public void dispose() {
         stage.dispose();

@@ -240,7 +240,7 @@ public class PlayScreen implements Screen{
             else{
                 //collision detection
                 foods.get(i).update(dt);
-               }
+            }
         }
     }
 
