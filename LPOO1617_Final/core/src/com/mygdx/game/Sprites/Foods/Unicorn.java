@@ -27,7 +27,7 @@ public class Unicorn extends Food {
     private boolean cornInc;
     private boolean hiting = false;
     private boolean animateC = false;
-    private Sprite corn;
+    private Corn corn;
     private Vector2 cornMovDir;
     private int x;
     private int y;
@@ -43,10 +43,7 @@ public class Unicorn extends Food {
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
         setRegion(ChickenTexture);
-        corn = new Sprite(new Texture("corn.png"),0,0,20,20);
         cornMovDir = new Vector2(Hud.getCornLabel().getX() - super.getBody().getPosition().x,Hud.getCornLabel().getY() - super.getBody().getPosition().y);
-        cornMovDir.nor();
-
     }
 
     @Override
@@ -84,13 +81,17 @@ public class Unicorn extends Food {
         timer++;
         //Unicorn's special ability
         if (animateC)
-            animateCorn(v);
+            if (corn.update(v)) {//ended
+                corn = null;
+                animateC = false;
+                Hud.addCorn(50);
+            }
+
         if(timer%500 == 0) { // every 5 seconds
-            timer = 0;
             System.out.println("New Corn");
+            timer = 0;
+            corn = new Corn(this.x,this.y, cornMovDir);
             animateC = true;
-            corn.setPosition(this.x, this.y);
-            animateCorn(v);
         }
 
         if(this.hiting){
@@ -103,10 +104,9 @@ public class Unicorn extends Food {
 
     @Override
     public void draw(SpriteBatch batch) {
-        if (animateC)
-            corn.draw((Batch) batch);
-
         this.draw( (Batch) batch);
+        if (corn != null)
+            corn.draw(batch);
     }
 
     @Override
@@ -124,7 +124,6 @@ public class Unicorn extends Food {
 
     public void Nothit(){this.hiting = false;}
 
-
     public boolean getCornInc(){
         return cornInc;
     }
@@ -133,22 +132,5 @@ public class Unicorn extends Food {
         this.cornInc = b;
     }
 
-    public void animateCorn(float dt){
-        if (corn.getX() > Hud.getCornLabel().getX() && corn.getY() < Hud.getCornLabel().getY()){
-            corn.setPosition(corn.getX() + 5*cornMovDir.x, corn.getY() + 5*cornMovDir.y);
-            System.out.println(corn.getX());
-            System.out.println(corn.getY());
-
-            game.getBatch().begin();
-            corn.draw(game.getBatch());
-            game.getBatch().end();
-        }
-        else {
-            System.out.println("chegou");
-            Hud.addCorn(50);
-            animateC = false;
-            corn.setPosition(this.x,this.y);
-        }
-    }
 
 }

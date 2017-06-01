@@ -226,8 +226,10 @@ public class PlayScreen implements Screen{
     public void updateCharacters(float dt){
         for (int i = 0; i < this.chicken.size(); i++) {
             //Dead Chicken
-            if (chicken.get(i).isDead())
+            if (chicken.get(i).isDead()) {
                 chicken.remove(i);
+                i--;
+            }
             else{
                 //collision detection
                 chicken.get(i).update(dt);
@@ -235,8 +237,10 @@ public class PlayScreen implements Screen{
         }
 
         for (int i = 0; i < this.foods.size(); i++) {
-            if (foods.get(i).isDead())
+            if (foods.get(i).isDead()) {
                 foods.remove(i);
+                i--;
+            }
             else{
                 //collision detection
                 foods.get(i).update(dt);
