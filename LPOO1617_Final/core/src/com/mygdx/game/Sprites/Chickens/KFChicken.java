@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.PlayScreen;
 
 /**
  * Created by vitor on 29/05/2017.
@@ -19,10 +20,9 @@ public class KFChicken extends Chicken {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
 
-    public KFChicken(World world, ChickenVsFood game) {
-        super(world, game);
+    public KFChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
+        super(world, game, screen);
     }
-
     @Override
     public void defineChicken(int i, int i1) {
 

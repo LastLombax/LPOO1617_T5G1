@@ -12,7 +12,7 @@ import com.mygdx.game.Scenes.Hud;
 public class Corn extends Sprite {
 
     private Vector2 cornMovDir;
-    private int MULTI = 5;
+    private int MULTI = 6;
 
     public Corn(int x, int y, Vector2 dir){
         super(new Texture("corn.png"));

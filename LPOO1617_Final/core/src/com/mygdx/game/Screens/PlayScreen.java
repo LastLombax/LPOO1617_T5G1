@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -50,6 +51,8 @@ public class PlayScreen implements Screen{
 
     private float accumulator;
     private float FPS = 1/60f;
+
+    private TextureAtlas enemies;
 
     //placement variables
     private int MIN_WORLD_X = 512;
@@ -105,15 +108,20 @@ public class PlayScreen implements Screen{
     }
 
     public void loadAssets(){
+        enemies = new TextureAtlas("chocobo.pack");
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
     }
-    //continuar a tratar da manteiga
+
     public void loadButters(){
         for (int i = 0; i < diffY.length; i++){
             Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
             butters.add(b);
         }
+    }
+
+    public TextureAtlas getEnemiesAtlas(){
+        return enemies;
     }
     @Override
     public void render(float delta) {
@@ -259,7 +267,7 @@ public class PlayScreen implements Screen{
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
-            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y);
+            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);
         }
