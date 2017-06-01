@@ -242,6 +242,10 @@ public class PlayScreen implements Screen{
                 foods.get(i).update(dt);
             }
         }
+
+        for (int i = 0; i < this.butters.size(); i++) {
+            this.butters.get(i).update(dt);
+        }
     }
 
 

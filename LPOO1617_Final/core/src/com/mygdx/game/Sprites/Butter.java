@@ -53,15 +53,12 @@ public class Butter extends Sprite {
     }
 
     public void update(float dt) {
-        update(dt);
         setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getWidth() / 2);
       //  this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);
+        if(this.hitting){
+            this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);
+        }
 
-    }
-
-    public void onHit(){
-        System.out.println("hit");
-        this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);
     }
 
     public void hit(){

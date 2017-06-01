@@ -26,7 +26,7 @@ public class WorldContactListener implements ContactListener {
         if ((fixA.getUserData() instanceof Butter )&& (fixB.getUserData() instanceof Chicken)){
             //butter and chicken
             ((Chicken) fixB.getUserData()).setHealth(0);
-            ((Butter) fixA.getUserData()).onHit();
+            ((Butter) fixA.getUserData()).hit();
         }
         else if((fixB.getUserData() instanceof Butter )&& (fixA.getUserData() instanceof Chicken)){
             //butter and chicken
