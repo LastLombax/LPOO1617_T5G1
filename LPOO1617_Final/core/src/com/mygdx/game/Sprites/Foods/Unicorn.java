@@ -95,6 +95,9 @@ public class Unicorn extends Food {
 
         if(this.hiting){
             super.getBody().setLinearVelocity(new Vector2(0,0));
+            if(timer%500 == 0){
+                decreaseHealth();
+            }
         }
     }
 
@@ -111,21 +114,16 @@ public class Unicorn extends Food {
         return HEALTH;
     }
 
+    @Override
+    public void setHealth(int health) {
+        this.HEALTH = health;
+    }
+
 
     public void hit(){this.hiting = true;}
+
     public void Nothit(){this.hiting = false;}
 
-    @Override
-    public boolean isDead() {
-        if (getHealth() == 0)
-            return true;
-        return false;
-    }
-
-    @Override
-    public void decreaseHealth() {
-        this.HEALTH--;
-    }
 
     public boolean getCornInc(){
         return cornInc;

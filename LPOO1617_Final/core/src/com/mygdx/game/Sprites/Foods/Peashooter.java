@@ -62,6 +62,7 @@ public class Peashooter extends Food {
 
     public void update(float dt){
         setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
+
         timer++;
         //implement a thread for each unicorn to send corns
         if(timer%100 == 0) { // every second
@@ -72,6 +73,9 @@ public class Peashooter extends Food {
 
         if(this.hiting){
             super.getBody().setLinearVelocity(new Vector2(0,0));
+            if(timer%500 == 0){
+                decreaseHealth();
+            }
         }
     }
 
@@ -89,14 +93,7 @@ public class Peashooter extends Food {
     }
 
     @Override
-    public boolean isDead() {
-        if (getHealth() == 0)
-            return true;
-        return false;
-    }
-
-    @Override
-    public void decreaseHealth() {
-        this.HEALTH--;
+    public void setHealth(int health) {
+        this.HEALTH = health;
     }
 }

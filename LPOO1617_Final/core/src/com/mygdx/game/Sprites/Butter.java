@@ -21,7 +21,10 @@ public class Butter extends Sprite {
     private ChickenVsFood game;
     private TextureRegion ButterTexture;
     private Texture Butter = new Texture("butter.png");
-    private float VELOCITY = 0.1f;
+    private float VELOCITY = 50f;
+    private boolean hitting = false;
+
+
     public Butter(World world, ChickenVsFood game, int x, int y){
         this.world = world;
         this.game = game;
@@ -36,19 +39,13 @@ public class Butter extends Sprite {
         bdef.position.set(x,y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-        b2body.setUserData("Butter");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(35);
-
         fdef.shape = shape;
 
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
-
-        b2body.createFixture(fdef);
+        this.b2body.createFixture(fdef).setUserData(this);
     }
 
     public Body getBody() {
@@ -63,7 +60,16 @@ public class Butter extends Sprite {
     }
 
     public void onHit(){
+        System.out.println("hit");
         this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);
+    }
+
+    public void hit(){
+        this.hitting = true;
+    }
+
+    public void NotHit(){
+        this.hitting = false;
     }
 
 

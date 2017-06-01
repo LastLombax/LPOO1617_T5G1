@@ -54,6 +54,11 @@ public class StrongChicken extends Chicken {
     }
 
     @Override
+    public void setHealth(int health) {
+        this.HEALTH = health;
+    }
+
+    @Override
     public int getDmg() {
         return DMG;
     }
@@ -62,16 +67,8 @@ public class StrongChicken extends Chicken {
     public void hit() {}
 
     @Override
-    public boolean isDead() {
-        if (getHealth() == 0)
-            return true;
-        return false;
-    }
+    public void Nothit() {
 
-    @Override
-    public void decreaseHealth() {
-        this.HEALTH--;
-        System.out.println("decrementou");
     }
 
 }

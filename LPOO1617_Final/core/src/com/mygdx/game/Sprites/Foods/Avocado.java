@@ -46,18 +46,15 @@ public class Avocado extends Food {
         return HEALTH;
     }
 
+    @Override
+    public void setHealth(int health) {
+        this.HEALTH=health;
+    }
 
     public void hit() {}
 
     @Override
-    public boolean isDead() {
-        if (getHealth() == 0)
-            return true;
-        return false;
-    }
+    public void Nothit() {
 
-    @Override
-    public void decreaseHealth() {
-        this.HEALTH--;
     }
 }

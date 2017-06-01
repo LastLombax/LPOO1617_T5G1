@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Food;
@@ -22,7 +23,16 @@ public class WorldContactListener implements ContactListener {
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
-        if (fixA.getUserData() instanceof Chicken){
+        if ((fixA.getUserData() instanceof Butter )&& (fixB.getUserData() instanceof Chicken)){
+            //butter and chicken
+            ((Chicken) fixB.getUserData()).setHealth(0);
+            ((Butter) fixA.getUserData()).onHit();
+        }
+        else if((fixB.getUserData() instanceof Butter )&& (fixA.getUserData() instanceof Chicken)){
+            //butter and chicken
+            ((Chicken) fixB.getUserData()).setHealth(0);
+        }
+        else if (fixA.getUserData() instanceof Chicken){
             //chicken and food
             if (fixB.getUserData() instanceof Food){
                 ((Chicken)fixA.getUserData()).hit();
@@ -45,9 +55,17 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-
         System.out.println("end contact");
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
 
+        if (fixA.getUserData() instanceof Chicken){
+            //chicken and food
+            if (fixB.getUserData() instanceof Food) {
+                ((Chicken) fixA.getUserData()).Nothit();
+                ((Food) fixB.getUserData()).Nothit();
+            }
+        }
 
     }
 

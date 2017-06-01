@@ -66,7 +66,6 @@ public class NormalChicken extends Chicken {
     }
 
     public void update(float dt) {
-
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
 
         //movement
@@ -97,20 +96,12 @@ public class NormalChicken extends Chicken {
     }
 
     @Override
+    public void setHealth(int health) {
+        this.HEALTH = health;
+    }
+
+    @Override
     public int getDmg() {
         return DMG;
-    }
-
-    @Override
-    public boolean isDead() {
-        if (getHealth() == 0)
-            return true;
-        return false;
-    }
-
-    @Override
-    public void decreaseHealth() {
-        this.HEALTH--;
-        System.out.println("decrementou");
     }
 }
