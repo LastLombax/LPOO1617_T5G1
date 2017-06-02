@@ -1,22 +1,11 @@
 package com.mygdx.game.Sprites.Chickens;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
@@ -24,7 +13,7 @@ import com.mygdx.game.Screens.PlayScreen;
 
 
 public class NormalChicken extends Chicken {
-    public enum State{WALKING, EATING};
+    public enum State{WALKING, EATING}
     private State currState;
     private State prevState;
     private float VELOCITY = 10f;
@@ -40,12 +29,12 @@ public class NormalChicken extends Chicken {
 
 
     /**
-     *
-     * @param world
-     * @param game
-     * @param xInicial
-     * @param yInicial
-     * @param screen
+     * Constructor for the Normal Chicken
+     * @param world game world
+     * @param game ChickenVsFood game
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     * @param screen game screen
      */
     public NormalChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
@@ -58,36 +47,8 @@ public class NormalChicken extends Chicken {
         ChickenTexture = new TextureRegion(screen.getNormalChicken().findRegion("NormalChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(ChickenTexture);
-
         setAnimations();
 
-    }
-
-    public void defineChicken(int x, int y) {
-        /*BodyDef bdef = new BodyDef();
-        bdef.position.set(x, y);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-<<<<<<< HEAD
-        //b2body.setUserData("Chicken");
-=======
-        b2body.setUserData("Normal Chicken");
->>>>>>> origin/master
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(35);
-
-
-        fdef.shape = shape;
-        fdef.filter.categoryBits = ChickenVsFood.CHICKEN_BIT;
-        fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT | ChickenVsFood.BUTTER_BIT | ChickenVsFood.FOOD_BIT;
-
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
-
-       /* b2body.createFixture(fdef).setUserData(this);*/
     }
 
     /**

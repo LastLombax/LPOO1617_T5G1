@@ -48,7 +48,6 @@ public class EggSplosion extends Chicken {
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
-
         ChickenTexture = new TextureRegion(screen.getEggSplosion().findRegion("EggSplosion"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(ChickenTexture);

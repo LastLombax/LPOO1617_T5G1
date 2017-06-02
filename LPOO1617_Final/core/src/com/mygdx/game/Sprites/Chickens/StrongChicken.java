@@ -1,10 +1,13 @@
 package com.mygdx.game.Sprites.Chickens;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -13,22 +16,20 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 
 public class StrongChicken extends Chicken {
-    public enum State{WALKING, EATING};
+    public enum State{WALKING, EATING}
     private State currState;
     private State prevState;
-    private float VELOCITY = 2.5f;
+    private float VELOCITY = 5f;
     private int HEALTH = 10;
     private int DMG = 1;
-    private World world;
-    private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private float stateTimer = 0;
+    private int SIZE_PIXEL = 30;
+    private int WORLD_SIZE = 90;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenEating;
 
-    private int SIZE_PIXEL = 30;
-    private int WORLD_SIZE = 90;
     public StrongChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
         this.game = game;
@@ -44,31 +45,67 @@ public class StrongChicken extends Chicken {
     }
 
     private void setAnimations() {
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for (int i = 0; i < 3; i++)
+            frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
+        chickenWalking = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
+        for (int i = 6; i < 8; i++)
+            frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
+        chickenEating = new Animation<TextureRegion>(0.5f, frames);
+        frames.clear();
     }
 
-    @Override
-    public void defineChicken(int i, int i1) {
 
-    }
 
     @Override
     public void update(float v) {
+        setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
+
+        setRegion(getFrame(v));
+
+        super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
 
     }
 
-    @Override
-    public Body getBody() {
-        return null;
+    /**
+     * Returns the current frame/animation of the NormalChicken
+     */
+    private TextureRegion getFrame(float dt) {
+
+        TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
+        currState = getState();
+        if (currState == State.EATING)
+            region = chickenEating.getKeyFrame(stateTimer, true);
+        else if (currState == State.WALKING)
+            region = chickenWalking.getKeyFrame(stateTimer, true);
+
+        stateTimer = currState == prevState ? stateTimer +dt : 0;
+        prevState = currState;
+
+        return region;
+
+    }
+    /**
+     * Returns the current state
+     */
+    private State getState() {
+        if (super.getFoodHit())
+            return State.EATING;
+        else
+            return State.WALKING;
+
     }
 
     @Override
     public float getVelocity() {
-        return 0;
+        return VELOCITY;
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-
+        this.draw((Batch) spriteBatch);
     }
 
     @Override
