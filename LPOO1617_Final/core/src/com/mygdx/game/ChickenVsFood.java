@@ -13,7 +13,8 @@ public class ChickenVsFood extends Game {
 	//public static final float ASPECT_RATIO = (float) V_WIDTH/(float) V_HEIGHT;
 	public static final short CHICKEN_BIT = 1;
 	public static final short FOOD_BIT = 2;
-	public static final short BUTTER_BIT = 1;
+	public static final short BUTTER_BIT = 4;
+	public static final short MAP_BIT = 8;
 	//public static final float PPM = 100;
 	private SpriteBatch batch;
 	private AssetManager assetManager;

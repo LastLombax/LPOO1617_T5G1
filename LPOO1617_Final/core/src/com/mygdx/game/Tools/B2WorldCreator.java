@@ -34,6 +34,8 @@ public class B2WorldCreator {
             //define fixture
             shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
             fdef.shape = shape;
+            fdef.filter.categoryBits = ChickenVsFood.MAP_BIT;
+            fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT;
             body.createFixture(fdef);
         }
 
