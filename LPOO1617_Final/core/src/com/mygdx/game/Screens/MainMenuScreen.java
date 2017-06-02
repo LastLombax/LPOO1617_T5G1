@@ -32,7 +32,7 @@ public class MainMenuScreen implements Screen {
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
 
-        background = new Texture(Gdx.files.internal("Background.jpg"));
+        background = new Texture(Gdx.files.internal("Chocobo.png"));
 
         Texture tex = new Texture("Butter.png");
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);

@@ -21,8 +21,10 @@ import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Chickens.EggSplosion;
+import com.mygdx.game.Sprites.Chickens.MadChicken;
 import com.mygdx.game.Sprites.Chickens.StrongChicken;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
+import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
 
 import com.mygdx.game.Sprites.Foods.Food;
 import com.mygdx.game.Sprites.Foods.Peashooter;
@@ -142,6 +144,10 @@ public class PlayScreen implements Screen{
             Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
             butters.add(b);
         }
+    }
+
+    public Vector<Chicken> getChickens(){
+        return chicken;
     }
 
     /**
@@ -307,7 +313,6 @@ public class PlayScreen implements Screen{
                 i--;
             }
             else{
-                //collision detection
                 chicken.get(i).update(dt);
             }
         }
@@ -338,8 +343,10 @@ public class PlayScreen implements Screen{
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
             //Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-           //Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-             Chicken c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            Chicken c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
 
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);

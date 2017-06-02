@@ -19,7 +19,7 @@ public class MadChicken extends Chicken {
     public enum State{WALKING, EATING};
     private State currState;
     private State prevState;
-    private float VELOCITY = 2.5f;
+    private float VELOCITY = 15f;
     private int HEALTH = 5;
     private int DMG = 1;
     private World world;
@@ -51,15 +51,14 @@ public class MadChicken extends Chicken {
      */
     public void setAnimations(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 4; i < 7; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-        chickenWalking = new Animation<TextureRegion>(0.1f, frames);
+        chickenWalking = new Animation<TextureRegion>(0.5f, frames);
         frames.clear();
 
-        for (int i = 7; i < 8; i++)
+        for (int i = 0; i < 3; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-
-        chickenEating = new Animation<TextureRegion>(2f, frames);
+        chickenEating = new Animation<TextureRegion>(0.5f, frames);
         frames.clear();
     }
 
@@ -71,22 +70,18 @@ public class MadChicken extends Chicken {
 
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
 
-       // if (currState == EggSplosion.State.EXPLOSION)
-          //  this.setHealth(0);
-
     }
     /**
-     * Returns the current frame/animation of the NormalChicken
+     * Returns the current frame/animation of the MadChicken
      */
     private TextureRegion getFrame(float dt) {
 
         TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
-       // currState = getState();
-      //  if (currState == EggSplosion.State.EXPLOSION)
-      //      region = chickenExplosion.getKeyFrame(stateTimer, true);
-      //  else if (currState == EggSplosion.State.WALKING) {
-         //   region = chickenWalking.getKeyFrame(stateTimer, true);
-
+        currState = getState();
+        if (currState == State.EATING)
+            region = chickenEating.getKeyFrame(stateTimer, true);
+        else if (currState == State.WALKING)
+            region = chickenWalking.getKeyFrame(stateTimer, true);
 
         stateTimer = currState == prevState ? stateTimer +dt : 0;
         prevState = currState;
@@ -97,11 +92,11 @@ public class MadChicken extends Chicken {
     /**
      * Returns the current state
      */
-    private EggSplosion.State getState() {
+    private State getState() {
         if (super.getFoodHit())
-            return EggSplosion.State.EXPLOSION;
+            return State.EATING;
         else
-            return EggSplosion.State.WALKING;
+            return State.WALKING;
 
     }
 
