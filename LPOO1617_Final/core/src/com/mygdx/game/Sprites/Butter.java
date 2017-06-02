@@ -60,12 +60,12 @@ public class Butter extends Sprite {
 
     }
 
-    public void hit(){
-        this.hitting = true;
+    public void setHit(boolean b){
+        this.hitting = b;
     }
 
-    public void NotHit(){
-        this.hitting = false;
+    public boolean getHit(){
+        return this.hitting;
     }
 
 
