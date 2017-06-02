@@ -52,7 +52,12 @@ public class PlayScreen implements Screen{
     private float accumulator;
     private float FPS = 1/60f;
 
-    private TextureAtlas enemies;
+    private TextureAtlas NormalChicken;
+    private TextureAtlas StrongChicken;
+    private TextureAtlas SmallChicken;
+    private TextureAtlas EggSplotion;
+    private TextureAtlas MadChicken;
+
 
     //placement variables
     private int MIN_WORLD_X = 512;
@@ -116,7 +121,7 @@ public class PlayScreen implements Screen{
      * Loads the several textures and stores them into specific atlas
      */
     public void loadAssets(){
-        enemies = new TextureAtlas("StrongChicken.pack");
+        NormalChicken = new TextureAtlas("NormalChicken.pack");
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
     }
@@ -132,11 +137,29 @@ public class PlayScreen implements Screen{
     }
 
     /**
-     * @return Returns the enemies atlas
+     * @return Returns the NormalChicken atlas
      */
-    public TextureAtlas getEnemiesAtlas(){
-        return enemies;
+    public TextureAtlas getNormalChicken(){
+        return NormalChicken;
     }
+    /**
+     * @return Returns the SmallChicken atlas
+     */
+    public TextureAtlas getSmallChicken(){ return SmallChicken;}
+    /**
+     * @return Returns the StrongChicken atlas
+     */
+    public TextureAtlas getStrongChicken(){ return StrongChicken;}
+    /**
+     * @return Returns the MadChicken atlas
+     */
+    public TextureAtlas getMadChicken(){ return MadChicken;}
+    /**
+     * @return Returns the EggSplotion atlas
+     */
+    public TextureAtlas getEggSplotion(){ return EggSplotion;}
+
+
 
     /**
      * Renders the game screen

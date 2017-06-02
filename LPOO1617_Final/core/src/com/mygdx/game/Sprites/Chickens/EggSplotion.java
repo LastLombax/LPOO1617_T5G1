@@ -11,7 +11,7 @@ import com.mygdx.game.Screens.PlayScreen;
  * Created by vitor on 29/05/2017.
  */
 
-public class KFChicken extends Chicken {
+public class EggSplotion extends Chicken {
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
     private int DMG = 1;
@@ -20,8 +20,12 @@ public class KFChicken extends Chicken {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
 
-    public KFChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
+    private int SIZE_PIXEL = 30;
+    private int WORLD_SIZE = 90;
+    public EggSplotion(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
+        ChickenTexture = new TextureRegion(screen.getEggSplotion().findRegion("EggSplotion"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+
     }
     @Override
     public void defineChicken(int i, int i1) {
@@ -62,6 +66,7 @@ public class KFChicken extends Chicken {
     public int getDmg() {
         return DMG;
     }
+
 
 
 

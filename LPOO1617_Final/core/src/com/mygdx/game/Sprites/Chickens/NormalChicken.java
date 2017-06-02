@@ -52,7 +52,7 @@ public class NormalChicken extends Chicken {
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
-        ChickenTexture = new TextureRegion(super.getTexture(), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+        ChickenTexture = new TextureRegion(screen.getNormalChicken().findRegion("NormalChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(ChickenTexture);
 

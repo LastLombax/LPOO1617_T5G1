@@ -11,7 +11,7 @@ import com.mygdx.game.Screens.PlayScreen;
  * Created by vitor on 29/05/2017.
  */
 
-public class Rooster extends Chicken {
+public class SmallChicken extends Chicken {
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
     private int DMG= 1;
@@ -19,9 +19,13 @@ public class Rooster extends Chicken {
     private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
+    private int SIZE_PIXEL = 30;
+    private int WORLD_SIZE = 90;
 
-    public Rooster(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
+    public SmallChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
+        ChickenTexture = new TextureRegion(screen.getSmallChicken().findRegion("SmallChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+
     }
     @Override
     public void defineChicken(int i, int i1) {

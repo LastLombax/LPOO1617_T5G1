@@ -20,8 +20,12 @@ public class MadChicken extends Chicken {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
 
+    private int SIZE_PIXEL = 30;
+    private int WORLD_SIZE = 90;
     public MadChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
+        ChickenTexture = new TextureRegion(screen.getMadChicken().findRegion("MadChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+
     }
     @Override
     public void defineChicken(int i, int i1) {
@@ -62,7 +66,6 @@ public class MadChicken extends Chicken {
     public int getDmg() {
         return DMG;
     }
-
 
 
 

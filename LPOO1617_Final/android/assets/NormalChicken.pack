@@ -1,0 +1,12 @@
+
+NormalChicken.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+NormalChicken
+  rotate: false
+  xy: 1, 1
+  size: 266, 26
+  orig: 266, 26
+  offset: 0, 0
+  index: -1

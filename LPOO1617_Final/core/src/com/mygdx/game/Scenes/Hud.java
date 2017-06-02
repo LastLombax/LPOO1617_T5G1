@@ -63,6 +63,8 @@ public class Hud implements Disposable{
         tableT.setFillParent(true);
 
         tex = new Texture(Gdx.files.internal("butter.png"));
+        tex1 = new Texture(Gdx.files.internal("UmbrellaCopr.png"));
+        tex2 = new Texture(Gdx.files.internal("Tree1.png"));
 
         ButtonImg food1 = new ButtonImg(tex,tex1,tex2);
 
@@ -75,7 +77,6 @@ public class Hud implements Disposable{
             }
         });
 
-        tex1 = new Texture(Gdx.files.internal("UmbrellaCopr.png"));
 
         ButtonImg food2 = new ButtonImg(tex1,tex1,tex1);
 
@@ -87,7 +88,6 @@ public class Hud implements Disposable{
             }
         });
 
-        tex2 = new Texture(Gdx.files.internal("Tree1.png"));
 
         ButtonImg food3 = new ButtonImg(tex2,tex2,tex2);
 

@@ -29,7 +29,7 @@ public abstract class Chicken extends Sprite{
      * @param screen game screen
      */
     public Chicken(World world, ChickenVsFood game, PlayScreen screen){
-        super(screen.getEnemiesAtlas().findRegion("StrongChicken"));
+
         setFoodHit(false);
         this.world = world;
     }

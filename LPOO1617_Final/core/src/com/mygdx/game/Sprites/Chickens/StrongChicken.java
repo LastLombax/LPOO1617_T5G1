@@ -20,8 +20,12 @@ public class StrongChicken extends Chicken {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
 
+    private int SIZE_PIXEL = 30;
+    private int WORLD_SIZE = 90;
     public StrongChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
+        ChickenTexture = new TextureRegion(screen.getStrongChicken().findRegion("StrongChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+
     }
 
     @Override
@@ -63,5 +67,6 @@ public class StrongChicken extends Chicken {
     public int getDmg() {
         return DMG;
     }
+
 
 }
