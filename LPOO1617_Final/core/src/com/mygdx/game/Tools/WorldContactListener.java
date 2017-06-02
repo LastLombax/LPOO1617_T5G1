@@ -1,5 +1,7 @@
 package com.mygdx.game.Tools;
 
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -31,6 +33,14 @@ public class WorldContactListener implements ContactListener {
             //butter and chicken
             ((Chicken) fixA.getUserData()).setHealth(0);
             ((Butter) fixB.getUserData()).setHit(true);
+        }
+        else if((fixB.getUserData() instanceof B2WorldCreator)&& (fixA.getUserData() instanceof Chicken)){
+            //Wall and chicken
+            System.out.println("Game Over");
+        }
+        else if((fixA.getUserData() instanceof B2WorldCreator)&& (fixB.getUserData() instanceof Chicken)){
+            //Wall and chicken
+            System.out.println("Game Over");
         }
         else if (fixA.getUserData() instanceof Chicken){
             //chicken and food

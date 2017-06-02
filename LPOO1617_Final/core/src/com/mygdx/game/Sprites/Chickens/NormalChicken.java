@@ -112,7 +112,7 @@ public class NormalChicken extends Chicken {
         setRegion(getFrame(dt));
 
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
-        
+
     }
 
     /**
