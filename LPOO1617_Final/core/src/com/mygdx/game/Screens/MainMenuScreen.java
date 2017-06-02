@@ -23,6 +23,10 @@ public class MainMenuScreen implements Screen {
     private int BUTTON_X = 720;
     Texture background;
 
+    /**
+     * Constructor for the MainMenu Screen
+     * @param game ChickenVsFood instance
+     */
     public MainMenuScreen(final ChickenVsFood game){
         this.game = game.getGame();
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
@@ -66,11 +70,18 @@ public class MainMenuScreen implements Screen {
         stage.addActor(ExitButton);
     }
 
+    /**
+     * sets the gdx input processor with the stage
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Renders the screen
+     * @param delta time interval
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
@@ -84,6 +95,11 @@ public class MainMenuScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Resizes the screen
+     * @param width new witdh
+     * @param height new height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width,height);

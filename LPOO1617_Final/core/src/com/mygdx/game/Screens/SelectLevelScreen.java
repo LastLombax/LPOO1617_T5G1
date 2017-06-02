@@ -23,6 +23,10 @@ public class SelectLevelScreen implements Screen {
     private int BUTTON_X = 200;
     Texture lvlSelector;
 
+    /**
+     * Constructor for the Select Level Screen
+     * @param game ChickenVsFood instance
+     */
     public SelectLevelScreen(final ChickenVsFood game){
         this.game = game;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
@@ -75,12 +79,17 @@ public class SelectLevelScreen implements Screen {
         });
         stage.addActor(ExitButton);
     }
-
+    /**
+     * sets the gdx input processor with the stage
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
-
+    /**
+     * Renders the screen
+     * @param delta time interval
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,1,1);
@@ -93,7 +102,11 @@ public class SelectLevelScreen implements Screen {
        // stage.act();
         stage.draw();
     }
-
+    /**
+     * Resizes the screen
+     * @param width new witdh
+     * @param height new height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width,height);

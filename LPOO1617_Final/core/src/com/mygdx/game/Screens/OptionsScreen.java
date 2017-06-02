@@ -23,6 +23,10 @@ public class OptionsScreen implements Screen {
     private ChickenVsFood game;
     private Viewport viewport;
 
+    /**
+     * Constructor for the Options Screen
+     * @param game ChickenVsFood instance
+     */
     public OptionsScreen(final ChickenVsFood game){
         this.game = game;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
@@ -78,11 +82,18 @@ public class OptionsScreen implements Screen {
         stage.addActor(ExitButton);
     }
 
+    /**
+     * sets the gdx input processor with the stage
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Renders the screen
+     * @param delta time interval
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
@@ -90,7 +101,11 @@ public class OptionsScreen implements Screen {
         stage.act();
         stage.draw();
     }
-
+    /**
+     * Resizes the screen
+     * @param width new witdh
+     * @param height new height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width,height);

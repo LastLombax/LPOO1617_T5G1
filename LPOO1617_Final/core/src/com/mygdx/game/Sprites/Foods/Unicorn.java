@@ -30,6 +30,13 @@ public class Unicorn extends Food {
     private int x;
     private int y;
 
+    /**
+     * Constructor for the Unicorn
+     * @param world game world
+     * @param game ChickenVsFood instance
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public Unicorn(World world, ChickenVsFood game, int x, int y){
         super(world,game);
         setCornInc(false);
@@ -43,35 +50,6 @@ public class Unicorn extends Food {
         setBounds(0,0,28,40);
         setRegion(ChickenTexture);
         cornMovDir = new Vector2(Hud.getCornLabel().getX() - super.getBody().getPosition().x,Hud.getCornLabel().getY() - super.getBody().getPosition().y);
-    }
-
-    @Override
-    public void defineFood(int i, int i1) {
-       /* BodyDef bdef = new BodyDef();
-        bdef.position.set(i,i1);
-<<<<<<< HEAD
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = super.getWorld().createBody(bdef);
-        //b2body.setUerData("Food");
-=======s
-        bdef.type = BodyDef.BodyType.StaticBody;
-        b2body = world.createBody(bdef);
-        b2body.setUserData("Unicorn");
->>>>>>> origin/master
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(35);
-
-        fdef.shape = shape;
-        fdef.filter.categoryBits = ChickenVsFood.FOOD_BIT;
-        fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT | ChickenVsFood.FOOD_BIT;
-
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
-/*
-        b2body.createFixture(fdef);*/
     }
 
     @Override
@@ -117,7 +95,6 @@ public class Unicorn extends Food {
     public void setHealth(int health) {
         this.HEALTH = health;
     }
-
 
     public boolean getCornInc(){
         return cornInc;

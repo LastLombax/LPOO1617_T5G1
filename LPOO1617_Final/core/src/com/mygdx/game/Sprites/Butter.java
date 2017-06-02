@@ -24,7 +24,13 @@ public class Butter extends Sprite {
     private float VELOCITY = 50f;
     private boolean hitting = false;
 
-
+    /**
+     * Constructor for the Butter
+     * @param world game world
+     * @param game ChickenVsFood instance
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public Butter(World world, ChickenVsFood game, int x, int y){
         this.world = world;
         this.game = game;
@@ -34,6 +40,11 @@ public class Butter extends Sprite {
         setRegion(ButterTexture);
     }
 
+    /**
+     * Defines the Butter's body
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public void defineButter(int x, int y){
         BodyDef bdef = new BodyDef();
         bdef.position.set(x,y);
@@ -50,10 +61,17 @@ public class Butter extends Sprite {
         this.b2body.createFixture(fdef).setUserData(this);
     }
 
+    /**
+     * @return Returns the body
+     */
     public Body getBody() {
         return b2body;
     }
 
+    /**
+     * Updates the butter's position
+     * @param dt time interval
+     */
     public void update(float dt) {
         setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getWidth() / 2);
         if(this.hitting){
@@ -62,6 +80,10 @@ public class Butter extends Sprite {
 
     }
 
+    /**
+     * Sets the field hitting with the value b
+     * @param b new value for the field hitting
+     */
     public void setHit(boolean b){
         this.hitting = b;
     }

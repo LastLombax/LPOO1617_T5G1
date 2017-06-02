@@ -16,6 +16,11 @@ import com.mygdx.game.ChickenVsFood;
  */
 
 public class B2WorldCreator {
+    /**
+     * Creates the B2 World
+     * @param world game world
+     * @param map TiledMap
+     */
     public B2WorldCreator (World world, TiledMap map){
         //bodies
         BodyDef bdef = new BodyDef();

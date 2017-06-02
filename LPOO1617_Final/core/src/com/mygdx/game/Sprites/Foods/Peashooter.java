@@ -26,6 +26,13 @@ public class Peashooter extends Food {
     private int x;
     private int y;
 
+    /**
+     * Constructor for the Peashooter
+     * @param world game world
+     * @param game ChickenVsFood instance
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     */
     public Peashooter(World world,ChickenVsFood game,int xInicial,int yInicial){
         super(world,game);
         this.timer = 0;
@@ -39,28 +46,7 @@ public class Peashooter extends Food {
         setRegion(ChickenTexture);
     }
 
-    public void defineFood(int x, int y){
-        /*BodyDef bdef = new BodyDef();
-        bdef.position.set(x,y);
-        bdef.type = BodyDef.BodyType.StaticBody;
-        b2body = world.createBody(bdef);
-
-
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(35);
-
-        fdef.shape = shape;
-        fdef.filter.categoryBits = ChickenVsFood.FOOD_BIT;
-        fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT | ChickenVsFood.FOOD_BIT;
-
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
-
-        /*b2body.createFixture(fdef).setUserData(this);*/
-    }
-
+    @Override
     public void update(float dt){
         setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
 
@@ -85,8 +71,6 @@ public class Peashooter extends Food {
         this.draw( (Batch) batch);
     }
 
-    public void hit(){this.hiting = true;}
-    public void Nothit(){this.hiting = false;}
 
     @Override
     public int getHealth() {

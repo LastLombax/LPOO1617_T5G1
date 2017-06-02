@@ -23,6 +23,14 @@ public class PeaBullet extends Peashooter{
     private Texture Pea = new Texture("butter.png");
     private float VELOCITY = 0.1f;
 
+
+    /**
+     * Constructor for the PeaBullet
+     * @param w game world
+     * @param g ChickenVsFood instance
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public PeaBullet(World w, ChickenVsFood g, int x, int y){
         super(w,g,x,y);
         definePea(x,y);
@@ -31,6 +39,11 @@ public class PeaBullet extends Peashooter{
         setRegion(PeaTexture);
     }
 
+    /**
+     * Defines the Bullet/Pea
+     * @param x x coordinate
+     * @param y x coordinate
+     */
    public void definePea(int x, int y){
        BodyDef bdef = new BodyDef();
        bdef.position.set(x,y);

@@ -83,6 +83,11 @@ public class PlayScreen implements Screen{
     private Vector<Food> foods = new Vector<Food>();
     private Vector<Butter> butters = new Vector<Butter>();
 
+
+    /**
+     * Creates the screen of the game
+     * @param game ChickenVsFood instance
+     */
     public PlayScreen(ChickenVsFood game){
         this.game = game;
 
@@ -103,26 +108,40 @@ public class PlayScreen implements Screen{
         new B2WorldCreator(world, map);
         world.setContactListener(new WorldContactListener());
 
-        loadButters();
+        createButters();
 
     }
 
+    /**
+     * Loads the several textures and stores them into specific atlas
+     */
     public void loadAssets(){
-        enemies = new TextureAtlas("chocobo.pack");
+        enemies = new TextureAtlas("StrongChicken.pack");
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
     }
 
-    public void loadButters(){
+    /**
+     * Creates the butters, used for a second chance in the game
+     */
+    public void createButters(){
         for (int i = 0; i < diffY.length; i++){
             Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
             butters.add(b);
         }
     }
 
+    /**
+     * @return Returns the enemies atlas
+     */
     public TextureAtlas getEnemiesAtlas(){
         return enemies;
     }
+
+    /**
+     * Renders the game screen
+     * @param delta time interval of each render
+     */
     @Override
     public void render(float delta) {
         update(delta);
@@ -152,6 +171,10 @@ public class PlayScreen implements Screen{
 
     }
 
+    /**
+     * Updates the screen
+     * @param dt time interval of the update
+     */
     public void update(float dt) {
         handleInput(dt);
 
@@ -172,6 +195,10 @@ public class PlayScreen implements Screen{
         renderer.setView(gameCam);
     }
 
+    /**
+     * Handles all input from the player
+     * @param dt time interval
+     */
     public void handleInput(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             for (int i = 0; i < this.chicken.size(); i++) {
@@ -227,10 +254,20 @@ public class PlayScreen implements Screen{
             }
     }
 
+    /**
+     * Verifies if a food can be placed in the selected spot
+     * @param px x coordinate
+     * @param py y coordinate
+     * @return true if can be placed
+     */
     public boolean checkPlacingBounds(double px, double py){
         return (px >= MIN_WORLD_X && px <= MAX_WORLD_X && py >= MIN_WORLD_Y && py <=MAX_WORLD_Y);
     }
 
+    /**
+     * Updates all characters(Foods and Chickens)
+     * @param dt time interval for the update
+     */
     public void updateCharacters(float dt){
         for (int i = 0; i < this.chicken.size(); i++) {
             //Dead Chicken
@@ -260,7 +297,9 @@ public class PlayScreen implements Screen{
         }
     }
 
-
+    /**
+     * Randomly generates chickens for each lane every 5 seconds
+     */
     public void GenerateChickens(){
         timer++;
         if(timer%500 == 0){ // every 5 seconds
@@ -273,12 +312,23 @@ public class PlayScreen implements Screen{
         }
     }
 
+    /**
+     * @return retuns the world
+     */
     public World getWorld(){
         return world;
     }
 
+    /**
+     * Sets the world
+     */
     public void setWorld(){world = new World(new Vector2(0,0),true);}
 
+    /**
+     * Resizes the gameport
+     * @param width new width
+     * @param height new height
+     */
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
@@ -303,6 +353,9 @@ public class PlayScreen implements Screen{
 
     }
 
+    /**
+     * Disposes of all used objects
+     */
     @Override
     public void dispose() {
         map.dispose();

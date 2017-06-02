@@ -5,18 +5,17 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
-import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Food;
-import com.mygdx.game.Sprites.Foods.Peashooter;
 import com.mygdx.game.Sprites.PeaBullet;
-
-import java.awt.event.ContainerListener;
 
 
 public class WorldContactListener implements ContactListener {
+    /**
+     * Detects contact between all objects
+     * @param contact Contact
+     */
     @Override
     public void beginContact(Contact contact) {
         System.out.println("begin contact");
@@ -58,6 +57,10 @@ public class WorldContactListener implements ContactListener {
         }
     }
 
+    /**
+     * Detects when two objects stop the contact
+     * @param contact Contact
+     */
     @Override
     public void endContact(Contact contact) {
         System.out.println("end contact");

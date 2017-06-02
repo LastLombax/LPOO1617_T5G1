@@ -21,13 +21,24 @@ public abstract class Chicken extends Sprite{
     private Body b2body;
     private boolean foodHit;
     private boolean hit;
-    
+
+    /**
+     * Constructor for a Chicken
+     * @param world game world
+     * @param game game
+     * @param screen game screen
+     */
     public Chicken(World world, ChickenVsFood game, PlayScreen screen){
-        super(screen.getEnemiesAtlas().findRegion("chocobo"));
+        super(screen.getEnemiesAtlas().findRegion("StrongChicken"));
         setFoodHit(false);
         this.world = world;
     }
 
+    /**
+     * Defines the body of a chicken
+     * @param x initial x coordinate
+     * @param y initial y coordinate
+     */
     public void defineChicken(int x, int y){
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
@@ -51,6 +62,10 @@ public abstract class Chicken extends Sprite{
         b2body.createFixture(fdef).setUserData(this);
     }
 
+    /**
+     * Updates the chicken
+     * @param dt
+     */
     public abstract void update(float dt);
 
     public abstract float getVelocity();
@@ -63,25 +78,49 @@ public abstract class Chicken extends Sprite{
 
     public abstract int getDmg();
 
+    /**
+     * Sets the hit field with value b
+     * @param b boolean
+     */
     public  void setHit(boolean b){
         this.hit = b;
     }
 
+    /**
+     * @return the value of the hit field
+     */
     public boolean getHit(){
         return this.hit;
     }
+
+    /**
+     * Sets the foodHit field with value b
+     * @param b boolean
+     */
     public void setFoodHit(boolean b) {
         this.foodHit = b;
     }
-
+    /**
+     * @return the value of the foodHit field
+     */
     public boolean getFoodHit(){
         return foodHit;
     }
 
+    /**
+     * @return the game world
+     */
     public World getWorld(){return this.world;}
 
+    /**
+     * @return the body of the chicken
+     */
     public Body getBody(){return this.b2body;}
 
+    /**
+     * Verifies if the chicken is dead
+     * @return true if dead, false if alive
+     */
     public boolean isDead() {
         if (getHealth() == 0){
             this.world.destroyBody(this.b2body);
@@ -90,7 +129,9 @@ public abstract class Chicken extends Sprite{
         return false;
     }
 
-
+    /**
+     * decreases the health of the chicken by 1
+     */
     public void decreaseHealth() {
         setHealth(getHealth()-1);
     }
