@@ -24,8 +24,6 @@ import com.mygdx.game.Screens.PlayScreen;
 
 
 public class NormalChicken extends Chicken {
-
-
     public enum State{WALKING, EATING};
     private State currState;
     private State prevState;
@@ -42,7 +40,12 @@ public class NormalChicken extends Chicken {
 
 
     /**
-     * Creates a NormalChicken
+     *
+     * @param world
+     * @param game
+     * @param xInicial
+     * @param yInicial
+     * @param screen
      */
     public NormalChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
@@ -103,9 +106,7 @@ public class NormalChicken extends Chicken {
         frames.clear();
     }
 
-    /**
-     * Updates the position and the animation for the NormalChicken
-     */
+    @Override
     public void update(float dt) {
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
 
@@ -118,21 +119,21 @@ public class NormalChicken extends Chicken {
     /**
      * Returns the current frame/animation of the NormalChicken
      */
-   private TextureRegion getFrame(float dt) {
+    private TextureRegion getFrame(float dt) {
 
-       TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
-       currState = getState();
-       if (currState == State.EATING)
+        TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
+        currState = getState();
+        if (currState == State.EATING)
             region = chickenEating.getKeyFrame(stateTimer, true);
-       else if (currState == State.WALKING)
+        else if (currState == State.WALKING)
             region = chickenWalking.getKeyFrame(stateTimer, true);
 
-       stateTimer = currState == prevState ? stateTimer +dt : 0;
-       prevState = currState;
+        stateTimer = currState == prevState ? stateTimer +dt : 0;
+        prevState = currState;
 
-       return region;
+        return region;
 
-   }
+    }
     /**
      * Returns the current state
      */
@@ -143,37 +144,27 @@ public class NormalChicken extends Chicken {
             return State.WALKING;
 
     }
-    /**
-     * Returns the velocity
-     */
+
     public float getVelocity() {
         return VELOCITY;
     }
 
-    /**
-     * Draws the chicken
-     */
+
     @Override
     public void draw(SpriteBatch batch) {
         this.draw((Batch) batch);
     }
-    /**
-     * Returns the health
-     */
+
     @Override
     public int getHealth() {
         return HEALTH;
     }
-    /**
-     * Sets the health
-     */
+
     @Override
     public void setHealth(int health) {
         this.HEALTH = health;
     }
-    /**
-     * Returns the damage
-     */
+
     @Override
     public int getDmg() {
         return DMG;

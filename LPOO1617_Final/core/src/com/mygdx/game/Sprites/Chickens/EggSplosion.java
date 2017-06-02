@@ -15,24 +15,32 @@ import com.mygdx.game.Screens.PlayScreen;
  * Created by vitor on 29/05/2017.
  */
 
-public class MadChicken extends Chicken {
-    public enum State{WALKING, EATING};
+public class EggSplosion extends Chicken {
+    public enum State{WALKING, EXPLOSION};
     private State currState;
     private State prevState;
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
     private int DMG = 1;
-    private World world;
-    private Body b2body;
+    private int timer = 0;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private float stateTimer = 0;
     private Animation<TextureRegion> chickenWalking;
-    private Animation<TextureRegion> chickenEating;
+    private Animation<TextureRegion> chickenExplosion;
 
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
-    public MadChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
+
+    /**
+     * Constructor for the EggSplosion
+     * @param world game world
+     * @param game ChickenVsFood instance
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     * @param screen game screen
+     */
+    public EggSplosion(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
         this.game = game;
         super.setFoodHit(false);
@@ -40,14 +48,15 @@ public class MadChicken extends Chicken {
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
-        ChickenTexture = new TextureRegion(screen.getMadChicken().findRegion("MadChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+
+        ChickenTexture = new TextureRegion(screen.getEggSplosion().findRegion("EggSplosion"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(ChickenTexture);
         setAnimations();
     }
 
     /**
-     * Sets the animations for a MadChicken
+     * Sets the animations for an EggSplosion
      */
     public void setAnimations(){
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -59,7 +68,7 @@ public class MadChicken extends Chicken {
         for (int i = 7; i < 8; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
 
-        chickenEating = new Animation<TextureRegion>(2f, frames);
+        chickenExplosion = new Animation<TextureRegion>(2f, frames);
         frames.clear();
     }
 
@@ -71,9 +80,11 @@ public class MadChicken extends Chicken {
 
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
 
-       // if (currState == EggSplosion.State.EXPLOSION)
-          //  this.setHealth(0);
-
+        if (currState == State.EXPLOSION) {
+            timer++;
+            if (timer % 100 == 0)
+                this.setHealth(0);
+        }
     }
     /**
      * Returns the current frame/animation of the NormalChicken
@@ -81,12 +92,13 @@ public class MadChicken extends Chicken {
     private TextureRegion getFrame(float dt) {
 
         TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
-       // currState = getState();
-      //  if (currState == EggSplosion.State.EXPLOSION)
-      //      region = chickenExplosion.getKeyFrame(stateTimer, true);
-      //  else if (currState == EggSplosion.State.WALKING) {
-         //   region = chickenWalking.getKeyFrame(stateTimer, true);
+        currState = getState();
+        if (currState == State.EXPLOSION)
+            region = chickenExplosion.getKeyFrame(stateTimer, true);
+        else if (currState == State.WALKING) {
+            region = chickenWalking.getKeyFrame(stateTimer, true);
 
+        }
 
         stateTimer = currState == prevState ? stateTimer +dt : 0;
         prevState = currState;
@@ -97,11 +109,11 @@ public class MadChicken extends Chicken {
     /**
      * Returns the current state
      */
-    private EggSplosion.State getState() {
+    private State getState() {
         if (super.getFoodHit())
-            return EggSplosion.State.EXPLOSION;
+            return State.EXPLOSION;
         else
-            return EggSplosion.State.WALKING;
+            return State.WALKING;
 
     }
 

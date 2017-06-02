@@ -20,8 +20,8 @@ import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
+import com.mygdx.game.Sprites.Chickens.EggSplosion;
 import com.mygdx.game.Sprites.Foods.Food;
-import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Foods.Peashooter;
 import com.mygdx.game.Sprites.Foods.Unicorn;
 import com.mygdx.game.Tools.B2WorldCreator;
@@ -55,7 +55,7 @@ public class PlayScreen implements Screen{
     private TextureAtlas NormalChicken;
     private TextureAtlas StrongChicken;
     private TextureAtlas SmallChicken;
-    private TextureAtlas EggSplotion;
+    private TextureAtlas EggSplosion;
     private TextureAtlas MadChicken;
 
 
@@ -122,6 +122,11 @@ public class PlayScreen implements Screen{
      */
     public void loadAssets(){
         NormalChicken = new TextureAtlas("NormalChicken.pack");
+        EggSplosion = new TextureAtlas("EggSplosion.pack");
+        MadChicken = new TextureAtlas("MadChicken.pack");
+        StrongChicken =  new TextureAtlas("StrongChicken.pack");
+        SmallChicken = new TextureAtlas("SmallChicken.pack");
+
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
     }
@@ -157,7 +162,7 @@ public class PlayScreen implements Screen{
     /**
      * @return Returns the EggSplotion atlas
      */
-    public TextureAtlas getEggSplotion(){ return EggSplotion;}
+    public TextureAtlas getEggSplosion(){ return EggSplosion;}
 
 
 
@@ -329,7 +334,8 @@ public class PlayScreen implements Screen{
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
-            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+           // Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);
         }

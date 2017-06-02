@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
+import com.mygdx.game.Sprites.Chickens.EggSplosion;
 import com.mygdx.game.Sprites.Foods.Food;
 import com.mygdx.game.Sprites.PeaBullet;
 
@@ -82,6 +83,8 @@ public class WorldContactListener implements ContactListener {
             if (fixB.getUserData() instanceof Food) {
                 ((Chicken) fixA.getUserData()).setFoodHit(false);
                 ((Food) fixB.getUserData()).setHit(false);
+                if (fixA.getUserData() instanceof EggSplosion)
+                    ((Food)fixB.getUserData()).setHealth(0);
             }
         }
         else if (fixB.getUserData() instanceof Chicken){
@@ -89,6 +92,8 @@ public class WorldContactListener implements ContactListener {
             if (fixA.getUserData() instanceof Food) {
                 ((Chicken) fixB.getUserData()).setFoodHit(false);
                 ((Food) fixA.getUserData()).setHit(false);
+                if (fixB.getUserData() instanceof EggSplosion)
+                    ((Food)fixA.getUserData()).setHealth(0);
             }
         }
 

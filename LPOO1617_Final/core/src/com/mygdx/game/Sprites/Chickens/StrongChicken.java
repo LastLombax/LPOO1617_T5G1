@@ -1,5 +1,6 @@
 package com.mygdx.game.Sprites.Chickens;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,6 +13,9 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 
 public class StrongChicken extends Chicken {
+    public enum State{WALKING, EATING};
+    private State currState;
+    private State prevState;
     private float VELOCITY = 2.5f;
     private int HEALTH = 10;
     private int DMG = 1;
@@ -19,13 +23,27 @@ public class StrongChicken extends Chicken {
     private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
+    private float stateTimer = 0;
+    private Animation<TextureRegion> chickenWalking;
+    private Animation<TextureRegion> chickenEating;
 
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     public StrongChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
+        this.game = game;
+        super.setFoodHit(false);
+        super.setHit(false);
+        currState = State.WALKING;
+        prevState = State.WALKING;
+        super.defineChicken(xInicial, yInicial);
         ChickenTexture = new TextureRegion(screen.getStrongChicken().findRegion("StrongChicken"), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
+        setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
+        setRegion(ChickenTexture);
+        setAnimations();
+    }
 
+    private void setAnimations() {
     }
 
     @Override

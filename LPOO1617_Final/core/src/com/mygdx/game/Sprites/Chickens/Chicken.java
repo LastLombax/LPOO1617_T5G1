@@ -63,17 +63,28 @@ public abstract class Chicken extends Sprite{
     }
 
     /**
-     * Updates the chicken
+     * Updates the chicken, it's animations and position
      * @param dt
      */
     public abstract void update(float dt);
 
+    /**
+     * Returns the velocity
+     */
     public abstract float getVelocity();
-
+    /**
+     * Draws the chicken
+     */
     public abstract void draw(SpriteBatch batch);
-
+    /**
+     * Returns the health
+     */
     public abstract int getHealth();
 
+    /**
+     * Sets the health field to the value health
+     * @param health new value of health field
+     */
     public abstract void setHealth(int health);
 
     public abstract int getDmg();
