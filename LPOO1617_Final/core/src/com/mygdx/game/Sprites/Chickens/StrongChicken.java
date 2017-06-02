@@ -64,12 +64,4 @@ public class StrongChicken extends Chicken {
         return DMG;
     }
 
-
-    public void hit() {}
-
-    @Override
-    public void Nothit() {
-
-    }
-
 }

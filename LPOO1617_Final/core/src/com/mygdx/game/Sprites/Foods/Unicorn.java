@@ -37,6 +37,7 @@ public class Unicorn extends Food {
         this.game = game;
         this.x = x;
         this.y = y;
+        super.setHit(false);
         super.defineFood(x,y);
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);
@@ -92,7 +93,7 @@ public class Unicorn extends Food {
             animateC = true;
         }
 
-        if(this.hiting){
+        if(super.getHit()){
             super.getBody().setLinearVelocity(new Vector2(0,0));
             if(timer%100 == 0){
                 decreaseHealth();
@@ -117,10 +118,6 @@ public class Unicorn extends Food {
         this.HEALTH = health;
     }
 
-
-    public void hit(){this.hiting = true;}
-
-    public void Nothit(){this.hiting = false;}
 
     public boolean getCornInc(){
         return cornInc;

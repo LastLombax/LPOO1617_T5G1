@@ -20,6 +20,8 @@ public abstract class Chicken extends Sprite{
     private World world;
     private Body b2body;
     private boolean foodHit;
+    private boolean hit;
+    
     public Chicken(World world, ChickenVsFood game, PlayScreen screen){
         super(screen.getEnemiesAtlas().findRegion("chocobo"));
         setFoodHit(false);
@@ -61,9 +63,20 @@ public abstract class Chicken extends Sprite{
 
     public abstract int getDmg();
 
-    public abstract void hit();
+    public  void setHit(boolean b){
+        this.hit = b;
+    }
 
-    public abstract void Nothit();
+    public boolean getHit(){
+        return this.hit;
+    }
+    public void setFoodHit(boolean b) {
+        this.foodHit = b;
+    }
+
+    public boolean getFoodHit(){
+        return foodHit;
+    }
 
     public World getWorld(){return this.world;}
 
@@ -83,11 +96,5 @@ public abstract class Chicken extends Sprite{
     }
 
 
-    public void setFoodHit(boolean b) {
-        this.foodHit = b;
-    }
 
-    public boolean getFoodHit(){
-        return foodHit;
-    }
 }

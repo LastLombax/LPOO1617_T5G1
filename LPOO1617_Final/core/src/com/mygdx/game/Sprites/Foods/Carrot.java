@@ -16,7 +16,6 @@ public class Carrot extends Food {
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int HEALTH = 5;
-    private boolean hiting = false;
 
     public Carrot(World world, ChickenVsFood game) {
         super(world, game);
@@ -52,14 +51,5 @@ public class Carrot extends Food {
         this.HEALTH = health;
     }
 
-
-    public void hit() {
-        this.hiting = true;
-    }
-
-    @Override
-    public void Nothit() {
-        this.hiting = false;
-    }
 
 }

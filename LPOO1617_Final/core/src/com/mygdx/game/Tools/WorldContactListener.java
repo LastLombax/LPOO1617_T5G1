@@ -35,9 +35,9 @@ public class WorldContactListener implements ContactListener {
         else if (fixA.getUserData() instanceof Chicken){
             //chicken and food
             if (fixB.getUserData() instanceof Food){
-                ((Chicken)fixA.getUserData()).hit();
+                ((Chicken)fixA.getUserData()).setHit(true);
                 ((Chicken)fixA.getUserData()).setFoodHit(true);
-                ((Food)fixB.getUserData()).hit();
+                ((Food)fixB.getUserData()).setHit(true);
                 ((Food)fixB.getUserData()).decreaseHealth();
             }
             //chicken and pea
@@ -47,9 +47,9 @@ public class WorldContactListener implements ContactListener {
         else if (fixB.getUserData() instanceof Chicken){
             //chicken and pea
             if (fixA.getUserData() instanceof Food) {
-                ((Chicken)fixB.getUserData()).hit();
+                ((Chicken)fixB.getUserData()).setHit(true);
                 ((Chicken)fixB.getUserData()).setFoodHit(true);
-                ((Food)fixA.getUserData()).hit();
+                ((Food)fixA.getUserData()).setHit(true);
                 ((Food)fixA.getUserData()).decreaseHealth();
             }
             else if (fixA.getUserData() instanceof PeaBullet)
@@ -66,8 +66,8 @@ public class WorldContactListener implements ContactListener {
         if (fixA.getUserData() instanceof Chicken){
             //chicken and food
             if (fixB.getUserData() instanceof Food) {
-                ((Chicken) fixA.getUserData()).Nothit();
-                ((Food) fixB.getUserData()).Nothit();
+                ((Chicken) fixA.getUserData()).setFoodHit(false);
+                ((Food) fixB.getUserData()).setHit(false);
             }
         }
 

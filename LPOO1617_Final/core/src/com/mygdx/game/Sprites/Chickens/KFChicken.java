@@ -64,11 +64,5 @@ public class KFChicken extends Chicken {
     }
 
 
-    public void hit() {}
-
-    @Override
-    public void Nothit() {
-
-    }
 
 }

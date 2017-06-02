@@ -1,0 +1,12 @@
+
+chocobo.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+chocobo
+  rotate: false
+  xy: 1, 1
+  size: 415, 174
+  orig: 415, 174
+  offset: 0, 0
+  index: -1

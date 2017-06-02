@@ -24,6 +24,10 @@ import com.mygdx.game.Screens.PlayScreen;
 
 
 public class NormalChicken extends Chicken {
+
+
+    public enum State{WALKING, EATING};
+    private State currState;
     private float VELOCITY = 10f;
     private int HEALTH = 5;
     private int DMG = 1;
@@ -31,19 +35,23 @@ public class NormalChicken extends Chicken {
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
-    private boolean hiting = false;
     private float stateTimer = 0;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenEating;
 
+    //corrigir bugs de cases
+
     public NormalChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
         this.game = game;
-        setFoodHit(false);
+        super.setFoodHit(false);
+        super.setHit(false);
+        currState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
         ChickenTexture = new TextureRegion(super.getTexture(), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(ChickenTexture);
+
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
@@ -86,19 +94,20 @@ public class NormalChicken extends Chicken {
 
     public void update(float dt) {
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
-        setRegion(getFrame(dt));
 
+        setRegion(getFrame(dt));
         //movement
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
 
-
-        if(this.hiting){
+        if(super.getHit()){
             super.getBody().setLinearVelocity(new Vector2(0,0));
             this.VELOCITY = 0f;
         }
     }
 
    private TextureRegion getFrame(float dt) {
+
+       currState = getState();
        TextureRegion region;
         if (super.getFoodHit())
             region = chickenEating.getKeyFrame(stateTimer, true);
@@ -110,14 +119,19 @@ public class NormalChicken extends Chicken {
 
    }
 
+    private State getState() {
+        if (super.getFoodHit())
+            currState = State.EATING;
+        else if (super.getHit())
+            currState = State.WALKING;
+
+        return currState;
+    }
+
     public float getVelocity() {
         return VELOCITY;
     }
 
-
-
-    public void hit(){this.hiting = true;}
-    public void Nothit(){this.hiting = false; this.setFoodHit(false);}
 
     @Override
     public void draw(SpriteBatch batch) {

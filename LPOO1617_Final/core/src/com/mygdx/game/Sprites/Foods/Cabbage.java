@@ -51,10 +51,5 @@ public class Cabbage extends Food {
         this.HEALTH=health;
     }
 
-    public void hit() {}
 
-    @Override
-    public void Nothit() {
-
-    }
 }

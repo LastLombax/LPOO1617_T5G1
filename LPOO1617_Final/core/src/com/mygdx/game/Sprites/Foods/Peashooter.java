@@ -32,6 +32,7 @@ public class Peashooter extends Food {
         this.game = game;
         this.x = xInicial;
         this.y = yInicial;
+        super.setHit(false);
         super.defineFood(xInicial,yInicial);
         ChickenTexture = new TextureRegion(getTexture(),0,0,28,40);
         setBounds(0,0,28,40);

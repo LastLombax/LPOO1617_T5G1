@@ -65,11 +65,5 @@ public class MadChicken extends Chicken {
 
 
 
-    public void hit() {}
-
-    @Override
-    public void Nothit() {
-
-    }
 
 }

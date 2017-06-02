@@ -18,6 +18,7 @@ public abstract class Food extends Sprite {
 
     private Body b2body;
     private World world;
+    private boolean hit;
 
     public Food(World world, ChickenVsFood game){
         super(game.getAssetManager().get("Chicken.png",Texture.class));
@@ -54,9 +55,13 @@ public abstract class Food extends Sprite {
 
     public abstract void setHealth(int health);
 
-    public abstract void hit();
+    public  void setHit(boolean b){
+        this.hit = b;
+    }
 
-    public abstract void Nothit();
+    public boolean getHit(){
+        return this.hit;
+    }
 
     public World getWorld(){return this.world;}
 
