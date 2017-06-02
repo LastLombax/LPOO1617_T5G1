@@ -28,6 +28,7 @@ public class NormalChicken extends Chicken {
 
     public enum State{WALKING, EATING};
     private State currState;
+    private State prevState;
     private float VELOCITY = 10f;
     private int HEALTH = 5;
     private int DMG = 1;
@@ -47,6 +48,7 @@ public class NormalChicken extends Chicken {
         super.setFoodHit(false);
         super.setHit(false);
         currState = State.WALKING;
+        prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
         ChickenTexture = new TextureRegion(super.getTexture(), 0, 0, SIZE_PIXEL, SIZE_PIXEL);
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
@@ -99,33 +101,31 @@ public class NormalChicken extends Chicken {
         //movement
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
 
-        if(super.getHit()){
-            super.getBody().setLinearVelocity(new Vector2(0,0));
-            this.VELOCITY = 0f;
-        }
     }
 
    private TextureRegion getFrame(float dt) {
 
+       TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
        currState = getState();
-       TextureRegion region;
-        if (super.getFoodHit())
+       System.out.println(currState);
+        if (currState == State.EATING)
             region = chickenEating.getKeyFrame(stateTimer, true);
-       else
+       else if (currState == State.WALKING)
             region = chickenWalking.getKeyFrame(stateTimer, true);
 
-       stateTimer+=dt;
+       stateTimer = currState == prevState ? stateTimer +dt : 0;
+       prevState = currState;
+
        return region;
 
    }
 
     private State getState() {
         if (super.getFoodHit())
-            currState = State.EATING;
-        else if (super.getHit())
-            currState = State.WALKING;
+            return State.EATING;
+        else
+            return State.WALKING;
 
-        return currState;
     }
 
     public float getVelocity() {

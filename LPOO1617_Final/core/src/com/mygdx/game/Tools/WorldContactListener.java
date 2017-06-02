@@ -71,6 +71,13 @@ public class WorldContactListener implements ContactListener {
                 ((Food) fixB.getUserData()).setHit(false);
             }
         }
+        else if (fixB.getUserData() instanceof Chicken){
+            //chicken and food
+            if (fixA.getUserData() instanceof Food) {
+                ((Chicken) fixB.getUserData()).setFoodHit(false);
+                ((Food) fixA.getUserData()).setHit(false);
+            }
+        }
 
     }
 
