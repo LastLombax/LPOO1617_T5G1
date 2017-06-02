@@ -99,10 +99,10 @@ public class NormalChicken extends Chicken {
         //movement
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
 
-        if(super.getHit()){
+       /* if(super.getHit()){
             super.getBody().setLinearVelocity(new Vector2(0,0));
             this.VELOCITY = 0f;
-        }
+        }*/
     }
 
    private TextureRegion getFrame(float dt) {

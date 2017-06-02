@@ -44,6 +44,8 @@ public class Butter extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(35);
         fdef.shape = shape;
+        fdef.filter.categoryBits = ChickenVsFood.BUTTER_BIT;
+        fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT;
 
         this.b2body.createFixture(fdef).setUserData(this);
     }

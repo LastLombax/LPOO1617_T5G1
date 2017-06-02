@@ -42,7 +42,7 @@ public abstract class Chicken extends Sprite{
 
         fdef.shape = shape;
         fdef.filter.categoryBits = ChickenVsFood.CHICKEN_BIT;
-        fdef.filter.maskBits = ChickenVsFood.BUTTER_BIT | ChickenVsFood.FOOD_BIT;
+        fdef.filter.maskBits = ChickenVsFood.BUTTER_BIT | ChickenVsFood.FOOD_BIT |ChickenVsFood.MAP_BIT;
 
         /*fdef.density = 0.5f;
         fdef.friction = 0.4f;
