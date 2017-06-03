@@ -1,5 +1,6 @@
 package com.mygdx.game.Sprites.Foods;
 
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,66 +8,64 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
-import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Sprites.Foods.Seed;
 
-/**
- * Created by vitor on 29/05/2017.
- */
 
-public class Unicorn extends Food {
+public class SeedShooter extends Food {
     public enum State{NORMAL, DYING, DYING2, DYING3}
     private State currState;
     private State prevState;
-    private ChickenVsFood game;
     private TextureRegion FoodTexture;
+    private ChickenVsFood game;
     private int HEALTH = 5;
     private int timer;
-    private boolean cornInc;
-    private boolean hiting = false;
-    private boolean animateC = false;
-    private Corn corn;
-    private Vector2 cornMovDir;
+    private int seedTimer;
     private int x;
     private int y;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private float stateTimer = 0;
+    private World world;
+    private PlayScreen screen;
     private Animation<TextureRegion> foodNormal;
     private Animation<TextureRegion> foodDying;
     private Animation<TextureRegion> foodDying2;
     private Animation<TextureRegion> foodDying3;
 
     /**
-     * Constructor for the Unicorn
+     * Constructor for the SeedShooter
      * @param world game world
      * @param game ChickenVsFood instance
-     * @param x x coordinate
-     * @param y y coordinate
-     * @param screen game screen
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
      */
-    public Unicorn(World world, ChickenVsFood game, int x, int y, PlayScreen screen){
-        super(world,game, screen);
-        setCornInc(false);
+    public SeedShooter(World world,ChickenVsFood game,int xInicial,int yInicial, PlayScreen screen) {
+        super(world, game, screen);
         this.timer = 0;
+        this.seedTimer = 0;
+        this.world = world;
         this.game = game;
-        this.x = x;
-        this.y = y;
-        this.currState = State.NORMAL;
-        this.prevState = State.NORMAL;
-        super.defineFood(x,y);
-        FoodTexture = new TextureRegion(screen.getUnicorn().findRegion("Unicorn"),0,0,SIZE_PIXEL,SIZE_PIXEL);
-        setBounds(0,0,WORLD_SIZE,WORLD_SIZE);
+        this.screen = screen;
+        this.x = xInicial;
+        this.y = yInicial;
+        super.setHit(false);
+        super.defineFood(xInicial, yInicial);
+        FoodTexture = new TextureRegion(screen.getSeedShooter().findRegion("SeedShooter"),0,0,SIZE_PIXEL,SIZE_PIXEL);
+        setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(FoodTexture);
-        cornMovDir = new Vector2(Hud.getCornLabel().getX() - super.getBody().getPosition().x,Hud.getCornLabel().getY() - super.getBody().getPosition().y);
         setAnimations();
     }
+
     /**
-     * Sets the animations for a Unicorn
+     * Sets the animations for the SeedShooter
      */
     private void setAnimations() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -92,25 +91,17 @@ public class Unicorn extends Food {
     }
 
     @Override
-    public void update(float v) {
+    public void update(float dt){
         setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
-
-        setRegion(getFrame(v));
-
+        setRegion(getFrame(dt));
         timer++;
-        //Unicorn's special ability
-        if (animateC)
-            if (corn.update(v)) {//ended
-                corn = null;
-                animateC = false;
-                Hud.addCorn(5);
-            }
+        seedTimer++;
+        //implement a thread for each unicorn to send corns
+       if(seedTimer%200 == 0) { // every second
 
-        if(timer%500 == 0) { // every 5 seconds
-            System.out.println("New Corn");
-            timer = 0;
-            corn = new Corn(this.x,this.y, cornMovDir);
-            animateC = true;
+           this.screen.getFoods().add(new Seed(this.world,this.game,this.x,this.y, this.screen));
+
+           System.out.println("bala incoming");
         }
 
         if(super.getHit()){
@@ -121,7 +112,7 @@ public class Unicorn extends Food {
     }
 
     /**
-     * Returns the current frame/animation of the Unicorn
+     * Returns the current frame/animation of the SeedShooter
      */
     private TextureRegion getFrame(float dt) {
 
@@ -160,9 +151,8 @@ public class Unicorn extends Food {
     @Override
     public void draw(SpriteBatch batch) {
         this.draw( (Batch) batch);
-        if (corn != null)
-            corn.draw(batch);
     }
+
 
     @Override
     public int getHealth() {
@@ -173,11 +163,4 @@ public class Unicorn extends Food {
     public void setHealth(int health) {
         this.HEALTH = health;
     }
-
-
-    public void setCornInc(boolean b){
-        this.cornInc = b;
-    }
-
-
 }

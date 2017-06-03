@@ -120,7 +120,7 @@ public abstract class Food extends Sprite {
     }
 
     /**
-     * decreases the health of the chicken by 1
+     * decreases the health of the food by 1
      */
     public void decreaseHealth() {
         setHealth(getHealth()-1);

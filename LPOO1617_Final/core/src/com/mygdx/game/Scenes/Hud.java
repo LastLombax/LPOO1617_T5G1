@@ -31,14 +31,17 @@ public class Hud implements Disposable{
     private Integer selectedFood;
     private boolean isSelected;
 
-    private static int FOOD_1 = 100;
-    private static int FOOD_2 = 50;
-    private static int cost[] = {FOOD_1,FOOD_2};
-    private int INITIAL_CORN = 50;
+    private static int FOOD_1 = 10;
+    private static int FOOD_2 = 5;
+    private static int FOOD_3 = 0;
+    private static int FOOD_4 = 15;
+
+    private static int cost[] = {FOOD_1,FOOD_2, FOOD_3, FOOD_4};
+    private int INITIAL_CORN = 5;
 
     private static Label cornLabel;
     Label leveLabel;
-    Texture tex,tex1,tex2;
+    Texture tex,tex1,tex2, tex3, exit;
 
     /**
      * Constructor for the Heads Up Display(HUD)
@@ -62,36 +65,54 @@ public class Hud implements Disposable{
         tableT.left();
         tableT.setFillParent(true);
 
-        tex = new Texture(Gdx.files.internal("butter.png"));
-        tex1 = new Texture(Gdx.files.internal("UmbrellaCopr.png"));
-        tex2 = new Texture(Gdx.files.internal("Tree1.png"));
+        tex = new Texture(Gdx.files.internal("SeedShooterCard.png"));
+        tex1 = new Texture(Gdx.files.internal("UnicornCard.png"));
+        tex2 = new Texture(Gdx.files.internal("ExplosiveBarryCard.png"));
+        tex3 = new Texture(Gdx.files.internal("CoolNappleCard.png"));
+        exit = new Texture(Gdx.files.internal("Exit.png"));
 
-        ButtonImg food1 = new ButtonImg(tex,tex1,tex2);
 
-        food1.addListener(new ClickListener() {
+        ButtonImg SeedShooterButton = new ButtonImg(tex,tex,tex);
+
+        SeedShooterButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                System.out.println("coiso1");
                if (!canSelect(1))
                    System.out.println("Get more coin");
-
             }
         });
 
 
-        ButtonImg food2 = new ButtonImg(tex1,tex1,tex1);
+        ButtonImg UnicornButton = new ButtonImg(tex1,tex1,tex1);
 
-        food2.addListener(new ClickListener() {
+        UnicornButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                System.out.println("coiso2");
                 if (!canSelect(2))
                     System.out.println("Get more coin");
             }
         });
 
 
-        ButtonImg food3 = new ButtonImg(tex2,tex2,tex2);
+        ButtonImg ExplosiveBarryButton = new ButtonImg(tex2,tex2,tex2);
 
-        food3.addListener(new ClickListener() {
+        ExplosiveBarryButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                if (!canSelect(3))
+                    System.out.println("Get more coin");
+            }
+        });
+
+        ButtonImg CoolNappleButton = new ButtonImg(tex3,tex3,tex3);
+
+        CoolNappleButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                if (!canSelect(4))
+                    System.out.println("Get more coin");
+            }
+        });
+
+        ButtonImg ExitButton = new ButtonImg(exit,exit,exit);
+
+        ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
                 dispose();
@@ -100,12 +121,23 @@ public class Hud implements Disposable{
 
         cornLabel = new Label(String.format("%04d", cornCounter), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         cornLabel.setFontScale(3); //change size
-        tableT.add(cornLabel).padLeft(150);
-        tableT.add(food1).padLeft(375);
-        tableT.add(food2).padLeft(10);
-        tableT.add(food3).padLeft(10);
+        tableT.add(cornLabel).padLeft(280);
         stage.addActor(tableT);
 
+        Table tableC = new Table();
+        tableC.center();
+        tableC.left();
+        tableC.top();
+        tableC.setFillParent(true);
+        tableC.row();
+        tableC.add(SeedShooterButton);
+        tableC.add(UnicornButton).padLeft(10);
+        tableC.row();
+        tableC.add(ExplosiveBarryButton).padLeft(10);
+        tableC.add(CoolNappleButton).padLeft(10);
+       // tableC.row();
+
+        stage.addActor(tableC);
 
         //lower hud
         Table tableD = new Table();
@@ -117,6 +149,13 @@ public class Hud implements Disposable{
         leveLabel.setFontScale(3); //change size
         tableD.add(leveLabel).padRight(50);
         stage.addActor(tableD);
+
+        Table tableE = new Table();
+        tableE.bottom();
+        tableE.left();
+        tableE.setFillParent(true);
+        tableE.add(ExitButton).padLeft(10);
+        stage.addActor(tableE);
     }
 
     /**
@@ -188,13 +227,13 @@ public class Hud implements Disposable{
      */
     public boolean canSelect(int food){
         if (cornCounter >= cost[food-1]){
+            System.out.println("yay");
             setSelectedFood(food);
             setSelected(true);
             removeCorn(cost[food-1]);
             return true;
         }
         return false;
-
     }
 
     /**

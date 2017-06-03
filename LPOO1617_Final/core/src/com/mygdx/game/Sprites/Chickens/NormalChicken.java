@@ -48,7 +48,6 @@ public class NormalChicken extends Chicken {
         setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
         setRegion(ChickenTexture);
         setAnimations();
-
     }
 
     /**

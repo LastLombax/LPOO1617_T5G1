@@ -26,8 +26,9 @@ import com.mygdx.game.Sprites.Chickens.StrongChicken;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
 import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
 
+import com.mygdx.game.Sprites.Foods.ExplosiveBarry;
 import com.mygdx.game.Sprites.Foods.Food;
-import com.mygdx.game.Sprites.Foods.Peashooter;
+import com.mygdx.game.Sprites.Foods.SeedShooter;
 import com.mygdx.game.Sprites.Foods.Unicorn;
 import com.mygdx.game.Tools.B2WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
@@ -64,6 +65,9 @@ public class PlayScreen implements Screen{
     private TextureAtlas MadChicken;
 
     private TextureAtlas Unicorn;
+    private TextureAtlas SeedShooter;
+    private TextureAtlas Seed;
+    private TextureAtlas ExplosiveBarry;
 
 
     //placement variables
@@ -134,7 +138,10 @@ public class PlayScreen implements Screen{
         StrongChicken =  new TextureAtlas("StrongChicken.pack");
         SmallChicken = new TextureAtlas("SmallChicken.pack");
 
+        SeedShooter = new TextureAtlas("SeedShooter.pack");
+        Seed = new TextureAtlas("Seed.pack");
         Unicorn = new TextureAtlas("Unicorn.pack");
+        ExplosiveBarry = new TextureAtlas("ExplosiveBarry.pack");
 
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
@@ -153,6 +160,8 @@ public class PlayScreen implements Screen{
     public Vector<Chicken> getChickens(){
         return chicken;
     }
+
+    public Vector<Food> getFoods() { return foods;}
 
     /**
      * @return Returns the NormalChicken atlas
@@ -180,6 +189,16 @@ public class PlayScreen implements Screen{
      * @return Returns the Unicorn atlas
      */
     public TextureAtlas getUnicorn() { return Unicorn;}
+    /**
+     * @return Returns the SeedShooter atlas
+     */
+    public TextureAtlas getSeedShooter() { return SeedShooter;}
+
+    public TextureAtlas getSeed() {
+        return Seed;
+    }
+
+    public TextureAtlas getExplosiveBarry() { return ExplosiveBarry;}
 
     /**
      * Renders the game screen
@@ -243,22 +262,8 @@ public class PlayScreen implements Screen{
      * @param dt time interval
      */
     public void handleInput(float dt) {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            for (int i = 0; i < this.chicken.size(); i++) {
-                chicken.get(i).getBody().applyLinearImpulse(new Vector2(-chicken.get(i).getVelocity(), 0), chicken.get(i).getBody().getWorldCenter(), true);
-            }
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S) /*&& chicken.b2body.getLinearVelocity().x <= 2*/) {
-            for (int i = 0; i < this.chicken.size(); i++) {
-                chicken.get(i).getBody().applyLinearImpulse(new Vector2(0, -chicken.get(i).getVelocity()), chicken.get(i).getBody().getWorldCenter(), true);
-            }
-
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("devia sair");
-            new MainMenuScreen(game);
-            dispose();
-
-        } else if (hud.isSelected()) //puts food in selected location
+        if (hud.isSelected()) //puts food in selected location
             if (Gdx.input.isTouched()) {
 
                 Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -284,11 +289,13 @@ public class PlayScreen implements Screen{
 
                     switch (hud.getSelectedFood()) {
                         case 1:
-                            foods.add(new Peashooter(getWorld(), game, x, y, this));
+                            foods.add(new SeedShooter(getWorld(), game, x, y, this));
                             break;
                         case 2:
                             foods.add(new Unicorn(getWorld(), game, x, y, this));
                             break;
+                        case 3:
+                            foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
                     }
                     hud.setSelectedFood(0);
                     hud.setSelected(false);
@@ -411,4 +418,5 @@ public class PlayScreen implements Screen{
         b2dr.dispose();
         hud.dispose();
     }
+
 }

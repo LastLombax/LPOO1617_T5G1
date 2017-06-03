@@ -78,13 +78,13 @@ public class SmallChickenEgg extends Chicken {
     public void update(float v) {
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
         setRegion(getFrame(v));
-
-        this.x = super.getBody().getPosition().x;
-        this.y = super.getBody().getPosition().y;;
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
+
         if (currState == State.EXPLODED) {
             timer++;
             if (timer % 100 == 0) {
+                this.x = super.getBody().getPosition().x;
+                this.y = super.getBody().getPosition().y;
                 this.screen.getChickens().add(new SmallChicken(this.world, this.game, (int) this.x + 15, (int)this.y, this.screen));
                 this.screen.getChickens().add(new SmallChicken(this.world, this.game, (int) this.x + 40, (int)this.y, this.screen));
                 this.setHealth(0);

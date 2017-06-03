@@ -12,6 +12,7 @@ public class ButtonImg extends ImageButton{
         super(new SpriteDrawable(new Sprite(texture_up)),
                 new SpriteDrawable(new Sprite(texture_down)));
 
+
         this.setBackground(new SpriteDrawable(new Sprite(background)));
 
     }
