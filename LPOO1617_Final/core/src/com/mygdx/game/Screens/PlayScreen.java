@@ -63,6 +63,8 @@ public class PlayScreen implements Screen{
     private TextureAtlas EggSplosion;
     private TextureAtlas MadChicken;
 
+    private TextureAtlas Unicorn;
+
 
     //placement variables
     private int MIN_WORLD_X = 512;
@@ -132,6 +134,8 @@ public class PlayScreen implements Screen{
         StrongChicken =  new TextureAtlas("StrongChicken.pack");
         SmallChicken = new TextureAtlas("SmallChicken.pack");
 
+        Unicorn = new TextureAtlas("Unicorn.pack");
+
         game.getAssetManager().load("Chicken.png", Texture.class);
         game.getAssetManager().finishLoading();
     }
@@ -172,8 +176,10 @@ public class PlayScreen implements Screen{
      * @return Returns the EggSplotion atlas
      */
     public TextureAtlas getEggSplosion(){ return EggSplosion;}
-
-
+    /**
+     * @return Returns the Unicorn atlas
+     */
+    public TextureAtlas getUnicorn() { return Unicorn;}
 
     /**
      * Renders the game screen
@@ -278,10 +284,10 @@ public class PlayScreen implements Screen{
 
                     switch (hud.getSelectedFood()) {
                         case 1:
-                            foods.add(new Peashooter(getWorld(), game, x, y));
+                            foods.add(new Peashooter(getWorld(), game, x, y, this));
                             break;
                         case 2:
-                            foods.add(new Unicorn(getWorld(), game, x, y));
+                            foods.add(new Unicorn(getWorld(), game, x, y, this));
                             break;
                     }
                     hud.setSelectedFood(0);
@@ -342,11 +348,11 @@ public class PlayScreen implements Screen{
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
-            //Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
             //Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
             //Chicken c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
             //Chicken c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            Chicken c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
 
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);

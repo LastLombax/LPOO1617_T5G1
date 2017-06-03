@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Foods.Peashooter;
 
 /**
@@ -31,8 +32,8 @@ public class PeaBullet extends Peashooter{
      * @param x x coordinate
      * @param y y coordinate
      */
-    public PeaBullet(World w, ChickenVsFood g, int x, int y){
-        super(w,g,x,y);
+    public PeaBullet(World w, ChickenVsFood g, int x, int y, PlayScreen screen){
+        super(w,g,x,y, screen);
         definePea(x,y);
         PeaTexture = new TextureRegion(Pea,0,0,28,40);
         setBounds(0,0,28,40);

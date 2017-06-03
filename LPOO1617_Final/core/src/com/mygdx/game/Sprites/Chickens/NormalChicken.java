@@ -29,7 +29,7 @@ public class NormalChicken extends Chicken {
 
 
     /**
-     * Constructor for the Normal Chicken
+     * Constructor for the NormalChicken
      * @param world game world
      * @param game ChickenVsFood game
      * @param xInicial x coordinate

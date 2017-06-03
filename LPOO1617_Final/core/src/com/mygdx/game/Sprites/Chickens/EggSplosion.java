@@ -86,7 +86,7 @@ public class EggSplosion extends Chicken {
         }
     }
     /**
-     * Returns the current frame/animation of the NormalChicken
+     * Returns the current frame/animation of the EggSplosion
      */
     private TextureRegion getFrame(float dt) {
 
@@ -130,16 +130,12 @@ public class EggSplosion extends Chicken {
     public int getHealth() {
         return HEALTH;
     }
-    /**
-     * Sets the health
-     */
+
     @Override
     public void setHealth(int health) {
         this.HEALTH = health;
     }
-    /**
-     * Returns the damage
-     */
+
     @Override
     public int getDmg() {
         return DMG;

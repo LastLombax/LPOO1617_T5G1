@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.PeaBullet;
 
 
@@ -33,8 +34,8 @@ public class Peashooter extends Food {
      * @param xInicial x coordinate
      * @param yInicial y coordinate
      */
-    public Peashooter(World world,ChickenVsFood game,int xInicial,int yInicial){
-        super(world,game);
+    public Peashooter(World world,ChickenVsFood game,int xInicial,int yInicial, PlayScreen screen){
+        super(world,game, screen);
         this.timer = 0;
         this.game = game;
         this.x = xInicial;

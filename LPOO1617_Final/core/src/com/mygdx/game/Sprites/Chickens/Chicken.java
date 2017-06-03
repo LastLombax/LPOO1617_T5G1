@@ -147,6 +147,4 @@ public abstract class Chicken extends Sprite{
         setHealth(getHealth()-1);
     }
 
-
-
 }

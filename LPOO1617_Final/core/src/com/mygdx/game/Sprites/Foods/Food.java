@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.PlayScreen;
 
 /**
  * Created by vitor on 29/05/2017.
@@ -25,9 +26,10 @@ public abstract class Food extends Sprite {
      * @param world game world
      * @param game ChickenVsFood instance
      */
-    public Food(World world, ChickenVsFood game){
-        super(game.getAssetManager().get("Chicken.png",Texture.class));
+    public Food(World world, ChickenVsFood game, PlayScreen screen){
+        //super(game.getAssetManager().get("Chicken.png",Texture.class));
         this.world = world;
+        setHit(false);
     }
 
     /**

@@ -29,7 +29,14 @@ public class StrongChicken extends Chicken {
     private int WORLD_SIZE = 90;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenEating;
-
+    /**
+     * Constructor for the StrongChicken
+     * @param world game world
+     * @param game ChickenVsFood game
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     * @param screen game screen
+     */
     public StrongChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world,game, screen);
         this.game = game;
@@ -43,7 +50,9 @@ public class StrongChicken extends Chicken {
         setRegion(ChickenTexture);
         setAnimations();
     }
-
+    /**
+     * Sets the animations for a StrongChicken
+     */
     private void setAnimations() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++)
@@ -58,7 +67,6 @@ public class StrongChicken extends Chicken {
     }
 
 
-
     @Override
     public void update(float v) {
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
@@ -70,7 +78,7 @@ public class StrongChicken extends Chicken {
     }
 
     /**
-     * Returns the current frame/animation of the NormalChicken
+     * Returns the current frame/animation of the StrongChicken
      */
     private TextureRegion getFrame(float dt) {
 

@@ -30,7 +30,14 @@ public class SmallChicken  extends Chicken {
     private int timer = 0;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenEating;
-
+    /**
+     * Constructor for the SmallChicken
+     * @param world game world
+     * @param game ChickenVsFood game
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     * @param screen game screen
+     */
     public SmallChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
         this.game = game;
@@ -44,7 +51,9 @@ public class SmallChicken  extends Chicken {
         setRegion(ChickenTexture);
         setAnimations();
     }
-
+    /**
+     * Sets the animations for a SmallChicken
+     */
     private void setAnimations() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 3; i++)

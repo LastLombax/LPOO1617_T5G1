@@ -34,7 +34,14 @@ public class SmallChickenEgg extends Chicken {
     private float y;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenExploding;
-
+    /**
+     * Constructor for the SmallChickenEgg
+     * @param world game world
+     * @param game ChickenVsFood game
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     * @param screen game screen
+     */
     public SmallChickenEgg(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
         this.game = game;
@@ -51,6 +58,9 @@ public class SmallChickenEgg extends Chicken {
         setAnimations();
     }
 
+    /**
+     * Sets the animations for a SmallChickenEgg
+     */
     private void setAnimations() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 6; i++)
@@ -83,7 +93,7 @@ public class SmallChickenEgg extends Chicken {
     }
 
     /**
-     * Returns the current frame/animation of the MadChicken
+     * Returns the current frame/animation of the SmallChickenEgg
      */
     private TextureRegion getFrame(float dt) {
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.PlayScreen;
 
 /**
  * Created by vitor on 29/05/2017.
@@ -17,8 +18,8 @@ public class Cabbage extends Food {
     private TextureRegion ChickenTexture;
     private int HEALTH = 5;
 
-    public Cabbage(World world, ChickenVsFood game) {
-        super(world, game);
+    public Cabbage(World world,ChickenVsFood game,int xInicial,int yInicial, PlayScreen screen) {
+        super(world, game, screen);
     }
 
     @Override

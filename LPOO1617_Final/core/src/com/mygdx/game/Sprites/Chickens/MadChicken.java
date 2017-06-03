@@ -32,6 +32,14 @@ public class MadChicken extends Chicken {
 
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
+    /**
+     * Constructor for the MadChicken
+     * @param world game world
+     * @param game ChickenVsFood instance
+     * @param xInicial x coordinate
+     * @param yInicial y coordinate
+     * @param screen game screen
+     */
     public MadChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
         super(world, game, screen);
         this.game = game;
@@ -114,16 +122,12 @@ public class MadChicken extends Chicken {
     public int getHealth() {
         return HEALTH;
     }
-    /**
-     * Sets the health
-     */
+
     @Override
     public void setHealth(int health) {
         this.HEALTH = health;
     }
-    /**
-     * Returns the damage
-     */
+
     @Override
     public int getDmg() {
         return DMG;
