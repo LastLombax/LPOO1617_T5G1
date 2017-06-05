@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.MainMenuScreen;
+import com.mygdx.game.Screens.PlayScreen;
 
 /**
  * Created by vitor on 06/04/2017.
@@ -32,6 +32,7 @@ public class Hud implements Disposable{
     private boolean isSelected;
 
     private ChickenVsFood game;
+
     private static int FOOD_1 = 10;
     private static int FOOD_2 = 5;
     private static int FOOD_3 = 1;
@@ -57,7 +58,6 @@ public class Hud implements Disposable{
         this.game = game;
         cornCounter = INITIAL_CORN;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
-
         stage = new Stage(viewport, sb);
 
         Gdx.input.setInputProcessor(stage);
@@ -74,7 +74,6 @@ public class Hud implements Disposable{
      * Defines the Top Table of the Hud
      */
     public void  defineTopTable(){
-        //upper hud
         Table tableT = new Table();
         tableT.top();
         tableT.left();
@@ -97,7 +96,7 @@ public class Hud implements Disposable{
         SeedShooterButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (!canSelect(1))
-                    System.out.println("Get more coin");
+                    System.out.println("You need more corn!");
             }
         });
 
@@ -107,7 +106,7 @@ public class Hud implements Disposable{
         UnicornButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (!canSelect(2))
-                    System.out.println("Get more coin");
+                    System.out.println("You need more corn!");
             }
         });
 
@@ -117,7 +116,7 @@ public class Hud implements Disposable{
         ExplosiveBarryButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (!canSelect(3))
-                    System.out.println("Get more coin");
+                    System.out.println("You need more corn!");
             }
         });
 
@@ -126,7 +125,7 @@ public class Hud implements Disposable{
         CoolNappleButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (!canSelect(4))
-                    System.out.println("Get more coin");
+                    System.out.println("You need more corn!");
             }
         });
 
@@ -143,7 +142,6 @@ public class Hud implements Disposable{
         tableC.add(CoolNappleButton).padLeft(10);
 
         stage.addActor(tableC);
-
     }
 
     /**
@@ -154,15 +152,18 @@ public class Hud implements Disposable{
 
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
+                getGame().getScreen().dispose();
                 getGame().setScreen(new MainMenuScreen(getGame()));
                 dispose();
             }
         });
+
         Table tableE = new Table();
         tableE.bottom();
         tableE.left();
         tableE.setFillParent(true);
         tableE.add(ExitButton).padLeft(80);
+
         stage.addActor(tableE);
     }
 
@@ -175,13 +176,12 @@ public class Hud implements Disposable{
         tableD.right();
         tableD.setFillParent(true);
 
-        leveLabel = new Label("Level 1-1", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        leveLabel.setFontScale(3); //change size
+        leveLabel = new Label("Level 1-" + PlayScreen.getLevel(), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        leveLabel.setFontScale(3);
         tableD.add(leveLabel).padRight(50);
+
         stage.addActor(tableD);
     }
-
-
 
     /**
      * Defines the textures used on the Hud
@@ -272,13 +272,18 @@ public class Hud implements Disposable{
      */
     public boolean canSelect(int food){
         if (cornCounter >= cost[food-1]){
-            System.out.println("yay");
             setSelectedFood(food);
             setSelected(true);
-            removeCorn(cost[food-1]);
             return true;
         }
         return false;
+    }
+
+    /**
+     * @return Returns the cost array of each food
+     */
+    public static int[] getCost(){
+        return cost;
     }
 
     /**

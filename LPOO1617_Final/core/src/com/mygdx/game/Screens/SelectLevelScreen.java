@@ -39,7 +39,7 @@ public class SelectLevelScreen implements Screen {
         PlayLevel1.setPosition(BUTTON_X,game.getvHeight()/2 );
         PlayLevel1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new PlayScreen(game));
+                game.setScreen(new PlayScreen(game,1));
                 dispose();
             }
         });
@@ -51,7 +51,8 @@ public class SelectLevelScreen implements Screen {
         PlayLevel2.setPosition(2*BUTTON_X, game.getvHeight()/2 );
         PlayLevel2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-
+                game.setScreen(new PlayScreen(game,2));
+                dispose();
             }
         });
         stage.addActor(PlayLevel2);
@@ -62,7 +63,8 @@ public class SelectLevelScreen implements Screen {
         PlayLevel3.setPosition(3*BUTTON_X, game.getvHeight()/2 );
         PlayLevel3.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-
+                game.setScreen(new PlayScreen(game,3));
+                dispose();
             }
         });
         stage.addActor(PlayLevel3);
@@ -80,7 +82,7 @@ public class SelectLevelScreen implements Screen {
         stage.addActor(ExitButton);
     }
     /**
-     * sets the gdx input processor with the stage
+     * Sets the gdx input processor with the stage
      */
     @Override
     public void show() {
@@ -128,6 +130,6 @@ public class SelectLevelScreen implements Screen {
 
     @Override
     public void dispose() {
-    stage.dispose();
+        stage.dispose();
     }
 }

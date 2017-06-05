@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -63,6 +64,7 @@ public class PlayScreen implements Screen{
     private TextureAtlas ExplosiveBarry;
     private TextureAtlas CoolNapple;
 
+    private Music music;
 
     //placement variables
     private int MIN_WORLD_X = 512;
@@ -94,14 +96,15 @@ public class PlayScreen implements Screen{
     private Vector<Food> foods = new Vector<Food>();
     private Vector<Butter> butters = new Vector<Butter>();
 
+    private static int level;
 
     /**
      * Creates the screen of the game
      * @param game ChickenVsFood instance
      */
-    public PlayScreen(ChickenVsFood game){
+    public PlayScreen(ChickenVsFood game, int level){
         this.game = game;
-
+        this.level = level;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(game.getvWidth(),game.getvHeight(),gameCam);
         hud = new Hud(game.getBatch(), game);
@@ -121,6 +124,11 @@ public class PlayScreen implements Screen{
 
         createButters();
 
+        music = Gdx.audio.newMusic(Gdx.files.internal("chocobo.mp3"));
+        music.setVolume(0.5f);
+
+        music.setLooping(true);
+        music.play();
     }
 
     /**
@@ -149,6 +157,173 @@ public class PlayScreen implements Screen{
             butters.add(b);
         }
     }
+
+    @Override
+    public void render(float delta) {
+        update(delta);
+
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        renderer.render();
+
+        b2dr.render(world, gameCam.combined);
+
+        game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
+        game.getBatch().begin();
+
+        //draw chickens
+        for (int i = 0; i < this.chicken.size(); i++){
+            chicken.get(i).draw(game.getBatch());
+        }
+        //draw foods
+        for (int i = 0; i < this.foods.size(); i++){
+            foods.get(i).draw(game.getBatch());
+        }
+        //draw butters
+        for (int i = 0; i < this.butters.size(); i++) {
+            this.butters.get(i).draw(game.getBatch());
+        }
+        game.getBatch().end();
+
+        hud.getStage().draw();
+    }
+
+    /**
+     * Updates the screen
+     * @param dt time interval of the update
+     */
+    public void update(float dt) {
+        handleInput(dt);
+
+        //takes 1 step in the physics simulation (60 times per second)
+        float frameTime = Math.min(dt, 0.25f);
+        accumulator += frameTime;
+        while (accumulator >= FPS) {
+            world.step(FPS, 6, 2);
+            accumulator -= FPS;
+        }
+
+        if(chicken.size() < MAX_CHICKEN)
+            GenerateChickens();
+
+        updateCharacters(dt);
+
+        gameCam.update();
+        renderer.setView(gameCam);
+    }
+
+    /**
+     * Handles all input from the player
+     * @param dt time interval
+     */
+    public void handleInput(float dt) {
+
+        if (hud.isSelected()) //puts food in selected location
+            if (Gdx.input.isTouched()) {
+
+                Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                v = gameCam.unproject(v);
+
+                int x = (int) v.x;
+                int y = (int) v.y - 20;
+
+                if (checkPlacingBounds(x , y)) {
+
+                    for (int m = ORIGINAL_X_MID; m <FINAL_X_MID; m+=tileSize){
+                        if ( x-m < GAP) { //found
+                            x = m;
+                            break;
+                        }
+                    }
+                    for (int m = ORIGINAL_Y_MID; m <FINAL_Y_MID; m+=tileSize){
+                        if ( y-m < GAP-10) { //found
+                            y = m;
+                            break;
+                        }
+                    }
+                    //level 1 -> seedshooter and unicorn
+                    //level 2 -> explosivebarry
+                    //level 3-> coolnapple
+                    switch (hud.getSelectedFood()) {
+                        case 1:
+                            foods.add(new SeedShooter(getWorld(), game, x, y, this));
+                            break;
+                        case 2:
+                            foods.add(new Unicorn(getWorld(), game, x, y, this));
+                            break;
+                        case 3:
+                            foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
+                            break;
+                        case 4:
+                            foods.add(new CoolNapple(getWorld(), game, x, y, this));
+                            break;
+                    }
+                    hud.removeCorn(hud.getCost()[hud.getSelectedFood()-1]);
+                    hud.setSelectedFood(0);
+                    hud.setSelected(false);
+                } else
+                    System.out.println("You can't put it there");
+            }
+    }
+
+    /**
+     * Verifies if a food can be placed in the selected spot
+     * @param px x coordinate
+     * @param py y coordinate
+     * @return true if can be placed
+     */
+    public boolean checkPlacingBounds(double px, double py){
+        return (px >= MIN_WORLD_X && px <= MAX_WORLD_X && py >= MIN_WORLD_Y && py <=MAX_WORLD_Y);
+    }
+
+    /**
+     * Updates all characters(Foods and Chickens)
+     * @param dt time interval for the update
+     */
+    public void updateCharacters(float dt){
+        for (int i = 0; i < this.chicken.size(); i++) {
+            if (chicken.get(i).isDead()) {
+                chicken.remove(i);
+                i--;
+            }
+            else
+                chicken.get(i).update(dt);
+        }
+
+        for (int i = 0; i < this.foods.size(); i++) {
+            if (foods.get(i).isDead()) {
+                foods.remove(i);
+                i--;
+            }
+            else
+                foods.get(i).update(dt);
+        }
+
+        for (int i = 0; i < this.butters.size(); i++)
+            this.butters.get(i).update(dt);
+    }
+
+    /**
+     * Randomly generates chickens for each lane every CHICKEN_GEN seconds
+     */
+    public void GenerateChickens(){
+        timer++;
+        if(timer%CHICKEN_GEN == 0){
+            Random rn = new Random();
+            int value = rn.nextInt(Integer.SIZE -1)%5;
+            int y = diffY[value];
+            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            //Chicken c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+
+            c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
+            chicken.add(c);
+        }
+    }
+
 
     /**
      * @return Returns the chicken vector
@@ -213,173 +388,9 @@ public class PlayScreen implements Screen{
      * Renders the game screen
      * @param delta time interval of each render
      */
-    @Override
-    public void render(float delta) {
-        update(delta);
-
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        renderer.render();
-
-        b2dr.render(world, gameCam.combined);
-
-        game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
-        game.getBatch().begin();
-
-        //draw chickens
-        for (int i = 0; i < this.chicken.size(); i++){
-            chicken.get(i).draw(game.getBatch());
-        }
-        //draw foods
-        for (int i = 0; i < this.foods.size(); i++){
-            foods.get(i).draw(game.getBatch());
-        }
-        //draw butters
-        for (int i = 0; i < this.butters.size(); i++) {
-            this.butters.get(i).draw(game.getBatch());
-        }
-        game.getBatch().end();
-
-        //draw hud
-        hud.getStage().draw();
-
-    }
 
     /**
-     * Updates the screen
-     * @param dt time interval of the update
-     */
-    public void update(float dt) {
-        handleInput(dt);
-
-        //takes 1 step in the physics simulation (60 times per second)
-        float frameTime = Math.min(dt, 0.25f);
-        accumulator += frameTime;
-        while (accumulator >= FPS) {
-            world.step(FPS, 6, 2);
-            accumulator -= FPS;
-        }
-
-        if(chicken.size() < MAX_CHICKEN)
-            GenerateChickens();
-
-        updateCharacters(dt);
-
-        gameCam.update();
-        renderer.setView(gameCam);
-    }
-
-    /**
-     * Handles all input from the player
-     * @param dt time interval
-     */
-    public void handleInput(float dt) {
-
-        if (hud.isSelected()) //puts food in selected location
-            if (Gdx.input.isTouched()) {
-
-                Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                v = gameCam.unproject(v);
-
-                int x = (int) v.x;
-                int y = (int) v.y - 20;
-
-                if (checkPlacingBounds(x , y)) {
-
-                    for (int m = ORIGINAL_X_MID; m <FINAL_X_MID; m+=tileSize){
-                        if ( x-m < GAP) { //found
-                            x = m;
-                            break;
-                        }
-                    }
-                    for (int m = ORIGINAL_Y_MID; m <FINAL_Y_MID; m+=tileSize){
-                        if ( y-m < GAP-10) { //found
-                            y = m;
-                            break;
-                        }
-                    }
-                    switch (hud.getSelectedFood()) {
-                        case 1:
-                            foods.add(new SeedShooter(getWorld(), game, x, y, this));
-                            break;
-                        case 2:
-                            foods.add(new Unicorn(getWorld(), game, x, y, this));
-                            break;
-                        case 3:
-                            foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
-                            break;
-                        case 4:
-                            foods.add(new CoolNapple(getWorld(), game, x, y, this));
-                            break;
-                    }
-                    hud.setSelectedFood(0);
-                    hud.setSelected(false);
-                } else
-                    System.out.println("You can't put it there");
-            }
-    }
-
-    /**
-     * Verifies if a food can be placed in the selected spot
-     * @param px x coordinate
-     * @param py y coordinate
-     * @return true if can be placed
-     */
-    public boolean checkPlacingBounds(double px, double py){
-        return (px >= MIN_WORLD_X && px <= MAX_WORLD_X && py >= MIN_WORLD_Y && py <=MAX_WORLD_Y);
-    }
-
-    /**
-     * Updates all characters(Foods and Chickens)
-     * @param dt time interval for the update
-     */
-    public void updateCharacters(float dt){
-        for (int i = 0; i < this.chicken.size(); i++) {
-            //Dead Chicken
-            if (chicken.get(i).isDead()) {
-                chicken.remove(i);
-                i--;
-            }
-            else
-                chicken.get(i).update(dt);
-        }
-
-        for (int i = 0; i < this.foods.size(); i++) {
-            if (foods.get(i).isDead()) {
-                foods.remove(i);
-                i--;
-            }
-            else
-                foods.get(i).update(dt);
-        }
-
-        for (int i = 0; i < this.butters.size(); i++)
-            this.butters.get(i).update(dt);
-    }
-
-    /**
-     * Randomly generates chickens for each lane every CHICKEN_GEN seconds
-     */
-    public void GenerateChickens(){
-        timer++;
-        if(timer%CHICKEN_GEN == 0){
-            Random rn = new Random();
-            int value = rn.nextInt(Integer.SIZE -1)%5;
-            int y = diffY[value];
-            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-
-            c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
-            chicken.add(c);
-        }
-    }
-
-    /**
-     * @return retuns the world
+     * @return Returns the world
      */
     public World getWorld(){
         return world;
@@ -390,6 +401,9 @@ public class PlayScreen implements Screen{
      */
     public void setWorld(){world = new World(new Vector2(0,0),true);}
 
+    public static int getLevel(){
+        return level;
+    }
     /**
      * Resizes the gameport
      * @param width new width
@@ -430,6 +444,7 @@ public class PlayScreen implements Screen{
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        music.dispose();
     }
 
 }
