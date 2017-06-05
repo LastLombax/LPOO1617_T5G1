@@ -20,9 +20,11 @@ public class Butter extends Sprite {
     private Body b2body;
     private ChickenVsFood game;
     private TextureRegion ButterTexture;
-    private Texture Butter = new Texture("butter.png");
+    private Texture Butter = new Texture("Butter.png");
     private float VELOCITY = 50f;
     private boolean hitting = false;
+    private int SIZE_PIXEL = 120;
+    private int WORLD_SIZE = 100;
 
     /**
      * Constructor for the Butter
@@ -35,8 +37,8 @@ public class Butter extends Sprite {
         this.world = world;
         this.game = game;
         defineButter(x,y);
-        ButterTexture = new TextureRegion(Butter,0,0,28,40);
-        setBounds(0,0,28,40);
+        ButterTexture = new TextureRegion(Butter,0,0,SIZE_PIXEL,SIZE_PIXEL);
+        setBounds(0,0,WORLD_SIZE,WORLD_SIZE);
         setRegion(ButterTexture);
     }
 
@@ -74,9 +76,8 @@ public class Butter extends Sprite {
      */
     public void update(float dt) {
         setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getWidth() / 2);
-        if(this.hitting){
+        if(getHit())
             this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);
-        }
 
     }
 

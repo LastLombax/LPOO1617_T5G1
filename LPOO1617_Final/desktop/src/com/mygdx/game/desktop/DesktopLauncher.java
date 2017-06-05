@@ -11,6 +11,5 @@ public class DesktopLauncher {
 		config.width = 1224;
 		config.height = 768;
 		new LwjglApplication(new ChickenVsFood(), config);
-
 	}
 }

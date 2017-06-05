@@ -20,7 +20,6 @@ public abstract class Chicken extends Sprite{
     private World world;
     private Body b2body;
     private boolean foodHit;
-    private boolean hit;
 
     /**
      * Constructor for a Chicken
@@ -44,7 +43,6 @@ public abstract class Chicken extends Sprite{
         bdef.position.set(x, y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
-        //b2body.setUserData("Chicken");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -54,10 +52,6 @@ public abstract class Chicken extends Sprite{
         fdef.shape = shape;
         fdef.filter.categoryBits = ChickenVsFood.CHICKEN_BIT;
         fdef.filter.maskBits = ChickenVsFood.BUTTER_BIT | ChickenVsFood.FOOD_BIT |ChickenVsFood.MAP_BIT;
-
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
 
         b2body.createFixture(fdef).setUserData(this);
     }
@@ -86,23 +80,6 @@ public abstract class Chicken extends Sprite{
      * @param health new value of health field
      */
     public abstract void setHealth(int health);
-
-    public abstract int getDmg();
-
-    /**
-     * Sets the hit field with value b
-     * @param b boolean
-     */
-    public  void setHit(boolean b){
-        this.hit = b;
-    }
-
-    /**
-     * @return the value of the hit field
-     */
-    public boolean getHit(){
-        return this.hit;
-    }
 
     /**
      * Sets the foodHit field with value b

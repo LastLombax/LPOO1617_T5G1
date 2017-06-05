@@ -14,6 +14,12 @@ public class Corn extends Sprite {
     private Vector2 cornMovDir;
     private int MULTI = 6;
 
+    /**
+     * Constructor for a Corn to be animated
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param dir vector between CornLabel and Unicorn's position
+     */
     public Corn(int x, int y, Vector2 dir){
         super(new Texture("corn.png"));
         this.setBounds(0,0,50,50);
@@ -22,6 +28,11 @@ public class Corn extends Sprite {
         cornMovDir.nor();
     }
 
+    /**
+     * Updates the position of the corn
+     * @param dt time interval
+     * @return Returns true if has arrived, else continues movement and returns false
+     */
     public boolean update(float dt){
         if (this.getX() > Hud.getCornLabel().getX() && this.getY() < Hud.getCornLabel().getY()){
             this.setPosition(this.getX() + MULTI*cornMovDir.x, this.getY() + MULTI*cornMovDir.y);

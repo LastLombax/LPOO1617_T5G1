@@ -111,6 +111,7 @@ public class OptionsScreen implements Screen {
         viewport.update(width,height);
     }
 
+
     @Override
     public void pause() {
 
@@ -128,6 +129,6 @@ public class OptionsScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

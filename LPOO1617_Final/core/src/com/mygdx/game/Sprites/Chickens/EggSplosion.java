@@ -21,7 +21,6 @@ public class EggSplosion extends Chicken {
     private State prevState;
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
-    private int DMG = 1;
     private int timer = 0;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
@@ -44,7 +43,6 @@ public class EggSplosion extends Chicken {
         super(world, game, screen);
         this.game = game;
         super.setFoodHit(false);
-        super.setHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
@@ -136,9 +134,5 @@ public class EggSplosion extends Chicken {
         this.HEALTH = health;
     }
 
-    @Override
-    public int getDmg() {
-        return DMG;
-    }
 
 }

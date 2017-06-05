@@ -1,6 +1,6 @@
 package com.mygdx.game.Sprites.Foods;
 
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,16 +22,13 @@ import com.mygdx.game.Screens.PlayScreen;
 public class Seed extends Food{
     private World world;
     private Body b2body;
-    private ChickenVsFood game;
     private TextureRegion FoodTexture;
     private float VELOCITY = 10f;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private int HEALTH = 1;
-
-    private Animation<TextureRegion> seed;
     /**
-     * Constructor for the Seed
+     * Constructor for a Seed
      * @param w game world
      * @param g ChickenVsFood instance
      * @param x x coordinate
@@ -45,7 +42,6 @@ public class Seed extends Food{
         FoodTexture = new TextureRegion(screen.getSeed().findRegion("Seed"),0,0,SIZE_PIXEL,SIZE_PIXEL);
         setBounds(0,0,WORLD_SIZE,WORLD_SIZE);
         setRegion(FoodTexture);
-        setAnimation();
     }
 
     /**
@@ -58,7 +54,6 @@ public class Seed extends Food{
         bdef.position.set(x,y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         this.b2body = this.world.createBody(bdef);
-        //this.b2body.setUserData("Food");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -68,31 +63,13 @@ public class Seed extends Food{
         fdef.filter.categoryBits = ChickenVsFood.FOOD_BIT;
         fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT ;
 
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
-
         this.b2body.createFixture(fdef).setUserData(this);
     }
-
-    /**
-     * Sets the animation
-     */
-    private void setAnimation() {
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < 1; i++)
-            frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-        seed = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-    }
-
 
     @Override
     public void update(float dt) {
         setPosition(this.getBody().getPosition().x - getWidth() / 2, this.getBody().getPosition().y - getWidth() / 2);
-
         this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0), this.getBody().getWorldCenter(), true);
-
     }
 
     @Override
@@ -116,7 +93,7 @@ public class Seed extends Food{
 
     /**
      * Verifies if Seed is dead
-     * @return true if dead, false is not
+     * @return true if dead, false if not
      */
     public boolean isDead() {
         if (getHealth() == 0){

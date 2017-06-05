@@ -1,14 +1,12 @@
 package com.mygdx.game.Sprites.Foods;
 
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
@@ -24,10 +22,12 @@ public class Unicorn extends Food {
     private State prevState;
     private ChickenVsFood game;
     private TextureRegion FoodTexture;
+    private int ADD_CORN = 5;
     private int HEALTH = 5;
     private int timer;
+    private int DMG_SECONDS = 100;
+    private int SPAWN_CORN = 500;
     private boolean cornInc;
-    private boolean hiting = false;
     private boolean animateC = false;
     private Corn corn;
     private Vector2 cornMovDir;
@@ -94,30 +94,26 @@ public class Unicorn extends Food {
     @Override
     public void update(float v) {
         setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
-
         setRegion(getFrame(v));
-
         timer++;
-        //Unicorn's special ability
+
         if (animateC)
-            if (corn.update(v)) {//ended
+            if (corn.update(v)) {
                 corn = null;
                 animateC = false;
-                Hud.addCorn(5);
+                Hud.addCorn(ADD_CORN);
             }
 
-        if(timer%500 == 0) { // every 5 seconds
+        if(timer%SPAWN_CORN == 0) {
             System.out.println("New Corn");
             timer = 0;
             corn = new Corn(this.x,this.y, cornMovDir);
             animateC = true;
         }
 
-        if(super.getHit()){
-            if(timer%100 == 0){
+        if(super.getHit())
+            if(timer%DMG_SECONDS == 0)
                 decreaseHealth();
-            }
-        }
     }
 
     /**
@@ -178,6 +174,5 @@ public class Unicorn extends Food {
     public void setCornInc(boolean b){
         this.cornInc = b;
     }
-
 
 }

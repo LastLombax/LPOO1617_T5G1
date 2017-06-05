@@ -10,6 +10,7 @@ import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Chickens.EggSplosion;
 import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
+import com.mygdx.game.Sprites.Foods.ExplosiveBarry;
 import com.mygdx.game.Sprites.Foods.Food;
 import com.mygdx.game.Sprites.Foods.InvisibleSeed;
 import com.mygdx.game.Sprites.Foods.Seed;
@@ -22,7 +23,6 @@ public class WorldContactListener implements ContactListener {
      */
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("begin contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
@@ -58,28 +58,30 @@ public class WorldContactListener implements ContactListener {
             //chicken and food
             if (fixB.getUserData() instanceof Seed) {
                 ((Seed) fixB.getUserData()).setHealth(0);
-
                 ((Chicken) fixA.getUserData()).decreaseHealth();
+            }
+            else if ((fixB.getUserData() instanceof ExplosiveBarry)) {
+                ((ExplosiveBarry) fixB.getUserData()).setHit(true);
+                ((Chicken) fixA.getUserData()).setHealth(0);
             }
 
             else if (fixB.getUserData() instanceof Food){
-                ((Chicken)fixA.getUserData()).setHit(true);
                 ((Chicken)fixA.getUserData()).setFoodHit(true);
                 ((Food)fixB.getUserData()).setHit(true);
                 ((Food)fixB.getUserData()).decreaseHealth();
             }
-            //chicken and pea
-
         }
         else if (fixB.getUserData() instanceof Chicken){
-            //chicken and pea
+
             if (fixA.getUserData() instanceof Seed) {
                 ((Seed) fixA.getUserData()).setHealth(0);
                 ((Chicken) fixB.getUserData()).decreaseHealth();
             }
-
+            else if ((fixA.getUserData() instanceof ExplosiveBarry)) {
+                ((ExplosiveBarry) fixA.getUserData()).setHit(true);
+                ((Chicken) fixB.getUserData()).setHealth(0);
+            }
             else if (fixA.getUserData() instanceof Food) {
-                ((Chicken)fixB.getUserData()).setHit(true);
                 ((Chicken)fixB.getUserData()).setFoodHit(true);
                 ((Food)fixA.getUserData()).setHit(true);
                 ((Food)fixA.getUserData()).decreaseHealth();
@@ -94,7 +96,6 @@ public class WorldContactListener implements ContactListener {
      */
     @Override
     public void endContact(Contact contact) {
-        System.out.println("end contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
@@ -107,6 +108,8 @@ public class WorldContactListener implements ContactListener {
                 if (fixA.getUserData() instanceof EggSplosion || fixA.getUserData() instanceof SmallChickenEgg)
                     ((Food)fixB.getUserData()).setHealth(0);
             }
+            if (fixB.getUserData() instanceof ExplosiveBarry)
+                ((ExplosiveBarry) fixB.getUserData()).setHit(true);
         }
         else if (fixB.getUserData() instanceof Chicken){
             //chicken and food
@@ -117,6 +120,8 @@ public class WorldContactListener implements ContactListener {
                 if (fixB.getUserData() instanceof EggSplosion || fixA.getUserData() instanceof SmallChickenEgg)
                     ((Food)fixA.getUserData()).setHealth(0);
             }
+            if (fixA.getUserData() instanceof ExplosiveBarry)
+                ((ExplosiveBarry) fixA.getUserData()).setHit(true);
         }
 
     }

@@ -1,6 +1,6 @@
 package com.mygdx.game.Sprites.Foods;
 
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -27,7 +27,6 @@ public abstract class Food extends Sprite {
      * @param game ChickenVsFood instance
      */
     public Food(World world, ChickenVsFood game, PlayScreen screen){
-        //super(game.getAssetManager().get("Chicken.png",Texture.class));
         this.world = world;
         setHit(false);
     }
@@ -42,7 +41,6 @@ public abstract class Food extends Sprite {
          bdef.position.set(x,y);
          bdef.type = BodyDef.BodyType.StaticBody;
          this.b2body = world.createBody(bdef);
-         //this.b2body.setUserData("Food");
 
          FixtureDef fdef = new FixtureDef();
          CircleShape shape = new CircleShape();
@@ -51,10 +49,6 @@ public abstract class Food extends Sprite {
          fdef.shape = shape;
          fdef.filter.categoryBits = ChickenVsFood.FOOD_BIT;
          fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT ;
-
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
 
          this.b2body.createFixture(fdef).setUserData(this);
      }
@@ -122,10 +116,6 @@ public abstract class Food extends Sprite {
     /**
      * decreases the health of the food by 1
      */
-    public void decreaseHealth() {
-        setHealth(getHealth()-1);
-    }
-
-
+    public void decreaseHealth() {   setHealth(getHealth()-1);  }
 
 }

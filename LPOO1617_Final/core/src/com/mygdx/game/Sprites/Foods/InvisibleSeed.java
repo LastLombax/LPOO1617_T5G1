@@ -1,16 +1,13 @@
 package com.mygdx.game.Sprites.Foods;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -21,14 +18,11 @@ import com.mygdx.game.Screens.PlayScreen;
 public class InvisibleSeed extends Food{
     private World world;
     private Body b2body;
-    private ChickenVsFood game;
     private float VELOCITY = 10f;
-    private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private int HEALTH = 1;
-    private boolean left;
     /**
-     * Constructor for the Seed
+     * Constructor for an Invisible Seed
      * @param w game world
      * @param g ChickenVsFood instance
      * @param x x coordinate
@@ -54,7 +48,6 @@ public class InvisibleSeed extends Food{
         bdef.position.set(x,y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         this.b2body = this.world.createBody(bdef);
-        //this.b2body.setUserData("Food");
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -63,10 +56,6 @@ public class InvisibleSeed extends Food{
         fdef.shape = shape;
         fdef.filter.categoryBits = ChickenVsFood.FOOD_BIT;
         fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT ;
-
-        /*fdef.density = 0.5f;
-        fdef.friction = 0.4f;
-        fdef.restitution = 0.5f;*/
 
         this.b2body.createFixture(fdef).setUserData(this);
     }
@@ -81,9 +70,7 @@ public class InvisibleSeed extends Food{
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
-        this.draw( (Batch) batch);
-    }
+    public void draw(SpriteBatch batch) {}
 
     @Override
     public int getHealth() {
@@ -101,7 +88,7 @@ public class InvisibleSeed extends Food{
 
     /**
      * Verifies if Seed is dead
-     * @return true if dead, false is not
+     * @return true if dead, false if not
      */
     public boolean isDead() {
         if (getHealth() == 0){

@@ -21,7 +21,6 @@ public class SmallChickenEgg extends Chicken {
     private State prevState;
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
-    private int DMG= 1;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
@@ -48,7 +47,6 @@ public class SmallChickenEgg extends Chicken {
         this.world = world;
         this.screen = screen;
         super.setFoodHit(false);
-        super.setHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
@@ -140,10 +138,6 @@ public class SmallChickenEgg extends Chicken {
         this.HEALTH = health;
     }
 
-    @Override
-    public int getDmg() {
-        return DMG;
-    }
 
 
 }

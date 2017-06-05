@@ -31,10 +31,11 @@ public class Hud implements Disposable{
     private Integer selectedFood;
     private boolean isSelected;
 
+    private ChickenVsFood game;
     private static int FOOD_1 = 10;
     private static int FOOD_2 = 5;
-    private static int FOOD_3 = 0;
-    private static int FOOD_4 = 15;
+    private static int FOOD_3 = 1;
+    private static int FOOD_4 = 0;
 
     private static int cost[] = {FOOD_1,FOOD_2, FOOD_3, FOOD_4};
     private int INITIAL_CORN = 5;
@@ -42,6 +43,7 @@ public class Hud implements Disposable{
     private static Label cornLabel;
     Label leveLabel;
     Texture tex,tex1,tex2, tex3, exit;
+
 
     /**
      * Constructor for the Heads Up Display(HUD)
@@ -52,6 +54,7 @@ public class Hud implements Disposable{
 
         setSelectedFood(0);
         setSelected(false);
+        this.game = game;
         cornCounter = INITIAL_CORN;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
 
@@ -59,25 +62,42 @@ public class Hud implements Disposable{
 
         Gdx.input.setInputProcessor(stage);
 
+        defineTopTable();
+        defineTextures();
+        defineFoodButtonsTable();
+        defineExitButtonTable();
+        defineBottomTable();
+    }
+
+
+    /**
+     * Defines the Top Table of the Hud
+     */
+    public void  defineTopTable(){
         //upper hud
         Table tableT = new Table();
         tableT.top();
         tableT.left();
         tableT.setFillParent(true);
 
-        tex = new Texture(Gdx.files.internal("SeedShooterCard.png"));
-        tex1 = new Texture(Gdx.files.internal("UnicornCard.png"));
-        tex2 = new Texture(Gdx.files.internal("ExplosiveBarryCard.png"));
-        tex3 = new Texture(Gdx.files.internal("CoolNappleCard.png"));
-        exit = new Texture(Gdx.files.internal("Exit.png"));
+        cornLabel = new Label(String.format("%04d", cornCounter), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        cornLabel.setFontScale(3); //change size
+        tableT.add(cornLabel).padLeft(310);
+        tableT.add(cornLabel).padTop(20);
 
+        stage.addActor(tableT);
+    }
 
+    /**
+     * Defines the Food Buttons Table of the Hud
+     */
+    private void defineFoodButtonsTable() {
         ButtonImg SeedShooterButton = new ButtonImg(tex,tex,tex);
 
         SeedShooterButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-               if (!canSelect(1))
-                   System.out.println("Get more coin");
+                if (!canSelect(1))
+                    System.out.println("Get more coin");
             }
         });
 
@@ -110,20 +130,6 @@ public class Hud implements Disposable{
             }
         });
 
-        ButtonImg ExitButton = new ButtonImg(exit,exit,exit);
-
-        ExitButton.addListener(new ClickListener() {
-            public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
-            }
-        });
-
-        cornLabel = new Label(String.format("%04d", cornCounter), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        cornLabel.setFontScale(3); //change size
-        tableT.add(cornLabel).padLeft(280);
-        stage.addActor(tableT);
-
         Table tableC = new Table();
         tableC.center();
         tableC.left();
@@ -135,11 +141,35 @@ public class Hud implements Disposable{
         tableC.row();
         tableC.add(ExplosiveBarryButton).padLeft(10);
         tableC.add(CoolNappleButton).padLeft(10);
-       // tableC.row();
 
         stage.addActor(tableC);
 
-        //lower hud
+    }
+
+    /**
+     * Defines the Exit Button Table of the Hud
+     */
+    private void defineExitButtonTable() {
+        ButtonImg ExitButton = new ButtonImg(exit,exit,exit);
+
+        ExitButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                getGame().setScreen(new MainMenuScreen(getGame()));
+                dispose();
+            }
+        });
+        Table tableE = new Table();
+        tableE.bottom();
+        tableE.left();
+        tableE.setFillParent(true);
+        tableE.add(ExitButton).padLeft(80);
+        stage.addActor(tableE);
+    }
+
+    /**
+     * Defines the Bottom Table of the Hud
+     */
+    private void defineBottomTable() {
         Table tableD = new Table();
         tableD.bottom();
         tableD.right();
@@ -149,14 +179,29 @@ public class Hud implements Disposable{
         leveLabel.setFontScale(3); //change size
         tableD.add(leveLabel).padRight(50);
         stage.addActor(tableD);
-
-        Table tableE = new Table();
-        tableE.bottom();
-        tableE.left();
-        tableE.setFillParent(true);
-        tableE.add(ExitButton).padLeft(10);
-        stage.addActor(tableE);
     }
+
+
+
+    /**
+     * Defines the textures used on the Hud
+     */
+    private void defineTextures() {
+        tex = new Texture(Gdx.files.internal("SeedShooterCard.png"));
+        tex1 = new Texture(Gdx.files.internal("UnicornCard.png"));
+        tex2 = new Texture(Gdx.files.internal("ExplosiveBarryCard.png"));
+        tex3 = new Texture(Gdx.files.internal("CoolNappleCard.png"));
+        exit = new Texture(Gdx.files.internal("Exit.png"));
+    }
+
+
+    /**
+     * @return Returns the instance of the game
+     */
+    private ChickenVsFood getGame(){
+        return this.game;
+    }
+
 
     /**
      * @return returns the stage

@@ -1,6 +1,5 @@
 package com.mygdx.game.Sprites.Foods;
 
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,55 +9,49 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
-public class SeedShooter extends Food {
+/**
+ * Created by vitor on 29/05/2017.
+ */
+
+public class CoolNapple extends Food {
     public enum State{NORMAL, DYING, DYING2, DYING3}
     private State currState;
     private State prevState;
-    private TextureRegion FoodTexture;
     private ChickenVsFood game;
-    private int HEALTH = 5;
+    private TextureRegion FoodTexture;
+    private int HEALTH = 10;
     private int timer;
-    private int seedTimer;
-    private int SEED_SECONDS = 200;
     private int DMG_SECONDS = 100;
-    private int x;
-    private int y;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private float stateTimer = 0;
-    private World world;
-    private PlayScreen screen;
     private Animation<TextureRegion> foodNormal;
     private Animation<TextureRegion> foodDying;
     private Animation<TextureRegion> foodDying2;
     private Animation<TextureRegion> foodDying3;
 
     /**
-     * Constructor for a SeedShooter
+     * Constructor for a CoolNapple
      * @param world game world
      * @param game ChickenVsFood instance
-     * @param xInicial x coordinate
-     * @param yInicial y coordinate
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param screen game screen
      */
-    public SeedShooter(World world,ChickenVsFood game,int xInicial,int yInicial, PlayScreen screen) {
-        super(world, game, screen);
+    public CoolNapple(World world,ChickenVsFood game,int x,int y, PlayScreen screen) {
+        super(world,game, screen);
         this.timer = 0;
-        this.seedTimer = 0;
-        this.world = world;
         this.game = game;
-        this.screen = screen;
-        this.x = xInicial;
-        this.y = yInicial;
-        super.setHit(false);
-        super.defineFood(xInicial, yInicial);
-        FoodTexture = new TextureRegion(screen.getSeedShooter().findRegion("SeedShooter"),0,0,SIZE_PIXEL,SIZE_PIXEL);
-        setBounds(0, 0, WORLD_SIZE, WORLD_SIZE);
+        this.currState = State.NORMAL;
+        this.prevState = State.NORMAL;
+        super.defineFood(x,y);
+        FoodTexture = new TextureRegion(screen.getCoolNapple().findRegion("CoolNapple"),0,0,SIZE_PIXEL,SIZE_PIXEL);
+        setBounds(0,0,WORLD_SIZE,WORLD_SIZE);
         setRegion(FoodTexture);
         setAnimations();
     }
-
     /**
-     * Sets the animations for the SeedShooter
+     * Sets the animations for a CoolNapple
      */
     private void setAnimations() {
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -84,21 +77,17 @@ public class SeedShooter extends Food {
     }
 
     @Override
-    public void update(float dt){
+    public void update(float v) {
         setPosition(super.getBody().getPosition().x-getWidth()/2,super.getBody().getPosition().y-getWidth()/2);
-        setRegion(getFrame(dt));
+        setRegion(getFrame(v));
         timer++;
-        seedTimer++;
-       if(seedTimer%SEED_SECONDS == 0)
-           this.screen.getFoods().add(new Seed(this.world,this.game,this.x,this.y, this.screen));
-
         if(super.getHit())
             if(timer%DMG_SECONDS == 0)
                 decreaseHealth();
     }
 
     /**
-     * Returns the current frame/animation of the SeedShooter
+     * Returns the current frame/animation of the CoolNapple
      */
     private TextureRegion getFrame(float dt) {
 
@@ -123,19 +112,19 @@ public class SeedShooter extends Food {
      * Returns the current state
      */
     private State getState() {
-        if (getHealth() == 5)
+        if (getHealth() >= 6 && getHealth() <= 10)
             return State.NORMAL;
-        else if (getHealth() == 4)
+        else if (getHealth() == 4 || getHealth() == 5)
             return State.DYING;
         else if (getHealth() == 2 || getHealth() == 3)
             return State.DYING2;
         else
             return State.DYING3;
+
     }
 
     @Override
-    public void draw(SpriteBatch batch) { this.draw( (Batch) batch); }
-
+    public void draw(SpriteBatch batch) {  this.draw( (Batch) batch);  }
 
     @Override
     public int getHealth() {
@@ -143,7 +132,7 @@ public class SeedShooter extends Food {
     }
 
     @Override
-    public void setHealth(int health) {
-        this.HEALTH = health;
-    }
+    public void setHealth(int health) { this.HEALTH = health; }
+
+
 }

@@ -22,7 +22,7 @@ public class B2WorldCreator {
      * @param map TiledMap
      */
     public B2WorldCreator (World world, TiledMap map){
-        //bodies
+        //bodies 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();

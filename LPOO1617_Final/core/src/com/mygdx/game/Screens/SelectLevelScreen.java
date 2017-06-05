@@ -99,7 +99,6 @@ public class SelectLevelScreen implements Screen {
         game.getBatch().draw(lvlSelector, 0,0, game.getvWidth(), game.getvHeight());
         game.getBatch().end();
 
-       // stage.act();
         stage.draw();
     }
     /**
@@ -129,6 +128,6 @@ public class SelectLevelScreen implements Screen {
 
     @Override
     public void dispose() {
-
+    stage.dispose();
     }
 }

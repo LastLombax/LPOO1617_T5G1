@@ -21,7 +21,6 @@ public class StrongChicken extends Chicken {
     private State prevState;
     private float VELOCITY = 5f;
     private int HEALTH = 10;
-    private int DMG = 1;
     private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private float stateTimer = 0;
@@ -41,7 +40,6 @@ public class StrongChicken extends Chicken {
         super(world,game, screen);
         this.game = game;
         super.setFoodHit(false);
-        super.setHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
@@ -126,10 +124,6 @@ public class StrongChicken extends Chicken {
         this.HEALTH = health;
     }
 
-    @Override
-    public int getDmg() {
-        return DMG;
-    }
 
 
 }

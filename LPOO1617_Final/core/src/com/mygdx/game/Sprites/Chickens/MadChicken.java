@@ -21,7 +21,6 @@ public class MadChicken extends Chicken {
     private State prevState;
     private float VELOCITY = 15f;
     private int HEALTH = 5;
-    private int DMG = 1;
     private World world;
     private Body b2body;
     private ChickenVsFood game;
@@ -44,7 +43,6 @@ public class MadChicken extends Chicken {
         super(world, game, screen);
         this.game = game;
         super.setFoodHit(false);
-        super.setHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;
         super.defineChicken(xInicial, yInicial);
@@ -128,9 +126,5 @@ public class MadChicken extends Chicken {
         this.HEALTH = health;
     }
 
-    @Override
-    public int getDmg() {
-        return DMG;
-    }
 
 }

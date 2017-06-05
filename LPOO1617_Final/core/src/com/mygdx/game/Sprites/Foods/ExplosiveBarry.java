@@ -4,14 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
-import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
-import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
 
 /**
  * Created by vitor on 29/05/2017.
@@ -19,12 +15,10 @@ import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
 
 public class ExplosiveBarry extends Food {
 
-
     public enum State{NORMAL, EXPLOSION}
     private State currState;
     private State prevState;
     private World world;
-    private Body b2body;
     private ChickenVsFood game;
     private TextureRegion FoodTexture;
     private int x;
@@ -39,14 +33,22 @@ public class ExplosiveBarry extends Food {
     private Animation<TextureRegion> foodNormal;
     private Animation<TextureRegion> foodExploding;
 
-
+    /**
+     * Constructor for an ExplosiveBarry
+     * @param world game world
+     * @param game ChickenVsFood instance
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param screen game screen
+     */
     public ExplosiveBarry(World world,ChickenVsFood game,int x,int y, PlayScreen screen) {
         super(world,game, screen);
         this.timer = 0;
         this.game = game;
         this.x = x;
-        this.stateTimer = 0;
         this.y = y;
+        this.world = world;
+        this.stateTimer = 0;
         this.screen = screen;
         this.currState = State.NORMAL;
         this.prevState = State.NORMAL;
@@ -68,7 +70,7 @@ public class ExplosiveBarry extends Food {
 
         for (int i = 1; i < 4; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-        foodExploding = new Animation<TextureRegion>(0.5f, frames);
+        foodExploding = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
     }
@@ -81,8 +83,8 @@ public class ExplosiveBarry extends Food {
         if (currState == State.EXPLOSION) {
             this.x = (int) super.getBody().getPosition().x;
             this.y = (int) super.getBody().getPosition().y;
-            this.screen.getFoods().add(new InvisibleSeed(this.world, this.game, this.x + 15, this.y, this.screen, true));
-            this.screen.getFoods().add(new InvisibleSeed(this.world, this.game, this.x - 15, this.y, this.screen, false));
+            this.screen.getFoods().add(new InvisibleSeed(this.world, this.game, this.x, this.y, this.screen, true));
+            this.screen.getFoods().add(new InvisibleSeed(this.world, this.game, this.x, this.y, this.screen, false));
             this.setHealth(0);
         }
     }
@@ -116,7 +118,7 @@ public class ExplosiveBarry extends Food {
 
     @Override
     public int getHealth() {
-        return 0;
+        return HEALTH;
     }
 
     @Override

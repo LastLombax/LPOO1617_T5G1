@@ -1,11 +1,9 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,19 +18,14 @@ import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
-import com.mygdx.game.Sprites.Chickens.EggSplosion;
-import com.mygdx.game.Sprites.Chickens.MadChicken;
-import com.mygdx.game.Sprites.Chickens.StrongChicken;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
-import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
-
+import com.mygdx.game.Sprites.Foods.CoolNapple;
 import com.mygdx.game.Sprites.Foods.ExplosiveBarry;
 import com.mygdx.game.Sprites.Foods.Food;
 import com.mygdx.game.Sprites.Foods.SeedShooter;
 import com.mygdx.game.Sprites.Foods.Unicorn;
 import com.mygdx.game.Tools.B2WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
-
 import java.util.Random;
 import java.util.Vector;
 
@@ -68,6 +61,7 @@ public class PlayScreen implements Screen{
     private TextureAtlas SeedShooter;
     private TextureAtlas Seed;
     private TextureAtlas ExplosiveBarry;
+    private TextureAtlas CoolNapple;
 
 
     //placement variables
@@ -83,6 +77,7 @@ public class PlayScreen implements Screen{
     private int tileSize = 128;
 
     private int MAX_CHICKEN = 20;
+    private int CHICKEN_GEN = 500;
     private int INITIAL_CHICKEN_X = 2000;
     private int timer = 0;
 
@@ -142,9 +137,7 @@ public class PlayScreen implements Screen{
         Seed = new TextureAtlas("Seed.pack");
         Unicorn = new TextureAtlas("Unicorn.pack");
         ExplosiveBarry = new TextureAtlas("ExplosiveBarry.pack");
-
-        game.getAssetManager().load("Chicken.png", Texture.class);
-        game.getAssetManager().finishLoading();
+        CoolNapple = new TextureAtlas("CoolNapple.pack");
     }
 
     /**
@@ -157,10 +150,16 @@ public class PlayScreen implements Screen{
         }
     }
 
+    /**
+     * @return Returns the chicken vector
+     */
     public Vector<Chicken> getChickens(){
         return chicken;
     }
 
+    /**
+     * @return Returns the foods vector
+     */
     public Vector<Food> getFoods() { return foods;}
 
     /**
@@ -193,12 +192,22 @@ public class PlayScreen implements Screen{
      * @return Returns the SeedShooter atlas
      */
     public TextureAtlas getSeedShooter() { return SeedShooter;}
-
+    /**
+     * @return Returns the Seed atlas
+     */
     public TextureAtlas getSeed() {
         return Seed;
     }
-
+    /**
+     * @return Returns the ExplosiveBarry atlas
+     */
     public TextureAtlas getExplosiveBarry() { return ExplosiveBarry;}
+
+
+    /**
+     * @return Returns the CoolNapple atlas
+     */
+    public TextureAtlas getCoolNapple() { return CoolNapple;}
 
     /**
      * Renders the game screen
@@ -225,6 +234,10 @@ public class PlayScreen implements Screen{
         //draw foods
         for (int i = 0; i < this.foods.size(); i++){
             foods.get(i).draw(game.getBatch());
+        }
+        //draw butters
+        for (int i = 0; i < this.butters.size(); i++) {
+            this.butters.get(i).draw(game.getBatch());
         }
         game.getBatch().end();
 
@@ -286,7 +299,6 @@ public class PlayScreen implements Screen{
                             break;
                         }
                     }
-
                     switch (hud.getSelectedFood()) {
                         case 1:
                             foods.add(new SeedShooter(getWorld(), game, x, y, this));
@@ -296,6 +308,10 @@ public class PlayScreen implements Screen{
                             break;
                         case 3:
                             foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
+                            break;
+                        case 4:
+                            foods.add(new CoolNapple(getWorld(), game, x, y, this));
+                            break;
                     }
                     hud.setSelectedFood(0);
                     hud.setSelected(false);
@@ -325,9 +341,8 @@ public class PlayScreen implements Screen{
                 chicken.remove(i);
                 i--;
             }
-            else{
+            else
                 chicken.get(i).update(dt);
-            }
         }
 
         for (int i = 0; i < this.foods.size(); i++) {
@@ -335,23 +350,20 @@ public class PlayScreen implements Screen{
                 foods.remove(i);
                 i--;
             }
-            else{
-                //collision detection
+            else
                 foods.get(i).update(dt);
-            }
         }
 
-        for (int i = 0; i < this.butters.size(); i++) {
+        for (int i = 0; i < this.butters.size(); i++)
             this.butters.get(i).update(dt);
-        }
     }
 
     /**
-     * Randomly generates chickens for each lane every 5 seconds
+     * Randomly generates chickens for each lane every CHICKEN_GEN seconds
      */
     public void GenerateChickens(){
         timer++;
-        if(timer%500 == 0){ // every 5 seconds
+        if(timer%CHICKEN_GEN == 0){
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
@@ -387,6 +399,7 @@ public class PlayScreen implements Screen{
     public void resize(int width, int height) {
         gamePort.update(width,height);
     }
+
 
     @Override
     public void show() {
