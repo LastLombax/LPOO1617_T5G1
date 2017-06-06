@@ -209,7 +209,6 @@ public class PlayScreen implements Screen{
             game.setScreen(new GameWonScreen(game, getLevel()));
             dispose();
         }
-
     }
 
     /**
@@ -217,7 +216,6 @@ public class PlayScreen implements Screen{
      * @param dt time interval of the update
      */
     public void update(float dt) {
-
         handleInput(dt);
 
         //takes 1 step in the physics simulation (60 times per second)
