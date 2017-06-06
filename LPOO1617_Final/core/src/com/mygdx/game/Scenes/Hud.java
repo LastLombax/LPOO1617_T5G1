@@ -69,7 +69,6 @@ public class Hud implements Disposable{
         defineBottomTable();
     }
 
-
     /**
      * Defines the Top Table of the Hud
      */
@@ -175,11 +174,12 @@ public class Hud implements Disposable{
      * Defines the Bottom Table of the Hud
      */
     private void defineBottomTable() {
+        int level = PlayScreen.getLevel();
         Table tableD = new Table();
         tableD.bottom();
         tableD.right();
         tableD.setFillParent(true);
-        if ( PlayScreen.getLevel() <= 3)
+        if (level <= 3)
              leveLabel = new Label("Level 1-" + PlayScreen.getLevel(), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         else
             leveLabel = new Label("Survival Mode", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
@@ -201,14 +201,12 @@ public class Hud implements Disposable{
         exit = new Texture(Gdx.files.internal("Exit.png"));
     }
 
-
     /**
      * @return Returns the instance of the game
      */
     private ChickenVsFood getGame(){
         return this.game;
     }
-
 
     /**
      * @return returns the stage

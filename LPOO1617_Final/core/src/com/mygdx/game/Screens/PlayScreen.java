@@ -286,26 +286,40 @@ public class PlayScreen implements Screen{
                             break;
                         }
                     }
-                    switch (hud.getSelectedFood()) {
-                        case 1:
-                            foods.add(new SeedShooter(getWorld(), game, x, y, this));
-                            break;
-                        case 2:
-                            foods.add(new Unicorn(getWorld(), game, x, y, this));
-                            break;
-                        case 3:
-                            foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
-                            break;
-                        case 4:
-                            foods.add(new CoolNapple(getWorld(), game, x, y, this));
-                            break;
+                    if (!isOccupied(x,y)){
+                        System.out.println("You can't put it there");
+
                     }
-                    Hud.removeCorn(Hud.getCost()[hud.getSelectedFood()-1]);
-                    hud.setSelectedFood(0);
-                    hud.setSelected(false);
-                } else
+                    else {
+                        switch (hud.getSelectedFood()) {
+                            case 1:
+                                foods.add(new SeedShooter(getWorld(), game, x, y, this));
+                                break;
+                            case 2:
+                                foods.add(new Unicorn(getWorld(), game, x, y, this));
+                                break;
+                            case 3:
+                                foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
+                                break;
+                            case 4:
+                                foods.add(new CoolNapple(getWorld(), game, x, y, this));
+                                break;
+                        }
+                        Hud.removeCorn(Hud.getCost()[hud.getSelectedFood() - 1]);
+                        hud.setSelectedFood(0);
+                        hud.setSelected(false);
+                    }
+                }
+                else
                     System.out.println("You can't put it there");
             }
+    }
+
+    public boolean isOccupied(int x, int y){
+        //verify chickens
+        //verify foods
+        //verify butters
+        return true;
     }
 
     /**

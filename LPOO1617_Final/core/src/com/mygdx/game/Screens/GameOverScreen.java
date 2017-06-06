@@ -53,10 +53,9 @@ public class GameOverScreen implements Screen {
             scoreLabel = new Label(PlayScreen.getChickensKilled() + " chickens defeated", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
             scoreLabel.setFontScale(3);
             scoreLabel.setPosition(500, game.getvHeight() / 2 + 55);
-
             stage.addActor(scoreLabel);
-
         }
+
         else {
             Texture tex = new Texture(Gdx.files.internal("butter.png"));
             ButtonImg TryAgain = new ButtonImg(tex, tex, tex);
