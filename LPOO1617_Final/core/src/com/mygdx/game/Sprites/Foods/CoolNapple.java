@@ -17,7 +17,6 @@ public class CoolNapple extends Food {
     public enum State{NORMAL, DYING, DYING2, DYING3}
     private State currState;
     private State prevState;
-    private ChickenVsFood game;
     private TextureRegion FoodTexture;
     private int HEALTH = 10;
     private int timer;
@@ -33,15 +32,13 @@ public class CoolNapple extends Food {
     /**
      * Constructor for a CoolNapple
      * @param world game world
-     * @param game ChickenVsFood instance
      * @param x x coordinate
      * @param y y coordinate
      * @param screen game screen
      */
-    public CoolNapple(World world,ChickenVsFood game,int x,int y, PlayScreen screen) {
-        super(world,game, screen);
+    public CoolNapple(World world, int x,int y, PlayScreen screen) {
+        super(world, screen);
         this.timer = 0;
-        this.game = game;
         this.currState = State.NORMAL;
         this.prevState = State.NORMAL;
         super.defineFood(x,y);

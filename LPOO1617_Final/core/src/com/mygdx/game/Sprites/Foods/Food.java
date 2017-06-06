@@ -16,7 +16,6 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 
 public abstract class Food extends Sprite {
-
     private Body b2body;
     private World world;
     private boolean hit;
@@ -24,9 +23,8 @@ public abstract class Food extends Sprite {
     /**
      * Constructor for a Food
      * @param world game world
-     * @param game ChickenVsFood instance
      */
-    public Food(World world, ChickenVsFood game, PlayScreen screen){
+    public Food(World world, PlayScreen screen){
         this.world = world;
         setHit(false);
     }

@@ -20,14 +20,12 @@ public class Unicorn extends Food {
     public enum State{NORMAL, DYING, DYING2, DYING3}
     private State currState;
     private State prevState;
-    private ChickenVsFood game;
     private TextureRegion FoodTexture;
     private int ADD_CORN = 5;
     private int HEALTH = 5;
     private int timer;
     private int DMG_SECONDS = 100;
     private int SPAWN_CORN = 500;
-    private boolean cornInc;
     private boolean animateC = false;
     private Corn corn;
     private Vector2 cornMovDir;
@@ -44,16 +42,13 @@ public class Unicorn extends Food {
     /**
      * Constructor for the Unicorn
      * @param world game world
-     * @param game ChickenVsFood instance
      * @param x x coordinate
      * @param y y coordinate
      * @param screen game screen
      */
-    public Unicorn(World world, ChickenVsFood game, int x, int y, PlayScreen screen){
-        super(world,game, screen);
-        setCornInc(false);
+    public Unicorn(World world, int x, int y, PlayScreen screen){
+        super(world, screen);
         this.timer = 0;
-        this.game = game;
         this.x = x;
         this.y = y;
         this.currState = State.NORMAL;
@@ -167,11 +162,6 @@ public class Unicorn extends Food {
     @Override
     public void setHealth(int health) {
         this.HEALTH = health;
-    }
-
-
-    public void setCornInc(boolean b){
-        this.cornInc = b;
     }
 
 }

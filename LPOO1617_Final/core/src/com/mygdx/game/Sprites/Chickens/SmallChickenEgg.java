@@ -21,7 +21,6 @@ public class SmallChickenEgg extends Chicken {
     private State prevState;
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
-    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
@@ -36,14 +35,12 @@ public class SmallChickenEgg extends Chicken {
     /**
      * Constructor for the SmallChickenEgg
      * @param world game world
-     * @param game ChickenVsFood game
      * @param xInicial x coordinate
      * @param yInicial y coordinate
      * @param screen game screen
      */
-    public SmallChickenEgg(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
-        super(world, game, screen);
-        this.game = game;
+    public SmallChickenEgg(World world,  int xInicial, int yInicial, PlayScreen screen) {
+        super(world,screen);
         this.world = world;
         this.screen = screen;
         super.setFoodHit(false);
@@ -83,8 +80,8 @@ public class SmallChickenEgg extends Chicken {
             if (timer % 100 == 0) {
                 this.x = super.getBody().getPosition().x;
                 this.y = super.getBody().getPosition().y;
-                this.screen.getChickens().add(new SmallChicken(this.world, this.game, (int) this.x + 15, (int)this.y, this.screen));
-                this.screen.getChickens().add(new SmallChicken(this.world, this.game, (int) this.x + 40, (int)this.y, this.screen));
+                this.screen.getChickens().add(new SmallChicken(this.world, (int) this.x + 15, (int)this.y, this.screen));
+                this.screen.getChickens().add(new SmallChicken(this.world, (int) this.x + 40, (int)this.y, this.screen));
                 this.setHealth(0);
             }
         }

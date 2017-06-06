@@ -43,6 +43,5 @@ public class B2WorldCreator {
             fdef.filter.maskBits = ChickenVsFood.CHICKEN_BIT;
             body.createFixture(fdef).setUserData(this);
         }
-
     }
 }

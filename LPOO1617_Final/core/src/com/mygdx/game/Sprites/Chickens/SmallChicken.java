@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
@@ -21,25 +20,21 @@ public class SmallChicken  extends Chicken {
     private State prevState;
     private float VELOCITY = 2.5f;
     private int HEALTH = 5;
-    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private float stateTimer = 0;
-    private int timer = 0;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenEating;
     /**
      * Constructor for the SmallChicken
      * @param world game world
-     * @param game ChickenVsFood game
      * @param xInicial x coordinate
      * @param yInicial y coordinate
      * @param screen game screen
      */
-    public SmallChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
-        super(world, game, screen);
-        this.game = game;
+    public SmallChicken(World world, int xInicial, int yInicial, PlayScreen screen) {
+        super(world, screen);
         super.setFoodHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;
@@ -70,7 +65,7 @@ public class SmallChicken  extends Chicken {
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
         setRegion(getFrame(v));
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
-            }
+    }
 
     /**
      * Returns the current frame/animation of the SmallChicken

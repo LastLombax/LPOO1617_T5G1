@@ -1,7 +1,5 @@
 package com.mygdx.game.Sprites.Foods;
 
-
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -30,12 +27,11 @@ public class Seed extends Food{
     /**
      * Constructor for a Seed
      * @param w game world
-     * @param g ChickenVsFood instance
      * @param x x coordinate
      * @param y y coordinate
      */
-    public Seed(World w, ChickenVsFood g, int x, int y, PlayScreen screen){
-        super(w,g, screen);
+    public Seed(World w, int x, int y, PlayScreen screen){
+        super(w, screen);
         super.setHit(false);
         this.world = w;
         defineFood(x+80,y);

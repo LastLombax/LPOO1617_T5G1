@@ -15,7 +15,6 @@ public class SeedShooter extends Food {
     private State currState;
     private State prevState;
     private TextureRegion FoodTexture;
-    private ChickenVsFood game;
     private int HEALTH = 5;
     private int timer;
     private int seedTimer;
@@ -36,16 +35,14 @@ public class SeedShooter extends Food {
     /**
      * Constructor for a SeedShooter
      * @param world game world
-     * @param game ChickenVsFood instance
      * @param xInicial x coordinate
      * @param yInicial y coordinate
      */
-    public SeedShooter(World world,ChickenVsFood game,int xInicial,int yInicial, PlayScreen screen) {
-        super(world, game, screen);
+    public SeedShooter(World world, int xInicial,int yInicial, PlayScreen screen) {
+        super(world,screen);
         this.timer = 0;
         this.seedTimer = 0;
         this.world = world;
-        this.game = game;
         this.screen = screen;
         this.x = xInicial;
         this.y = yInicial;
@@ -90,7 +87,7 @@ public class SeedShooter extends Food {
         timer++;
         seedTimer++;
        if(seedTimer%SEED_SECONDS == 0)
-           this.screen.getFoods().add(new Seed(this.world,this.game,this.x,this.y, this.screen));
+           this.screen.getFoods().add(new Seed(this.world, this.x,this.y, this.screen));
 
         if(super.getHit())
             if(timer%DMG_SECONDS == 0)

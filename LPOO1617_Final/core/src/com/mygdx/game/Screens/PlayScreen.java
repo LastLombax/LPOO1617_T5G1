@@ -263,16 +263,16 @@ public class PlayScreen implements Screen{
                     else {
                         switch (hud.getSelectedFood()) {
                             case 1:
-                                foods.add(new SeedShooter(getWorld(), game, x, y, this));
+                                foods.add(new SeedShooter(getWorld(), x, y, this));
                                 break;
                             case 2:
-                                foods.add(new Unicorn(getWorld(), game, x, y, this));
+                                foods.add(new Unicorn(getWorld(), x, y, this));
                                 break;
                             case 3:
-                                foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
+                                foods.add(new ExplosiveBarry(getWorld(), x, y, this));
                                 break;
                             case 4:
-                                foods.add(new CoolNapple(getWorld(), game, x, y, this));
+                                foods.add(new CoolNapple(getWorld(), x, y, this));
                                 break;
                         }
                         Hud.removeCorn(Hud.getCost()[hud.getSelectedFood() - 1]);
@@ -360,19 +360,19 @@ public class PlayScreen implements Screen{
             Chicken c = null;
             switch(a){
                 case 0:
-                    c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    c = new NormalChicken(getWorld(),INITIAL_CHICKEN_X, y, this);
                     break;
                 case 1:
-                    c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    c = new StrongChicken(getWorld(), INITIAL_CHICKEN_X, y, this);
                     break;
                 case 2:
-                    c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    c = new MadChicken(getWorld(), INITIAL_CHICKEN_X, y, this);
                     break;
                 case 3:
-                    c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    c = new EggSplosion(getWorld(), INITIAL_CHICKEN_X, y, this);
                     break;
                 case 4:
-                    c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    c = new SmallChickenEgg(getWorld(), INITIAL_CHICKEN_X, y, this);
                     break;
             }
 
@@ -405,7 +405,7 @@ public class PlayScreen implements Screen{
      */
     public void createButters(){
         for (int i = 0; i < diffY.length; i++){
-            Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
+            Butter b = new Butter(getWorld(), BUTTER_X , diffY[i]);
             butters.add(b);
         }
     }

@@ -24,7 +24,6 @@ public class MadChicken extends Chicken {
     private int HEALTH = 5;
     private World world;
     private Body b2body;
-    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private float stateTimer = 0;
     private Animation<TextureRegion> chickenWalking;
@@ -35,14 +34,12 @@ public class MadChicken extends Chicken {
     /**
      * Constructor for the MadChicken
      * @param world game world
-     * @param game ChickenVsFood instance
      * @param xInicial x coordinate
      * @param yInicial y coordinate
      * @param screen game screen
      */
-    public MadChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
-        super(world, game, screen);
-        this.game = game;
+    public MadChicken(World world,  int xInicial, int yInicial, PlayScreen screen) {
+        super(world, screen);
         super.setFoodHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;

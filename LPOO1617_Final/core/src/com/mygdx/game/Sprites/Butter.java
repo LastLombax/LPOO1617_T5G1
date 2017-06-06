@@ -18,7 +18,6 @@ import com.mygdx.game.ChickenVsFood;
 public class Butter extends Sprite {
     private World world;
     private Body b2body;
-    private ChickenVsFood game;
     private TextureRegion ButterTexture;
     private Texture Butter = new Texture("Butter.png");
     private float VELOCITY = 100f;
@@ -31,13 +30,11 @@ public class Butter extends Sprite {
     /**
      * Constructor for the Butter
      * @param world game world
-     * @param game ChickenVsFood instance
      * @param x x coordinate
      * @param y y coordinate
      */
-    public Butter(World world, ChickenVsFood game, int x, int y){
+    public Butter(World world, int x, int y){
         this.world = world;
-        this.game = game;
         defineButter(x,y);
         ButterTexture = new TextureRegion(Butter,0,0,SIZE_PIXEL,SIZE_PIXEL);
         setBounds(0,0,WORLD_SIZE,WORLD_SIZE);

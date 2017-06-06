@@ -14,16 +14,13 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 
 public class ExplosiveBarry extends Food {
-
     public enum State{NORMAL, EXPLOSION}
     private State currState;
     private State prevState;
     private World world;
-    private ChickenVsFood game;
     private TextureRegion FoodTexture;
     private int x;
     private int y;
-    private int timer;
     private int HEALTH = 2;
     private float stateTimer;
     private PlayScreen screen;
@@ -36,15 +33,12 @@ public class ExplosiveBarry extends Food {
     /**
      * Constructor for an ExplosiveBarry
      * @param world game world
-     * @param game ChickenVsFood instance
      * @param x x coordinate
      * @param y y coordinate
      * @param screen game screen
      */
-    public ExplosiveBarry(World world,ChickenVsFood game,int x,int y, PlayScreen screen) {
-        super(world,game, screen);
-        this.timer = 0;
-        this.game = game;
+    public ExplosiveBarry(World world, int x,int y, PlayScreen screen) {
+        super(world, screen);
         this.x = x;
         this.y = y;
         this.world = world;
@@ -83,8 +77,8 @@ public class ExplosiveBarry extends Food {
         if (currState == State.EXPLOSION) {
             this.x = (int) super.getBody().getPosition().x;
             this.y = (int) super.getBody().getPosition().y;
-            this.screen.getFoods().add(new InvisibleSeed(this.world, this.game, this.x, this.y, this.screen, true));
-            this.screen.getFoods().add(new InvisibleSeed(this.world, this.game, this.x, this.y, this.screen, false));
+            this.screen.getFoods().add(new InvisibleSeed(this.world, this.x, this.y, this.screen, true));
+            this.screen.getFoods().add(new InvisibleSeed(this.world, this.x, this.y, this.screen, false));
             this.setHealth(0);
         }
     }

@@ -24,10 +24,9 @@ public abstract class Chicken extends Sprite{
     /**
      * Constructor for a Chicken
      * @param world game world
-     * @param game game
      * @param screen game screen
      */
-    public Chicken(World world, ChickenVsFood game, PlayScreen screen){
+    public Chicken(World world,PlayScreen screen){
         setFoodHit(false);
         this.world = world;
     }

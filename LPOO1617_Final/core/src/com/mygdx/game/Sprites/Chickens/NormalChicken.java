@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
 
@@ -18,7 +17,6 @@ public class NormalChicken extends Chicken {
     private State prevState;
     private float VELOCITY = 10f;
     private int HEALTH = 5;
-    private ChickenVsFood game;
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
@@ -30,14 +28,12 @@ public class NormalChicken extends Chicken {
     /**
      * Constructor for the NormalChicken
      * @param world game world
-     * @param game ChickenVsFood game
      * @param xInicial x coordinate
      * @param yInicial y coordinate
      * @param screen game screen
      */
-    public NormalChicken(World world, ChickenVsFood game, int xInicial, int yInicial, PlayScreen screen) {
-        super(world,game, screen);
-        this.game = game;
+    public NormalChicken(World world, int xInicial, int yInicial, PlayScreen screen) {
+        super(world,screen);
         super.setFoodHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;

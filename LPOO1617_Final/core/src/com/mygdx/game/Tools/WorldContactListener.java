@@ -87,7 +87,6 @@ public class WorldContactListener implements ContactListener {
                 ((Food)fixA.getUserData()).setHit(true);
                 ((Food)fixA.getUserData()).decreaseHealth();
             }
-
         }
     }
 

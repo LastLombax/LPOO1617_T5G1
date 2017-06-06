@@ -24,12 +24,11 @@ public class InvisibleSeed extends Food{
     /**
      * Constructor for an Invisible Seed
      * @param w game world
-     * @param g ChickenVsFood instance
      * @param x x coordinate
      * @param y y coordinate
      */
-    public InvisibleSeed(World w, ChickenVsFood g, int x, int y, PlayScreen screen, boolean left){
-        super(w,g, screen);
+    public InvisibleSeed(World w, int x, int y, PlayScreen screen, boolean left){
+        super(w, screen);
         super.setHit(false);
         this.world = w;
         if (!left)
