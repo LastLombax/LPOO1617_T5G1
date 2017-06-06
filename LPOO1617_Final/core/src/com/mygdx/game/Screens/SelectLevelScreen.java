@@ -45,7 +45,7 @@ public class SelectLevelScreen implements Screen {
      * Adds the Play Level 1 Button
      */
     private void addPlayLvL1Button() {
-        Texture tex = new Texture(Gdx.files.internal("butter.png"));
+        Texture tex = new Texture(Gdx.files.internal("Butter.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
         PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
         PlayLevel1.setPosition(BUTTON_X,game.getvHeight()/2 );
