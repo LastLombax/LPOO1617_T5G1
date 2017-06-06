@@ -84,7 +84,7 @@ public class PlayScreen implements Screen{
     private int GAP = 60;
     private int tileSize = 128;
 
-    private int MAX_CHICKEN_LVL_1 = 1;
+    private int MAX_CHICKEN_LVL_1 = 10;
     private int MAX_CHICKEN_LVL_2 = 15;
     private int MAX_CHICKEN_LVL_3 = 20;
 
@@ -286,26 +286,41 @@ public class PlayScreen implements Screen{
                             break;
                         }
                     }
-                    switch (hud.getSelectedFood()) {
-                        case 1:
-                            foods.add(new SeedShooter(getWorld(), game, x, y, this));
-                            break;
-                        case 2:
-                            foods.add(new Unicorn(getWorld(), game, x, y, this));
-                            break;
-                        case 3:
-                            foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
-                            break;
-                        case 4:
-                            foods.add(new CoolNapple(getWorld(), game, x, y, this));
-                            break;
+                    if (isOccupied(x,y))
+                        System.out.println("You can't put it there");
+                    else {
+                        switch (hud.getSelectedFood()) {
+                            case 1:
+                                foods.add(new SeedShooter(getWorld(), game, x, y, this));
+                                break;
+                            case 2:
+                                foods.add(new Unicorn(getWorld(), game, x, y, this));
+                                break;
+                            case 3:
+                                foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
+                                break;
+                            case 4:
+                                foods.add(new CoolNapple(getWorld(), game, x, y, this));
+                                break;
+                        }
+                        Hud.removeCorn(Hud.getCost()[hud.getSelectedFood() - 1]);
+                        hud.setSelectedFood(0);
+                        hud.setSelected(false);
                     }
-                    Hud.removeCorn(Hud.getCost()[hud.getSelectedFood()-1]);
-                    hud.setSelectedFood(0);
-                    hud.setSelected(false);
-                } else
+                }
+                else
                     System.out.println("You can't put it there");
             }
+    }
+
+    public boolean isOccupied(int x, int y){
+        for (int i = 0; i < chicken.size(); i++)
+            if (chicken.get(i).getBody().getPosition().x > x - tileSize/2 && chicken.get(i).getBody().getPosition().x < x + tileSize/2 )
+                return true;
+        for (int i = 0; i < foods.size(); i++)
+            if (foods.get(i).getBody().getPosition().x > x - tileSize/2 && foods.get(i).getBody().getPosition().x < x + tileSize/2 )
+                return true;
+        return false;
     }
 
     /**

@@ -105,7 +105,6 @@ public class Unicorn extends Food {
             }
 
         if(timer%SPAWN_CORN == 0) {
-            System.out.println("New Corn");
             timer = 0;
             corn = new Corn(this.x,this.y, cornMovDir);
             animateC = true;

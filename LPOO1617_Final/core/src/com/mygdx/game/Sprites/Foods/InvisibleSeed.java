@@ -66,7 +66,6 @@ public class InvisibleSeed extends Food{
         setPosition(this.getBody().getPosition().x - getWidth() / 2, this.getBody().getPosition().y - getWidth() / 2);
 
         this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0), this.getBody().getWorldCenter(), true);
-
     }
 
     @Override
