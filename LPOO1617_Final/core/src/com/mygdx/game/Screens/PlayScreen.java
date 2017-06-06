@@ -222,20 +222,29 @@ public class PlayScreen implements Screen{
             world.step(FPS, 6, 2);
             accumulator -= FPS;
         }
-        if(chicken.isEmpty() && MAX_CHICKEN == nChickenGEN){
+        if(chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN){
             System.out.println("won");
         }
 
 
         if(getLevel() == 1){
+            if(chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN){
+                System.out.println("won");
+            }
             if (chicken.size() < MAX_CHICKEN_LVL_1 )
                 GenerateChickens(3);
         }
         else if(getLevel() == 2) {
+            if(chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN){
+                System.out.println("won");
+            }
             if (chicken.size() < MAX_CHICKEN_LVL_2)
                 GenerateChickens(4);
         }
         else  if(getLevel() == 3) {
+            if(chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN){
+                System.out.println("won");
+            }
             if (chicken.size() < MAX_CHICKEN_LVL_3)
                 GenerateChickens(5);
         }
