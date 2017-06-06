@@ -248,14 +248,14 @@ public class PlayScreen implements Screen{
                 gameWon = true;
             else if (chicken.size() < MAX_CHICKEN_LVL_3)
                 GenerateChickens(5);
-        } else if (getLevel() == 4) {
+        } else if (getLevel() == 4)
             GenerateChickens(5);
 
-            updateCharacters(dt);
+        updateCharacters(dt);
 
-            gameCam.update();
-            renderer.setView(gameCam);
-        }
+        gameCam.update();
+        renderer.setView(gameCam);
+
     }
 
     /**
@@ -286,40 +286,26 @@ public class PlayScreen implements Screen{
                             break;
                         }
                     }
-                    if (!isOccupied(x,y)){
-                        System.out.println("You can't put it there");
-
+                    switch (hud.getSelectedFood()) {
+                        case 1:
+                            foods.add(new SeedShooter(getWorld(), game, x, y, this));
+                            break;
+                        case 2:
+                            foods.add(new Unicorn(getWorld(), game, x, y, this));
+                            break;
+                        case 3:
+                            foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
+                            break;
+                        case 4:
+                            foods.add(new CoolNapple(getWorld(), game, x, y, this));
+                            break;
                     }
-                    else {
-                        switch (hud.getSelectedFood()) {
-                            case 1:
-                                foods.add(new SeedShooter(getWorld(), game, x, y, this));
-                                break;
-                            case 2:
-                                foods.add(new Unicorn(getWorld(), game, x, y, this));
-                                break;
-                            case 3:
-                                foods.add(new ExplosiveBarry(getWorld(), game, x, y, this));
-                                break;
-                            case 4:
-                                foods.add(new CoolNapple(getWorld(), game, x, y, this));
-                                break;
-                        }
-                        Hud.removeCorn(Hud.getCost()[hud.getSelectedFood() - 1]);
-                        hud.setSelectedFood(0);
-                        hud.setSelected(false);
-                    }
-                }
-                else
+                    Hud.removeCorn(Hud.getCost()[hud.getSelectedFood()-1]);
+                    hud.setSelectedFood(0);
+                    hud.setSelected(false);
+                } else
                     System.out.println("You can't put it there");
             }
-    }
-
-    public boolean isOccupied(int x, int y){
-        //verify chickens
-        //verify foods
-        //verify butters
-        return true;
     }
 
     /**
