@@ -77,7 +77,6 @@ public class MainMenuScreen implements Screen {
 
         if (!music.isPlaying()) {
             music.setVolume(0.3f);
-
             music.setLooping(true);
             music.play();
         }

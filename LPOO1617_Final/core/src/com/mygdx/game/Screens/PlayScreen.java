@@ -57,7 +57,7 @@ public class PlayScreen implements Screen{
     private float FPS = 1/60f;
 
     private static boolean gameOver;
-
+    private boolean gameWon;
     private TextureAtlas NormalChicken;
     private TextureAtlas StrongChicken;
     private TextureAtlas SmallChicken;
@@ -84,7 +84,7 @@ public class PlayScreen implements Screen{
     private int GAP = 60;
     private int tileSize = 128;
 
-    private int MAX_CHICKEN_LVL_1 = 10;
+    private int MAX_CHICKEN_LVL_1 = 1;
     private int MAX_CHICKEN_LVL_2 = 15;
     private int MAX_CHICKEN_LVL_3 = 20;
 
@@ -115,6 +115,7 @@ public class PlayScreen implements Screen{
     public PlayScreen(ChickenVsFood game, int level){
         this.game = game;
         this.gameOver = false;
+        this.gameWon = false;
         PlayScreen.level = level;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(game.getvWidth(),game.getvHeight(),gameCam);
@@ -204,6 +205,10 @@ public class PlayScreen implements Screen{
             game.setScreen(new GameOverScreen(game, getLevel()));
             dispose();
         }
+        if (gameWon){
+            game.setScreen(new GameWonScreen(game, getLevel()));
+            dispose();
+        }
 
     }
 
@@ -222,21 +227,24 @@ public class PlayScreen implements Screen{
             world.step(FPS, 6, 2);
             accumulator -= FPS;
         }
-        if(chicken.isEmpty() && MAX_CHICKEN == nChickenGEN){
-            System.out.println("won");
-        }
-
 
         if(getLevel() == 1){
-            if (chicken.size() < MAX_CHICKEN_LVL_1 )
+            if(chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN)
+               gameWon = true;
+
+            else if (chicken.size() < MAX_CHICKEN_LVL_1 )
                 GenerateChickens(3);
         }
         else if(getLevel() == 2) {
-            if (chicken.size() < MAX_CHICKEN_LVL_2)
+            if(chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
+                gameWon = true;
+            else if (chicken.size() < MAX_CHICKEN_LVL_2 )
                 GenerateChickens(4);
         }
-        else  if(getLevel() == 3) {
-            if (chicken.size() < MAX_CHICKEN_LVL_3)
+        else if(getLevel() == 3) {
+            if(chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
+                gameWon = true;
+            else if (chicken.size() < MAX_CHICKEN_LVL_3 )
                 GenerateChickens(5);
         }
         updateCharacters(dt);
