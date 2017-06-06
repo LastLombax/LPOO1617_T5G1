@@ -39,6 +39,7 @@ public class ChickenVsFood extends Game {
 	public SpriteBatch getBatch() {
 		return batch;
 	}
+
 	/**
 	 * @return Returns the game batch
 	 */
