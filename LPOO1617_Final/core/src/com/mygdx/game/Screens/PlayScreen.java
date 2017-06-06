@@ -167,6 +167,7 @@ public class PlayScreen implements Screen{
 
         renderer.render();
 
+        b2dr.setDrawBodies(false);
         b2dr.render(world, gameCam.combined);
 
         game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
