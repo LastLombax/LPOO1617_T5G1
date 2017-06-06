@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.GameOverScreen;
 import com.mygdx.game.Screens.GameWonScreen;
 import com.mygdx.game.Screens.MainMenuScreen;
+import com.mygdx.game.Screens.PlayScreen;
 
 //implements the game loop
 public class ChickenVsFood extends Game {
@@ -55,7 +56,6 @@ public class ChickenVsFood extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		this.setScreen(new MainMenuScreen(this));
-		//this.setScreen(new GameWonScreen(this, 1));
 	}
 	/**
 	 * Renders all

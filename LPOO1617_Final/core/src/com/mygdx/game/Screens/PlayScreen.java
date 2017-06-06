@@ -92,6 +92,7 @@ public class PlayScreen implements Screen{
     private int INITIAL_CHICKEN_X = 2000;
     private int timer = 0;
     private int nChickenGEN = 0;
+    private static int nChickenKilled = 0;
 
     private int LANE_1_Y = 700;
     private int LANE_2_Y = 570;
@@ -170,6 +171,11 @@ public class PlayScreen implements Screen{
         }
     }
 
+    /**
+     * Renders the game screen
+     * @param delta time interval of each render
+     */
+
     @Override
     public void render(float delta) {
         update(delta);
@@ -226,31 +232,31 @@ public class PlayScreen implements Screen{
             accumulator -= FPS;
         }
 
-        if(getLevel() == 1){
-            if(chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN)
-               gameWon = true;
+        if (getLevel() == 1) {
+            if (chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN)
+                gameWon = true;
 
-            else if (chicken.size() < MAX_CHICKEN_LVL_1 )
+            else if (chicken.size() < MAX_CHICKEN_LVL_1)
                 GenerateChickens(3);
-        }
-        else if(getLevel() == 2) {
-            if(chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
+        } else if (getLevel() == 2) {
+            if (chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
                 gameWon = true;
-            else if (chicken.size() < MAX_CHICKEN_LVL_2 )
+            else if (chicken.size() < MAX_CHICKEN_LVL_2)
                 GenerateChickens(4);
-        }
-        else if(getLevel() == 3) {
-            if(chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
+        } else if (getLevel() == 3) {
+            if (chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
                 gameWon = true;
-            else if (chicken.size() < MAX_CHICKEN_LVL_3 )
+            else if (chicken.size() < MAX_CHICKEN_LVL_3)
                 GenerateChickens(5);
+        } else if (getLevel() == 4) {
+            GenerateChickens(5);
+
+            updateCharacters(dt);
+
+            gameCam.update();
+            renderer.setView(gameCam);
         }
-        updateCharacters(dt);
-
-        gameCam.update();
-        renderer.setView(gameCam);
     }
-
 
     /**
      * Handles all input from the player
@@ -268,7 +274,6 @@ public class PlayScreen implements Screen{
                 int y = (int) v.y - 20;
 
                 if (checkPlacingBounds(x , y)) {
-
                     for (int m = ORIGINAL_X_MID; m <FINAL_X_MID; m+=tileSize){
                         if ( x-m < GAP) { //found
                             x = m;
@@ -320,6 +325,7 @@ public class PlayScreen implements Screen{
     public void updateCharacters(float dt){
         for (int i = 0; i < this.chicken.size(); i++) {
             if (chicken.get(i).isDead()) {
+                nChickenKilled++;
                 chicken.remove(i);
                 i--;
             }
@@ -376,7 +382,6 @@ public class PlayScreen implements Screen{
         }
     }
 
-
     /**
      * @return Returns the chicken vector
      */
@@ -430,16 +435,10 @@ public class PlayScreen implements Screen{
      */
     public TextureAtlas getExplosiveBarry() { return ExplosiveBarry;}
 
-
     /**
      * @return Returns the CoolNapple atlas
      */
     public TextureAtlas getCoolNapple() { return CoolNapple;}
-
-    /**
-     * Renders the game screen
-     * @param delta time interval of each render
-     */
 
     /**
      * @return Returns the world
@@ -454,7 +453,7 @@ public class PlayScreen implements Screen{
     public void setWorld(){world = new World(new Vector2(0,0),true);}
 
     /**
-     * @return Returns the current level;
+     * @return Returns the current level
      */
     public static int getLevel(){
         return level;
@@ -466,12 +465,18 @@ public class PlayScreen implements Screen{
     public static void setGameOver(){
         gameOver = true;
     }
+
+    /**
+     * @return Returns the number of chickens killed
+     */
+    public static int getChickensKilled(){
+        return nChickenKilled;
+    }
     /**
      * Resizes the gameport
      * @param width new width
      * @param height new height
      */
-
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);

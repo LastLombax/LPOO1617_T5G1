@@ -33,6 +33,7 @@ public class SelectLevelScreen implements Screen {
         stage = new Stage(viewport, game.getBatch());
 
         lvlSelector = new Texture(Gdx.files.internal("LevelScreen.png"));
+
         Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
         PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
@@ -70,9 +71,21 @@ public class SelectLevelScreen implements Screen {
         stage.addActor(PlayLevel3);
 
         Texture tex3 = new Texture(Gdx.files.internal("Tree1.png"));
-        ButtonImg ExitButton = new ButtonImg(tex3,tex3,tex3);
+        ButtonImg SurvivalButton = new ButtonImg(tex3,tex3,tex3);
+        SurvivalButton.setWidth(Gdx.graphics.getWidth()/3);
+        SurvivalButton.setPosition(4*BUTTON_X,game.getvHeight()/2 );
+        SurvivalButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new PlayScreen(game,4));
+                dispose();
+            }
+        });
+        stage.addActor(SurvivalButton);
+
+        Texture tex4 = new Texture(Gdx.files.internal("Tree1.png"));
+        ButtonImg ExitButton = new ButtonImg(tex4,tex4,tex4);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(4*BUTTON_X,game.getvHeight()/2 );
+        ExitButton.setPosition(5*BUTTON_X,game.getvHeight()/2 );
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));

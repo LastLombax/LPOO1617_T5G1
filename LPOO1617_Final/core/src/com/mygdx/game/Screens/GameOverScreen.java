@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,17 +24,17 @@ import com.mygdx.game.ChickenVsFood;
 
 public class GameOverScreen implements Screen {
     private Stage stage;
-    private ChickenVsFood game;
     private Viewport viewport;
-    private Label GameOver;
+    private Label GameOver, scoreLabel;
     private Texture background;
+
+    private Music music;
 
     /**
      * Constructor for the GameOverScreen
      * @param game ChickenVsFood instance
      */
     public GameOverScreen(final ChickenVsFood game, final int level){
-        this.game = game;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
 
         background = new Texture(Gdx.files.internal("GameOverScreen.png"));
@@ -48,17 +49,27 @@ public class GameOverScreen implements Screen {
         t.add(GameOver).padTop(180);
         stage.addActor(t);
 
-        Texture tex = new Texture(Gdx.files.internal("butter.png"));
-        ButtonImg TryAgain = new ButtonImg(tex,tex,tex);
-        TryAgain.setWidth(Gdx.graphics.getWidth()/3);
-        TryAgain.setPosition(600,game.getvHeight()/2 );
-        TryAgain.addListener(new ClickListener() {
-            public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new PlayScreen(game,level));
-                dispose();
-            }
-        });
-        stage.addActor(TryAgain);
+        if (level == 4) {
+            scoreLabel = new Label(PlayScreen.getChickensKilled() + " chickens defeated", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+            scoreLabel.setFontScale(3);
+            scoreLabel.setPosition(500, game.getvHeight() / 2 + 55);
+
+            stage.addActor(scoreLabel);
+
+        }
+        else {
+            Texture tex = new Texture(Gdx.files.internal("butter.png"));
+            ButtonImg TryAgain = new ButtonImg(tex, tex, tex);
+            TryAgain.setWidth(Gdx.graphics.getWidth() / 3);
+            TryAgain.setPosition(500, game.getvHeight() / 2);
+            TryAgain.addListener(new ClickListener() {
+                public void clicked(InputEvent e, float x, float y) {
+                    game.setScreen(new PlayScreen(game, level));
+                    dispose();
+                }
+            });
+            stage.addActor(TryAgain);
+        }
 
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
@@ -71,6 +82,12 @@ public class GameOverScreen implements Screen {
             }
         });
         stage.addActor(Exit);
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("Won.mp3"));
+
+        music.setVolume(0.3f);
+        music.setLooping(true);
+        music.play();
 
     }
     /**
@@ -123,6 +140,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        music.dispose();
     }
 
 }

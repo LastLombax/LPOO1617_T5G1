@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -26,6 +27,7 @@ public class GameWonScreen implements Screen {
     private ChickenVsFood game;
     private Viewport viewport;
     private Label GameOver;
+    private Music music;
     private Texture background;
 
     /**
@@ -79,6 +81,12 @@ public class GameWonScreen implements Screen {
         });
         stage.addActor(Exit);
 
+        music = Gdx.audio.newMusic(Gdx.files.internal("Won.mp3"));
+
+        music.setVolume(0.3f);
+        music.setLooping(false);
+        music.play();
+
     }
     /**
      * Sets the gdx input processor with the stage
@@ -130,6 +138,7 @@ public class GameWonScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        music.dispose();
     }
 
 }

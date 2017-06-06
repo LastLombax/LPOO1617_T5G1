@@ -179,8 +179,11 @@ public class Hud implements Disposable{
         tableD.bottom();
         tableD.right();
         tableD.setFillParent(true);
+        if ( PlayScreen.getLevel() <= 3)
+             leveLabel = new Label("Level 1-" + PlayScreen.getLevel(), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        else
+            leveLabel = new Label("Survival Mode", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
 
-        leveLabel = new Label("Level 1-" + PlayScreen.getLevel(), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         leveLabel.setFontScale(3);
         tableD.add(leveLabel).padRight(50);
 

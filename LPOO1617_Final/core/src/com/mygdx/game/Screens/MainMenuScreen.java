@@ -22,10 +22,9 @@ public class MainMenuScreen implements Screen {
     private ChickenVsFood game;
     private Viewport viewport;
     private int BUTTON_X = 720;
-    Texture background;
+    private Texture background;
 
     private Music music;
-
 
     /**
      * Constructor for the MainMenu Screen
@@ -75,11 +74,11 @@ public class MainMenuScreen implements Screen {
 
         music = Gdx.audio.newMusic(Gdx.files.internal("MainMenu.mp3"));
 
-        if (!music.isPlaying()) {
-            music.setVolume(0.3f);
-            music.setLooping(true);
-            music.play();
-        }
+
+        music.setVolume(0.3f);
+        music.setLooping(true);
+        music.play();
+
     }
 
     /**
