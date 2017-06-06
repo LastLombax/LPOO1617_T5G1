@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,9 @@ public class MainMenuScreen implements Screen {
     private Viewport viewport;
     private int BUTTON_X = 720;
     Texture background;
+
+    private Music music;
+
 
     /**
      * Constructor for the MainMenu Screen
@@ -68,6 +72,15 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(ExitButton);
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("MainMenu.mp3"));
+
+        if (!music.isPlaying()) {
+            music.setVolume(0.3f);
+
+            music.setLooping(true);
+            music.play();
+        }
     }
 
     /**
@@ -123,6 +136,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
+        stage.dispose();
     }
 }

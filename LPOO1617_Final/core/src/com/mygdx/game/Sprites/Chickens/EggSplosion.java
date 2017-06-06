@@ -16,7 +16,8 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 
 public class EggSplosion extends Chicken {
-    public enum State{WALKING, EXPLOSION};
+    public enum State{WALKING, EXPLOSION}
+
     private State currState;
     private State prevState;
     private float VELOCITY = 2.5f;

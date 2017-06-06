@@ -138,8 +138,12 @@ public class Hud implements Disposable{
         tableC.add(SeedShooterButton);
         tableC.add(UnicornButton).padLeft(10);
         tableC.row();
-        tableC.add(ExplosiveBarryButton).padLeft(10);
-        tableC.add(CoolNappleButton).padLeft(10);
+
+        if (PlayScreen.getLevel() > 1)
+            tableC.add(ExplosiveBarryButton).padLeft(10);
+
+        if (PlayScreen.getLevel() > 2)
+            tableC.add(CoolNappleButton).padLeft(10);
 
         stage.addActor(tableC);
     }

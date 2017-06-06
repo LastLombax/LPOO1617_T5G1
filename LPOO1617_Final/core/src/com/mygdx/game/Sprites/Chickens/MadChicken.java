@@ -16,7 +16,8 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 
 public class MadChicken extends Chicken {
-    public enum State{WALKING, EATING};
+    public enum State{WALKING, EATING}
+
     private State currState;
     private State prevState;
     private float VELOCITY = 15f;

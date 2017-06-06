@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Screens.PlayScreen;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Chickens.EggSplosion;
@@ -46,14 +48,13 @@ public class WorldContactListener implements ContactListener {
             ((Chicken) fixA.getUserData()).setHealth(0);
             ((InvisibleSeed) fixB.getUserData()).setHealth(0);
         }
-        else if((fixB.getUserData() instanceof B2WorldCreator)&& (fixA.getUserData() instanceof Chicken)){
-            //Wall and chicken
-            System.out.println("Game Over");
-        }
-        else if((fixA.getUserData() instanceof B2WorldCreator)&& (fixB.getUserData() instanceof Chicken)){
-            //Wall and chicken
-            System.out.println("Game Over");
-        }
+
+        else if((fixB.getUserData() instanceof B2WorldCreator)&& (fixA.getUserData() instanceof Chicken))
+            PlayScreen.setGameOver();
+
+        else if((fixA.getUserData() instanceof B2WorldCreator)&& (fixB.getUserData() instanceof Chicken))
+            PlayScreen.setGameOver();
+
         else if (fixA.getUserData() instanceof Chicken){
             //chicken and food
             if (fixB.getUserData() instanceof Seed) {

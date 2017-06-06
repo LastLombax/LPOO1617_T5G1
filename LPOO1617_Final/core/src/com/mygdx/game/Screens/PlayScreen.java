@@ -20,6 +20,10 @@ import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Sprites.Butter;
 import com.mygdx.game.Sprites.Chickens.Chicken;
 import com.mygdx.game.Sprites.Chickens.NormalChicken;
+import com.mygdx.game.Sprites.Chickens.MadChicken;
+import com.mygdx.game.Sprites.Chickens.StrongChicken;
+import com.mygdx.game.Sprites.Chickens.SmallChickenEgg;
+import com.mygdx.game.Sprites.Chickens.EggSplosion;
 import com.mygdx.game.Sprites.Foods.CoolNapple;
 import com.mygdx.game.Sprites.Foods.ExplosiveBarry;
 import com.mygdx.game.Sprites.Foods.Food;
@@ -52,6 +56,8 @@ public class PlayScreen implements Screen{
     private float accumulator;
     private float FPS = 1/60f;
 
+    private static boolean gameOver;
+
     private TextureAtlas NormalChicken;
     private TextureAtlas StrongChicken;
     private TextureAtlas SmallChicken;
@@ -78,7 +84,10 @@ public class PlayScreen implements Screen{
     private int GAP = 60;
     private int tileSize = 128;
 
-    private int MAX_CHICKEN = 20;
+    private int MAX_CHICKEN_LVL_1 = 10;
+    private int MAX_CHICKEN_LVL_2 = 15;
+    private int MAX_CHICKEN_LVL_3 = 20;
+
     private int CHICKEN_GEN = 500;
     private int INITIAL_CHICKEN_X = 2000;
     private int timer = 0;
@@ -104,7 +113,8 @@ public class PlayScreen implements Screen{
      */
     public PlayScreen(ChickenVsFood game, int level){
         this.game = game;
-        this.level = level;
+        this.gameOver = false;
+        PlayScreen.level = level;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(game.getvWidth(),game.getvHeight(),gameCam);
         hud = new Hud(game.getBatch(), game);
@@ -187,6 +197,12 @@ public class PlayScreen implements Screen{
         game.getBatch().end();
 
         hud.getStage().draw();
+
+        if (gameOver){
+            game.setScreen(new GameOverScreen(game, getLevel()));
+            dispose();
+        }
+
     }
 
     /**
@@ -194,6 +210,7 @@ public class PlayScreen implements Screen{
      * @param dt time interval of the update
      */
     public void update(float dt) {
+
         handleInput(dt);
 
         //takes 1 step in the physics simulation (60 times per second)
@@ -204,14 +221,24 @@ public class PlayScreen implements Screen{
             accumulator -= FPS;
         }
 
-        if(chicken.size() < MAX_CHICKEN)
-            GenerateChickens();
-
+        if(getLevel() == 1){
+            if (chicken.size() < MAX_CHICKEN_LVL_1 )
+                GenerateChickens(3);
+        }
+        else if(getLevel() == 2) {
+            if (chicken.size() < MAX_CHICKEN_LVL_2)
+                GenerateChickens(4);
+        }
+        else  if(getLevel() == 3) {
+            if (chicken.size() < MAX_CHICKEN_LVL_3)
+                GenerateChickens(5);
+        }
         updateCharacters(dt);
 
         gameCam.update();
         renderer.setView(gameCam);
     }
+
 
     /**
      * Handles all input from the player
@@ -242,9 +269,6 @@ public class PlayScreen implements Screen{
                             break;
                         }
                     }
-                    //level 1 -> seedshooter and unicorn
-                    //level 2 -> explosivebarry
-                    //level 3-> coolnapple
                     switch (hud.getSelectedFood()) {
                         case 1:
                             foods.add(new SeedShooter(getWorld(), game, x, y, this));
@@ -259,7 +283,7 @@ public class PlayScreen implements Screen{
                             foods.add(new CoolNapple(getWorld(), game, x, y, this));
                             break;
                     }
-                    hud.removeCorn(hud.getCost()[hud.getSelectedFood()-1]);
+                    Hud.removeCorn(Hud.getCost()[hud.getSelectedFood()-1]);
                     hud.setSelectedFood(0);
                     hud.setSelected(false);
                 } else
@@ -307,17 +331,32 @@ public class PlayScreen implements Screen{
     /**
      * Randomly generates chickens for each lane every CHICKEN_GEN seconds
      */
-    public void GenerateChickens(){
+    private void GenerateChickens(int possible_chickens) {
         timer++;
         if(timer%CHICKEN_GEN == 0){
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
-            Chicken c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
-            //Chicken c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+            Random chi = new Random();
+            int a = chi.nextInt(Integer.SIZE -1)%possible_chickens;
+            Chicken c = null;
+            switch(a){
+                case 0:
+                    c = new NormalChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    break;
+                case 1:
+                    c = new StrongChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    break;
+                case 2:
+                    c = new MadChicken(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    break;
+                case 3:
+                    c = new EggSplosion(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    break;
+                case 4:
+                    c = new SmallChickenEgg(getWorld(), game, INITIAL_CHICKEN_X, y, this);
+                    break;
+            }
 
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);
@@ -401,14 +440,25 @@ public class PlayScreen implements Screen{
      */
     public void setWorld(){world = new World(new Vector2(0,0),true);}
 
+    /**
+     * @return Returns the current level;
+     */
     public static int getLevel(){
         return level;
+    }
+
+    /**
+     * Game is Over
+     */
+    public static void setGameOver(){
+        gameOver = true;
     }
     /**
      * Resizes the gameport
      * @param width new width
      * @param height new height
      */
+
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
