@@ -93,6 +93,7 @@ public class PlayScreen implements Screen{
     private int timer = 0;
     private int nChickenGEN = 0;
     private static int nChickenKilled = 0;
+    private static int level;
 
     private int LANE_1_Y = 700;
     private int LANE_2_Y = 570;
@@ -107,7 +108,6 @@ public class PlayScreen implements Screen{
     private Vector<Food> foods = new Vector<Food>();
     private Vector<Butter> butters = new Vector<Butter>();
 
-    private static int level;
 
     /**
      * Creates the screen of the game
@@ -117,7 +117,7 @@ public class PlayScreen implements Screen{
         this.game = game;
         this.gameOver = false;
         this.gameWon = false;
-        PlayScreen.level = level;
+        this.level = level;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(game.getvWidth(),game.getvHeight(),gameCam);
         hud = new Hud(game.getBatch(), game);
@@ -136,46 +136,15 @@ public class PlayScreen implements Screen{
         world.setContactListener(new WorldContactListener());
 
         createButters();
-
-        music = Gdx.audio.newMusic(Gdx.files.internal("chocobo.mp3"));
-        music.setVolume(0.5f);
-
-        music.setLooping(true);
-        music.play();
+        setMusic();
     }
 
-    /**
-     * Loads the several textures and stores them into specific atlas
-     */
-    public void loadAssets(){
-        NormalChicken = new TextureAtlas("NormalChicken.pack");
-        EggSplosion = new TextureAtlas("EggSplosion.pack");
-        MadChicken = new TextureAtlas("MadChicken.pack");
-        StrongChicken =  new TextureAtlas("StrongChicken.pack");
-        SmallChicken = new TextureAtlas("SmallChicken.pack");
 
-        SeedShooter = new TextureAtlas("SeedShooter.pack");
-        Seed = new TextureAtlas("Seed.pack");
-        Unicorn = new TextureAtlas("Unicorn.pack");
-        ExplosiveBarry = new TextureAtlas("ExplosiveBarry.pack");
-        CoolNapple = new TextureAtlas("CoolNapple.pack");
-    }
-
-    /**
-     * Creates the butters, used for a second chance in the game
-     */
-    public void createButters(){
-        for (int i = 0; i < diffY.length; i++){
-            Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
-            butters.add(b);
-        }
-    }
 
     /**
      * Renders the game screen
      * @param delta time interval of each render
      */
-
     @Override
     public void render(float delta) {
         update(delta);
@@ -238,17 +207,20 @@ public class PlayScreen implements Screen{
 
             else if (chicken.size() < MAX_CHICKEN_LVL_1)
                 GenerateChickens(3);
-        } else if (getLevel() == 2) {
+        }
+        else if (getLevel() == 2) {
             if (chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
                 gameWon = true;
             else if (chicken.size() < MAX_CHICKEN_LVL_2)
                 GenerateChickens(4);
-        } else if (getLevel() == 3) {
+        }
+        else if (getLevel() == 3) {
             if (chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
                 gameWon = true;
             else if (chicken.size() < MAX_CHICKEN_LVL_3)
                 GenerateChickens(5);
-        } else if (getLevel() == 4)
+        }
+        else if (getLevel() == 4)
             GenerateChickens(5);
 
         updateCharacters(dt);
@@ -313,6 +285,12 @@ public class PlayScreen implements Screen{
             }
     }
 
+    /**
+     * Verifies if a food can be placed in the selected spot
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return true if can be placed, false otherwise
+     */
     public boolean isOccupied(int x, int y){
         for (int i = 0; i < chicken.size(); i++)
             if (chicken.get(i).getBody().getPosition().x > x - tileSize/2 && chicken.get(i).getBody().getPosition().x < x + tileSize/2 )
@@ -324,10 +302,10 @@ public class PlayScreen implements Screen{
     }
 
     /**
-     * Verifies if a food can be placed in the selected spot
+     * Verifies if a selected food is within bounds
      * @param px x coordinate
      * @param py y coordinate
-     * @return true if can be placed
+     * @return true if can be placed, false otherwise
      */
     public boolean checkPlacingBounds(double px, double py){
         return (px >= MIN_WORLD_X && px <= MAX_WORLD_X && py >= MIN_WORLD_Y && py <=MAX_WORLD_Y);
@@ -357,8 +335,15 @@ public class PlayScreen implements Screen{
                 foods.get(i).update(dt);
         }
 
-        for (int i = 0; i < this.butters.size(); i++)
-            this.butters.get(i).update(dt);
+        for (int i = 0; i < this.butters.size(); i++) {
+            if (butters.get(i).isDead()) {
+                butters.remove(i);
+                i--;
+            }
+            else
+                butters.get(i).update(dt);
+        }
+
     }
 
     /**
@@ -395,6 +380,45 @@ public class PlayScreen implements Screen{
             chicken.add(c);
             nChickenGEN++;
         }
+    }
+
+
+    /**
+     * Loads the several textures and stores them into specific atlas
+     */
+    public void loadAssets(){
+        NormalChicken = new TextureAtlas("NormalChicken.pack");
+        EggSplosion = new TextureAtlas("EggSplosion.pack");
+        MadChicken = new TextureAtlas("MadChicken.pack");
+        StrongChicken =  new TextureAtlas("StrongChicken.pack");
+        SmallChicken = new TextureAtlas("SmallChicken.pack");
+
+        SeedShooter = new TextureAtlas("SeedShooter.pack");
+        Seed = new TextureAtlas("Seed.pack");
+        Unicorn = new TextureAtlas("Unicorn.pack");
+        ExplosiveBarry = new TextureAtlas("ExplosiveBarry.pack");
+        CoolNapple = new TextureAtlas("CoolNapple.pack");
+    }
+
+    /**
+     * Creates the butters, used for a second chance in the game
+     */
+    public void createButters(){
+        for (int i = 0; i < diffY.length; i++){
+            Butter b = new Butter(getWorld(), game, BUTTER_X , diffY[i]);
+            butters.add(b);
+        }
+    }
+
+    /**
+     * Sets the music for the Screen
+     */
+    private void setMusic() {
+        music = Gdx.audio.newMusic(Gdx.files.internal("chocobo.mp3"));
+        music.setVolume(0.5f);
+
+        music.setLooping(true);
+        music.play();
     }
 
     /**

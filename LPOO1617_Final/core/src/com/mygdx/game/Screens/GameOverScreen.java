@@ -24,10 +24,11 @@ import com.mygdx.game.ChickenVsFood;
 
 public class GameOverScreen implements Screen {
     private Stage stage;
+    private ChickenVsFood game;
     private Viewport viewport;
-    private Label GameOver, scoreLabel;
+    private Label GameWon, scoreLabel;
     private Texture background;
-
+    private int level;
     private Music music;
 
     /**
@@ -35,41 +36,69 @@ public class GameOverScreen implements Screen {
      * @param game ChickenVsFood instance
      */
     public GameOverScreen(final ChickenVsFood game, final int level){
+        this.game = game;
+        this.level = level;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
 
         background = new Texture(Gdx.files.internal("GameOverScreen.png"));
 
         stage = new Stage(viewport, game.getBatch());
-        GameOver = new Label("GAME OVER", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        GameOver.setFontScale(3);
+        addGameOverLabel();
+
+        System.out.println(level);
+        if (level == 4)
+            addScoreLabel();
+        else if (level < 4)
+            addTryAgainButton();
+
+        addExitButton();
+        setMusic();
+    }
+
+    /**
+     * Adds the Game Won Label
+     */
+    private void addGameOverLabel(){
+        GameWon = new Label("GAME OVER", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        GameWon.setFontScale(3);
         Table t = new Table();
         t.center();
         t.top();
         t.setFillParent(true);
-        t.add(GameOver).padTop(180);
+        t.add(GameWon).padTop(180);
         stage.addActor(t);
+    }
 
-        if (level == 4) {
-            scoreLabel = new Label(PlayScreen.getChickensKilled() + " chickens defeated", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-            scoreLabel.setFontScale(3);
-            scoreLabel.setPosition(500, game.getvHeight() / 2 + 55);
-            stage.addActor(scoreLabel);
-        }
+    /**
+     * Adds the Score Label
+     */
+    private void addScoreLabel(){
+        scoreLabel = new Label(PlayScreen.getChickensKilled() + " chickens defeated", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        scoreLabel.setFontScale(3);
+        scoreLabel.setPosition(500, game.getvHeight() / 2 + 55);
+        stage.addActor(scoreLabel);
+    }
 
-        else {
-            Texture tex = new Texture(Gdx.files.internal("butter.png"));
-            ButtonImg TryAgain = new ButtonImg(tex, tex, tex);
-            TryAgain.setWidth(Gdx.graphics.getWidth() / 3);
-            TryAgain.setPosition(500, game.getvHeight() / 2);
-            TryAgain.addListener(new ClickListener() {
-                public void clicked(InputEvent e, float x, float y) {
-                    game.setScreen(new PlayScreen(game, level));
-                    dispose();
-                }
-            });
-            stage.addActor(TryAgain);
-        }
-
+    /**
+     * Adds the Try Again Button
+     */
+    private void addTryAgainButton(){
+        Texture tex = new Texture(Gdx.files.internal("butter.png"));
+        ButtonImg TryAgain = new ButtonImg(tex, tex, tex);
+        TryAgain.setWidth(Gdx.graphics.getWidth() / 3);
+        TryAgain.setPosition(500, game.getvHeight() / 2);
+        TryAgain.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new PlayScreen(game, level));
+                dispose();
+            }
+        });
+        stage.addActor(TryAgain);
+    }
+    /**
+     * Adds the Exit Button
+     */
+    private void addExitButton(){
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
         Exit.setWidth(Gdx.graphics.getWidth()/3);
@@ -82,13 +111,18 @@ public class GameOverScreen implements Screen {
         });
         stage.addActor(Exit);
 
+    }
+    /**
+     * Sets the music for the Screen
+     */
+    private void setMusic() {
         music = Gdx.audio.newMusic(Gdx.files.internal("Won.mp3"));
 
         music.setVolume(0.3f);
         music.setLooping(true);
         music.play();
-
     }
+
     /**
      * Sets the gdx input processor with the stage
      */
@@ -96,6 +130,7 @@ public class GameOverScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
+
     /**
      * Renders the screen
      * @param delta time interval

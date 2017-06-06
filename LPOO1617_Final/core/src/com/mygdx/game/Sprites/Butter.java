@@ -21,10 +21,12 @@ public class Butter extends Sprite {
     private ChickenVsFood game;
     private TextureRegion ButterTexture;
     private Texture Butter = new Texture("Butter.png");
-    private float VELOCITY = 50f;
+    private float VELOCITY = 100f;
     private boolean hitting = false;
     private int SIZE_PIXEL = 120;
     private int WORLD_SIZE = 100;
+    private int LIMIT_X = 2000;
+    private boolean destroy = false;
 
     /**
      * Constructor for the Butter
@@ -79,6 +81,8 @@ public class Butter extends Sprite {
         if(getHit())
             this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);
 
+        if (getBody().getPosition().x > LIMIT_X)
+            destroy = true;
     }
 
     /**
@@ -89,12 +93,24 @@ public class Butter extends Sprite {
         this.hitting = b;
     }
 
+    /**
+     * @return Returns the value hitting
+     */
     public boolean getHit(){
         return this.hitting;
     }
 
-
-
+    /**
+     * Verifies if butter has passed a limit
+     * @return true if to destroy, false if not
+     */
+    public boolean isDead() {
+        if (destroy){
+            this.world.destroyBody(this.b2body);
+            return true;
+        }
+        return false;
+    }
 
 }
 

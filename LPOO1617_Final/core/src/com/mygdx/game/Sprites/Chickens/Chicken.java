@@ -28,7 +28,6 @@ public abstract class Chicken extends Sprite{
      * @param screen game screen
      */
     public Chicken(World world, ChickenVsFood game, PlayScreen screen){
-
         setFoodHit(false);
         this.world = world;
     }
@@ -47,7 +46,6 @@ public abstract class Chicken extends Sprite{
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(35);
-
 
         fdef.shape = shape;
         fdef.filter.categoryBits = ChickenVsFood.CHICKEN_BIT;

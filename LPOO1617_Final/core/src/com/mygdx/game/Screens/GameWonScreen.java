@@ -29,6 +29,7 @@ public class GameWonScreen implements Screen {
     private Label GameOver;
     private Music music;
     private Texture background;
+    private int level;
 
     /**
      * Constructor for the GameOverScreen
@@ -36,11 +37,23 @@ public class GameWonScreen implements Screen {
      */
     public GameWonScreen(final ChickenVsFood game, final int level){
         this.game = game;
+        this.level = level;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
 
         background = new Texture(Gdx.files.internal("GameOverScreen.png"));
 
         stage = new Stage(viewport, game.getBatch());
+
+        addGameOverLabel();
+        addNextLvlButton();
+        addExitButton();
+        setMusic();
+    }
+
+    /**
+     * Adds the Game Over Label
+     */
+    private void addGameOverLabel(){
         GameOver = new Label("YOU WON", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         GameOver.setFontScale(3);
         Table t = new Table();
@@ -49,7 +62,12 @@ public class GameWonScreen implements Screen {
         t.setFillParent(true);
         t.add(GameOver).padTop(180);
         stage.addActor(t);
+    }
 
+    /**
+     * Adds the Next Level Button
+     */
+    private void addNextLvlButton(){
         Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg NextLvL = new ButtonImg(tex,tex,tex);
         NextLvL.setWidth(Gdx.graphics.getWidth()/3);
@@ -64,11 +82,15 @@ public class GameWonScreen implements Screen {
                     game.setScreen(new MainMenuScreen(game));
                     dispose();
                 }
-
             }
         });
         stage.addActor(NextLvL);
 
+    }
+    /**
+     * Adds the Exit Button
+     */
+    public void addExitButton(){
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
         Exit.setWidth(Gdx.graphics.getWidth()/3);
@@ -80,14 +102,20 @@ public class GameWonScreen implements Screen {
             }
         });
         stage.addActor(Exit);
+    }
 
+
+    /**
+     * Sets the music for the Screen
+     */
+    private void setMusic() {
         music = Gdx.audio.newMusic(Gdx.files.internal("Won.mp3"));
 
         music.setVolume(0.3f);
         music.setLooping(false);
         music.play();
-
     }
+
     /**
      * Sets the gdx input processor with the stage
      */

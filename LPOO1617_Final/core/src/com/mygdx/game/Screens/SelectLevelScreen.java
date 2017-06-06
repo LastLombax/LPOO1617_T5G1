@@ -34,6 +34,17 @@ public class SelectLevelScreen implements Screen {
 
         lvlSelector = new Texture(Gdx.files.internal("LevelScreen.png"));
 
+        addPlayLvL1Button();
+        addPlayLvL2Button();
+        addPlayLvL3Button();
+        addPlaySurvivalButton();
+        addExitButton();
+
+    }
+    /**
+     * Adds the Play Level 1 Button
+     */
+    private void addPlayLvL1Button() {
         Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
         PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
@@ -45,7 +56,12 @@ public class SelectLevelScreen implements Screen {
             }
         });
         stage.addActor(PlayLevel1);
+    }
 
+    /**
+     * Adds the Play Level 2 Button
+     */
+    private void addPlayLvL2Button(){
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg PlayLevel2 = new ButtonImg(tex1,tex1,tex1);
         PlayLevel2.setWidth(Gdx.graphics.getWidth()/3);
@@ -57,7 +73,12 @@ public class SelectLevelScreen implements Screen {
             }
         });
         stage.addActor(PlayLevel2);
+    }
 
+    /**
+     * Adds the Play Level 3 Button
+     */
+    private void addPlayLvL3Button(){
         Texture tex2 = new Texture(Gdx.files.internal("Relva1.png"));
         ButtonImg PlayLevel3 = new ButtonImg(tex2,tex2,tex2);
         PlayLevel3.setWidth(Gdx.graphics.getWidth()/3);
@@ -69,7 +90,12 @@ public class SelectLevelScreen implements Screen {
             }
         });
         stage.addActor(PlayLevel3);
+    }
 
+    /**
+     * Adds the Play Survival Button
+     */
+    private void addPlaySurvivalButton(){
         Texture tex3 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg SurvivalButton = new ButtonImg(tex3,tex3,tex3);
         SurvivalButton.setWidth(Gdx.graphics.getWidth()/3);
@@ -81,7 +107,12 @@ public class SelectLevelScreen implements Screen {
             }
         });
         stage.addActor(SurvivalButton);
+    }
 
+    /**
+     * Adds the Exit Button
+     */
+    private void addExitButton(){
         Texture tex4 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex4,tex4,tex4);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);

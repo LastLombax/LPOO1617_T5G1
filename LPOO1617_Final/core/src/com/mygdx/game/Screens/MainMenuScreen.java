@@ -36,7 +36,16 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(viewport, game.getBatch());
 
         background = new Texture(Gdx.files.internal("Chocobo.png"));
+        addPlayButton();
+        addOptionsButton();
+        addExitButton();
+        setMusic();
+    }
 
+    /**
+     * Adds the Play Button
+     */
+    private void addPlayButton() {
         Texture tex = new Texture("Butter.png");
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);
         PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
@@ -48,7 +57,11 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(PlayGameButton);
-
+    }
+    /**
+     * Adds the Options Button
+     */
+    private void addOptionsButton() {
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
         OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
@@ -60,7 +73,12 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(OptionsButton);
+    }
 
+    /**
+     * Adds the Exit Button
+     */
+    private void addExitButton() {
         Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
@@ -71,14 +89,16 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(ExitButton);
+    }
 
+    /**
+     * Sets the music for the Screen
+     */
+    private void setMusic() {
         music = Gdx.audio.newMusic(Gdx.files.internal("MainMenu.mp3"));
-
-
         music.setVolume(0.3f);
         music.setLooping(true);
         music.play();
-
     }
 
     /**
