@@ -91,6 +91,7 @@ public class PlayScreen implements Screen{
     private int CHICKEN_GEN = 500;
     private int INITIAL_CHICKEN_X = 2000;
     private int timer = 0;
+    private int nChickenGEN = 0;
 
     private int LANE_1_Y = 700;
     private int LANE_2_Y = 570;
@@ -177,6 +178,7 @@ public class PlayScreen implements Screen{
 
         renderer.render();
 
+        b2dr.setDrawBodies(false);
         b2dr.render(world, gameCam.combined);
 
         game.getBatch().setProjectionMatrix(hud.getStage().getCamera().combined);
@@ -220,6 +222,10 @@ public class PlayScreen implements Screen{
             world.step(FPS, 6, 2);
             accumulator -= FPS;
         }
+        if(chicken.isEmpty() && MAX_CHICKEN == nChickenGEN){
+            System.out.println("won");
+        }
+
 
         if(getLevel() == 1){
             if (chicken.size() < MAX_CHICKEN_LVL_1 )
@@ -360,6 +366,7 @@ public class PlayScreen implements Screen{
 
             c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
             chicken.add(c);
+            nChickenGEN++;
         }
     }
 
