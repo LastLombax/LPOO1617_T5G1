@@ -38,6 +38,7 @@ public class MainMenuScreen implements Screen {
         background = new Texture(Gdx.files.internal("Chocobo.png"));
         addPlayButton();
         addOptionsButton();
+        addAlmanacButton();
         addExitButton();
         setMusic();
     }
@@ -49,7 +50,7 @@ public class MainMenuScreen implements Screen {
         Texture tex = new Texture("Butter.png");
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);
         PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
-        PlayGameButton.setPosition(BUTTON_X,2*game.getvHeight()/3 + 40);
+        PlayGameButton.setPosition(BUTTON_X,2*game.getvHeight()/3 +40 );
         PlayGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new SelectLevelScreen(game));
@@ -65,7 +66,7 @@ public class MainMenuScreen implements Screen {
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
         OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
-        OptionsButton.setPosition(BUTTON_X, game.getvHeight()/2 );
+        OptionsButton.setPosition(BUTTON_X, game.getvHeight()/2 + 30);
         OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new OptionsScreen(game));
@@ -76,13 +77,30 @@ public class MainMenuScreen implements Screen {
     }
 
     /**
+     * Adds the Almanac Button
+     */
+    private void addAlmanacButton(){
+        Texture tex2 = new Texture(Gdx.files.internal("darkGrass.png"));
+        ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
+        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        ExitButton.setPosition(BUTTON_X,game.getvHeight()/3);
+        ExitButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new AlmanacScreen(game));
+                dispose();
+            }
+        });
+        stage.addActor(ExitButton);
+    }
+
+    /**
      * Adds the Exit Button
      */
     private void addExitButton() {
         Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(BUTTON_X,game.getvHeight()/3 - 40);
+        ExitButton.setPosition(BUTTON_X,game.getvHeight()/4 - 80);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 System.exit(0);
