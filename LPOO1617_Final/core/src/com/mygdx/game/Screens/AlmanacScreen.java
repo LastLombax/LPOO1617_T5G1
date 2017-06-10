@@ -25,17 +25,28 @@ public class AlmanacScreen implements Screen{
     private Viewport viewport;
     private Texture background;
     private Music music;
-    private Texture cards[]  = new Texture[4];
+    private Texture cards[];
     private int currCard = 0;
-    private int BUTTON_Y = 100;
+    private int BUTTON_Y = 50;
 
-    public AlmanacScreen(final ChickenVsFood game){
+    /**
+     * Constructor for the AlmanacScreen
+     * @param game ChickenVsFood instance
+     * @param food integer to identify almanac
+     */
+    public AlmanacScreen(final ChickenVsFood game, int food){
         this.game = game;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
-        background = new Texture(Gdx.files.internal("GameOverScreen.png"));
-
+        background = new Texture(Gdx.files.internal("Almanac.png"));
         stage = new Stage(viewport, game.getBatch());
-        loadCards();
+        if (food == 0) {
+            cards = new Texture[4];
+            loadFoodCards();
+        }
+        else {
+            cards = new Texture[5];
+            loadChickenCards();
+        }
         addPreviousButton();
         addExitButton();
         addNextButton();
@@ -45,59 +56,52 @@ public class AlmanacScreen implements Screen{
     /**
      * Loads the Food Almanac Cards
      */
-    public void loadCards(){
+    public void loadFoodCards(){
         cards[0] = new Texture(Gdx.files.internal("UnicornAlmanac.png"));
         cards[1] = new Texture(Gdx.files.internal("SeedShooterAlmanac.png"));
         cards[2] = new Texture(Gdx.files.internal("ExplosiveBarryAlmanac.png"));
         cards[3] = new Texture(Gdx.files.internal("CoolNappleAlmanac.png"));
+    }
+    /**
+     * Loads the Chicken Almanac Cards
+     */
+    public void loadChickenCards(){
+        cards[0] = new Texture(Gdx.files.internal("NormalChickenAlmanac.png"));
+        cards[1] = new Texture(Gdx.files.internal("MadChickenAlmanac.png"));
+        cards[2] = new Texture(Gdx.files.internal("StrongChickenAlmanac.png"));
+        cards[3] = new Texture(Gdx.files.internal("SmallChickenEggAlmanac.png"));
+        cards[4] = new Texture(Gdx.files.internal("EggSplosionAlmanac.png"));
     }
 
     /**
      * Adds the Previous Button
      */
     public void addPreviousButton(){
-        Texture tex2 = new Texture(Gdx.files.internal("darkGrass.png"));
+        Texture tex2 = new Texture(Gdx.files.internal("PreviousButton.png"));
         ButtonImg PrevButton = new ButtonImg(tex2,tex2,tex2);
         PrevButton.setWidth(Gdx.graphics.getWidth() / 3);
-        PrevButton.setPosition(200, BUTTON_Y);
+        PrevButton.setPosition(625, BUTTON_Y);
         PrevButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (currCard == 0)
-                    currCard = 3;
+                    currCard = cards.length-1;
                 else
                     currCard--;
             }
         });
         stage.addActor(PrevButton);
     }
-
-    /**
-     * Adds the Exit Button
-     */
-    public void addExitButton(){
-        Texture tex2 = new Texture(Gdx.files.internal("Butter.png"));
-        ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        ExitButton.setWidth(Gdx.graphics.getWidth() / 3);
-        ExitButton.setPosition(700,BUTTON_Y);
-        ExitButton.addListener(new ClickListener() {
-            public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
-            }
-        });
-        stage.addActor(ExitButton);
-    }
     /**
      * Adds the Next Button
      */
     public void addNextButton(){
-        Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
+        Texture tex2 = new Texture(Gdx.files.internal("NextButton.png"));
         ButtonImg NextButton = new ButtonImg(tex2,tex2,tex2);
         NextButton.setWidth(Gdx.graphics.getWidth() / 3);
-        NextButton.setPosition(1200, BUTTON_Y);
+        NextButton.setPosition(950, BUTTON_Y);
         NextButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                if (currCard == 3)
+                if (currCard == cards.length-1)
                     currCard = 0;
                 else
                     currCard++;
@@ -106,6 +110,23 @@ public class AlmanacScreen implements Screen{
         stage.addActor(NextButton);
     }
 
+
+    /**
+     * Adds the Exit Button
+     */
+    public void addExitButton(){
+        Texture tex2 = new Texture(Gdx.files.internal("ExitButton.png"));
+        ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
+        ExitButton.setWidth(Gdx.graphics.getWidth() / 3);
+        ExitButton.setPosition(1550, BUTTON_Y);
+        ExitButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
+        stage.addActor(ExitButton);
+    }
     /**
      * Sets the music for the Screen
      */
@@ -130,7 +151,7 @@ public class AlmanacScreen implements Screen{
 
         game.getBatch().begin();
         game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
-        game.getBatch().draw(cards[currCard],game.getvWidth()/2-250, 300);
+        game.getBatch().draw(cards[currCard],game.getvWidth()/2-220, 200);
         game.getBatch().end();
 
         stage.act();

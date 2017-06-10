@@ -55,7 +55,7 @@ public class ChickenVsFood extends Game {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		this.setScreen(new GameWonScreen(this,2));
+		this.setScreen(new MainMenuScreen(this));
 	}
 	/**
 	 * Renders all

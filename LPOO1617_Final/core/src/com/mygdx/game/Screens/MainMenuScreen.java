@@ -22,9 +22,9 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
-    private int BUTTON_X = 780;
+    private int BUTTON_X = 1510;
     private Texture background;
-
+    private boolean volume;
     private Music music;
 
     /**
@@ -33,16 +33,19 @@ public class MainMenuScreen implements Screen {
      */
     public MainMenuScreen(final ChickenVsFood game){
         this.game = game.getGame();
+        this.volume = true;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
 
         background = new Texture(Gdx.files.internal("Chocobo.png"));
         addPlayButton();
         addOptionsButton();
-        addAlmanacButton();
-      //  if(Gdx.app.getType() == Application.ApplicationType.Android)
+        addFoodAlmanacButton();
+        addChickenAlmanacButton();
+        if(Gdx.app.getType() == Application.ApplicationType.Android)
             addFbButton();
         addExitButton();
+        addMusicButton();
         setMusic();
     }
 
@@ -50,10 +53,10 @@ public class MainMenuScreen implements Screen {
      * Adds the Play Button
      */
     private void addPlayButton() {
-        Texture tex = new Texture("Butter.png");
+        Texture tex = new Texture("SelectLevelButton.png");
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);
         PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
-        PlayGameButton.setPosition(BUTTON_X,2*game.getvHeight()/3 +40 );
+        PlayGameButton.setPosition(BUTTON_X, 700);
         PlayGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new SelectLevelScreen(game));
@@ -62,14 +65,47 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(PlayGameButton);
     }
+
+    /**
+     * Adds the Chicken Almanac Button
+     */
+    private void addChickenAlmanacButton(){
+        Texture tex2 = new Texture(Gdx.files.internal("ChickenAlmanac.png"));
+        ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
+        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        ExitButton.setPosition(BUTTON_X, 540);
+        ExitButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new AlmanacScreen(game, 1));
+                dispose();
+            }
+        });
+        stage.addActor(ExitButton);
+    }
+    /**
+     * Adds the Food Almanac Button
+     */
+    private void addFoodAlmanacButton(){
+        Texture tex2 = new Texture(Gdx.files.internal("FoodAlmanac.png"));
+        ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
+        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        ExitButton.setPosition(BUTTON_X, 380);
+        ExitButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new AlmanacScreen(game, 0));
+                dispose();
+            }
+        });
+        stage.addActor(ExitButton);
+    }
     /**
      * Adds the Options Button
      */
     private void addOptionsButton() {
-        Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
+        Texture tex1 = new Texture(Gdx.files.internal("OptionsButton.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
         OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
-        OptionsButton.setPosition(BUTTON_X, game.getvHeight()/2 + 30);
+        OptionsButton.setPosition(BUTTON_X, 270);
         OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new OptionsScreen(game));
@@ -78,19 +114,17 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(OptionsButton);
     }
-
     /**
-     * Adds the Almanac Button
+     * Adds the Exit Button
      */
-    private void addAlmanacButton(){
-        Texture tex2 = new Texture(Gdx.files.internal("darkGrass.png"));
+    private void addExitButton() {
+            Texture tex2 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(BUTTON_X,game.getvHeight()/3);
+        ExitButton.setPosition(BUTTON_X, 150);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new AlmanacScreen(game));
-                dispose();
+                System.exit(0);
             }
         });
         stage.addActor(ExitButton);
@@ -100,10 +134,10 @@ public class MainMenuScreen implements Screen {
      * Adds the Facebook Button if on Android Device
      */
     private void addFbButton(){
-        Texture tex2 = new Texture(Gdx.files.internal("Butter.png"));
+        Texture tex2 = new Texture(Gdx.files.internal("fbButton.png"));
         ButtonImg FBButton = new ButtonImg(tex2,tex2,tex2);
         FBButton.setWidth(Gdx.graphics.getWidth()/3);
-        FBButton.setPosition(BUTTON_X + 850,game.getvHeight()/3);
+        FBButton.setPosition(BUTTON_X ,20);
         FBButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (!Gdx.net.openURI("fb://page/<page_id>"))
@@ -112,20 +146,28 @@ public class MainMenuScreen implements Screen {
         });
         stage.addActor(FBButton);
     }
+
     /**
-     * Adds the Exit Button
+     * Adds the Music Button
      */
-    private void addExitButton() {
-        Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
-        ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(BUTTON_X,game.getvHeight()/4 - 80);
-        ExitButton.addListener(new ClickListener() {
+    private void addMusicButton(){
+        Texture tex1 = new Texture(Gdx.files.internal("SoundButton.png"));
+        ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
+        OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
+        OptionsButton.setPosition(0, 10);
+        OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                System.exit(0);
+                if(volume) {
+                    music.setVolume(0);
+                    volume = false;
+                }
+                else{
+                    music.setVolume(0.3f);
+                    volume = true;
+                }
             }
         });
-        stage.addActor(ExitButton);
+        stage.addActor(OptionsButton);
     }
 
     /**

@@ -41,7 +41,7 @@ public class GameWonScreen implements Screen {
             background = new Texture(Gdx.files.internal("GameWon.png"));
         stage = new Stage(viewport, game.getBatch());
 
-        if(/*Gdx.app.getType() == Application.ApplicationType.Android && */level == 3)
+        if(Gdx.app.getType() == Application.ApplicationType.Android && level == 3)
             addFbButton();
         if (level < 3)
             addNextLvlButton();
@@ -70,10 +70,10 @@ public class GameWonScreen implements Screen {
      * Adds the Next Level Button
      */
     private void addNextLvlButton(){
-        Texture tex = new Texture(Gdx.files.internal("butter.png"));
+        Texture tex = new Texture(Gdx.files.internal("NextLvLButton.png"));
         ButtonImg NextLvL = new ButtonImg(tex,tex,tex);
         NextLvL.setWidth(Gdx.graphics.getWidth()/3);
-        NextLvL.setPosition(600, 20 );
+        NextLvL.setPosition(600, 10 );
         NextLvL.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game, level + 1));
@@ -81,19 +81,18 @@ public class GameWonScreen implements Screen {
             }
         });
         stage.addActor(NextLvL);
-
     }
     /**
      * Adds the Exit Button
      */
     public void addExitButton(){
-        Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
+        Texture tex1 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
         Exit.setWidth(Gdx.graphics.getWidth()/3);
         if (level == 3)
             Exit.setPosition(1550,50);
         else
-            Exit.setPosition(850, 20);
+            Exit.setPosition(870, 10);
 
         Exit.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {

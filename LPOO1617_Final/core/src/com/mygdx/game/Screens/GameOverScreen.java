@@ -8,15 +8,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
 import com.mygdx.game.ChickenVsFood;
+import com.mygdx.game.Sprites.Moogle;
+import com.mygdx.game.Tools.WorldContactListener;
 
 /**
  * Created by vitor on 06/06/2017.
@@ -26,10 +30,14 @@ public class GameOverScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
-    private Label GameWon, scoreLabel;
+    private Label scoreLabel;
     private Texture background;
     private int level;
     private Music music;
+    private TextureAtlas moogleAtlas;
+    private Moogle moogle;
+    private World world;
+    private OrthographicCamera gameCam;
 
     /**
      * Constructor for the GameOverScreen
@@ -37,45 +45,38 @@ public class GameOverScreen implements Screen {
      */
     public GameOverScreen(final ChickenVsFood game, final int level){
         this.game = game;
+        world = new World(new Vector2(0,0),true);
         this.level = level;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
+        world.setContactListener(new WorldContactListener());
+        gameCam = new OrthographicCamera();
+        FitViewport gamePort = new FitViewport(game.getvWidth(), game.getvHeight(), gameCam);
+        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        background = new Texture(Gdx.files.internal("GameOverScreen.png"));
+        if (level != 4)
+            background = new Texture(Gdx.files.internal("GameOverScreen.png"));
+        else
+            background = new Texture(Gdx.files.internal("SurvivalGameOver.png"));
 
         stage = new Stage(viewport, game.getBatch());
-        addGameOverLabel();
 
-        System.out.println(level);
         if (level == 4)
             addScoreLabel();
-        else if (level < 4)
-            addTryAgainButton();
+        addTryAgainButton();
 
         addExitButton();
         setMusic();
-    }
-
-    /**
-     * Adds the Game Won Label
-     */
-    private void addGameOverLabel(){
-        GameWon = new Label("GAME OVER", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        GameWon.setFontScale(3);
-        Table t = new Table();
-        t.center();
-        t.top();
-        t.setFillParent(true);
-        t.add(GameWon).padTop(180);
-        stage.addActor(t);
+        moogleAtlas = new TextureAtlas("Moogle.pack");
+        moogle = new Moogle(world, 200, 200, this);
     }
 
     /**
      * Adds the Score Label
      */
     private void addScoreLabel(){
-        scoreLabel = new Label(PlayScreen.getChickensKilled() + " chickens defeated", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        scoreLabel = new Label(PlayScreen.getChickensKilled() + "", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         scoreLabel.setFontScale(3);
-        scoreLabel.setPosition(500, game.getvHeight() / 2 + 55);
+        scoreLabel.setPosition(1452, 413);
         stage.addActor(scoreLabel);
     }
 
@@ -83,10 +84,10 @@ public class GameOverScreen implements Screen {
      * Adds the Try Again Button
      */
     private void addTryAgainButton(){
-        Texture tex = new Texture(Gdx.files.internal("butter.png"));
+        Texture tex = new Texture(Gdx.files.internal("TryAgainButton.png"));
         ButtonImg TryAgain = new ButtonImg(tex, tex, tex);
         TryAgain.setWidth(Gdx.graphics.getWidth() / 3);
-        TryAgain.setPosition(500, game.getvHeight() / 2);
+        TryAgain.setPosition(550, 200);
         TryAgain.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game, level));
@@ -99,10 +100,10 @@ public class GameOverScreen implements Screen {
      * Adds the Exit Button
      */
     private void addExitButton(){
-        Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
+        Texture tex1 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
         Exit.setWidth(Gdx.graphics.getWidth()/3);
-        Exit.setPosition(900, game.getvHeight()/2 );
+        Exit.setPosition(950, 200);
         Exit.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
@@ -124,6 +125,13 @@ public class GameOverScreen implements Screen {
     }
 
     /**
+     * Returns the Moogle Atlas
+     */
+    public TextureAtlas getMoogle(){
+        return moogleAtlas;
+    }
+
+    /**
      * Sets the gdx input processor with the stage
      */
     @Override
@@ -137,15 +145,24 @@ public class GameOverScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        update(delta);
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-       /* game.getBatch().begin();
+        game.getBatch().begin();
+        moogle.draw(game.getBatch());
         game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
-        game.getBatch().end();*/
+        game.getBatch().end();
 
         stage.draw();
     }
+
+    private void update(float delta) {
+        moogle.update(delta);
+        gameCam.update();
+
+    }
+
     /**
      * Resizes the screen
      * @param width new witdh

@@ -139,8 +139,6 @@ public class PlayScreen implements Screen{
         setMusic();
     }
 
-
-
     /**
      * Renders the game screen
      * @param delta time interval of each render
@@ -280,10 +278,9 @@ public class PlayScreen implements Screen{
                         hud.setSelected(false);
                     }
                 }
-                else {
+                else
                     System.out.println("You can't put it there");
-                    System.out.println("x = " + x + " ,  y = " + y);
-                }
+
             }
     }
 
@@ -345,7 +342,6 @@ public class PlayScreen implements Screen{
             else
                 butters.get(i).update(dt);
         }
-
     }
 
     /**
@@ -384,7 +380,6 @@ public class PlayScreen implements Screen{
         }
     }
 
-
     /**
      * Loads the several textures and stores them into specific atlas
      */
@@ -418,7 +413,6 @@ public class PlayScreen implements Screen{
     private void setMusic() {
         music = Gdx.audio.newMusic(Gdx.files.internal("chocobo.mp3"));
         music.setVolume(0.3f);
-
         music.setLooping(true);
         music.play();
     }

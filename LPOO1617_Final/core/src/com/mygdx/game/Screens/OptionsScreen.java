@@ -34,7 +34,7 @@ public class OptionsScreen implements Screen {
         this.game = game;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
-        background = new Texture(Gdx.files.internal("Chocobo.png"));
+        background = new Texture(Gdx.files.internal("Almanac.png"));
         addCenterTable();
         addBottomTable();
         addExitButton();
@@ -44,8 +44,8 @@ public class OptionsScreen implements Screen {
      * Adds the Center Table
      */
     public void addCenterTable(){
-        Label credits1 = new Label("Chicken Vs Food is a game developed for the subject of Object Oriented Programming Laboratory from FEUP", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        Label credits2 = new Label("The game was developed by Vicente Espinha and Vitor Magalhaes", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        Label credits1 = new Label("Chicken Vs Food is a game developed for the subject of Object Oriented Programming Laboratory from FEUP", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        Label credits2 = new Label("The game was developed by Vicente Espinha and Vitor Magalhaes", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         credits1.setFontScale(2);
         credits2.setFontScale(2);
 
@@ -62,7 +62,7 @@ public class OptionsScreen implements Screen {
      * Adds the Exit Button
      */
     private void addExitButton() {
-        Texture tex2 = new Texture(Gdx.files.internal("Tree1.png"));
+        Texture tex2 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(750,game.getvHeight()/4 - 80);
@@ -79,7 +79,8 @@ public class OptionsScreen implements Screen {
      * Adds the Bottom Table
      */
     public void addBottomTable(){
-        Label credits3 = new Label("No chickens/chocobos were harmed in the making of this game", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        Label credits3 = new Label("No chickens/chocobos were harmed in the making of this game", new Label.LabelStyle(new BitmapFont(), Color.BLACK));
+        credits3.setFontScale(2);
         Table t1 = new Table();
         t1.center();
         t1.bottom();

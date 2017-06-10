@@ -22,8 +22,6 @@ public class MadChicken extends Chicken {
     private State prevState;
     private float VELOCITY = 15f;
     private int HEALTH = 5;
-    private World world;
-    private Body b2body;
     private TextureRegion ChickenTexture;
     private float stateTimer = 0;
     private Animation<TextureRegion> chickenWalking;

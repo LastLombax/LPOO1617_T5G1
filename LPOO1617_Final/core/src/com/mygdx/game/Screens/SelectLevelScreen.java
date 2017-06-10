@@ -23,7 +23,7 @@ public class SelectLevelScreen implements Screen {
     private int BUTTON_X = 40;
     private int BUTTON_Y = 250;
     private int DIST = 450;
-    Texture lvlSelector;
+    private Texture background;
 
     /**
      * Constructor for the Select Level Screen
@@ -34,7 +34,7 @@ public class SelectLevelScreen implements Screen {
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
 
-        lvlSelector = new Texture(Gdx.files.internal("LevelScreen.png"));
+        background = new Texture(Gdx.files.internal("PinkScreen.png"));
 
         addPlayLvL1Button();
         addPlayLvL2Button();
@@ -115,7 +115,7 @@ public class SelectLevelScreen implements Screen {
      * Adds the Exit Button
      */
     private void addExitButton(){
-        Texture tex4 = new Texture(Gdx.files.internal("Tree1.png"));
+        Texture tex4 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex4,tex4,tex4);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(BUTTON_X + 3*DIST + 50, 0);
@@ -142,6 +142,10 @@ public class SelectLevelScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        game.getBatch().begin();
+        game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
+        game.getBatch().end();
 
         stage.draw();
     }

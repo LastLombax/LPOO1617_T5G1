@@ -37,7 +37,7 @@ public class EggSplosion extends Chicken {
      * @param screen game screen
      */
     public EggSplosion(World world, int xInicial, int yInicial, PlayScreen screen) {
-        super(world,  screen);
+        super(world, screen);
         super.setFoodHit(false);
         currState = State.WALKING;
         prevState = State.WALKING;
