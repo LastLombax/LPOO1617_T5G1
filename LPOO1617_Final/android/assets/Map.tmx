@@ -41,17 +41,17 @@
  </tileset>
  <layer name="Grass" width="15" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYKAeYAJiZiJobAAkzkgEPVzsJQUAAF44AHQ=
+   eJxjYIAARgbKARMQMxNBYwPMUDcQooeLvaQAAF/UAHU=
   </data>
  </layer>
  <layer name="Stone" width="15" height="7">
   <data encoding="base64" compression="zlib">
-   eJyTZGBgkIRiFhKxOBJmZCAeiDOMPL2SZGIJIAYAiAYDww==
+   eJyTZGBgkIRiEGAhAYsjYUYG4oE4w8jTK0kmlgBiAIGmA78=
   </data>
  </layer>
  <layer name="House" width="15" height="7">
   <data encoding="base64" compression="zlib">
-   eJydy7sRgCAUBdGX8BE1AIVAHei/SzawAe7OnHCHmfXfag4eQXgjNiTh3XHgFN6Mgkt4b1Q04X3x4RHeCUJHAXM=
+   eJydyzsOgCAUBdHXICpS+E1EAvvfJUPiBriTnHKqmZXfa2M5TPCDX2/GglV4AzZE4d1x4BTeCzce4f2QkYS3AWofAYw=
   </data>
  </layer>
  <objectgroup name="GrassWall">

@@ -20,7 +20,9 @@ public class SelectLevelScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
-    private int BUTTON_X = 200;
+    private int BUTTON_X = 40;
+    private int BUTTON_Y = 250;
+    private int DIST = 450;
     Texture lvlSelector;
 
     /**
@@ -45,10 +47,10 @@ public class SelectLevelScreen implements Screen {
      * Adds the Play Level 1 Button
      */
     private void addPlayLvL1Button() {
-        Texture tex = new Texture(Gdx.files.internal("Butter.png"));
+        Texture tex = new Texture(Gdx.files.internal("Level1.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
         PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel1.setPosition(BUTTON_X,game.getvHeight()/2 );
+        PlayLevel1.setPosition(BUTTON_X, BUTTON_Y);
         PlayLevel1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game,1));
@@ -62,10 +64,10 @@ public class SelectLevelScreen implements Screen {
      * Adds the Play Level 2 Button
      */
     private void addPlayLvL2Button(){
-        Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
+        Texture tex1 = new Texture(Gdx.files.internal("Level2.png"));
         ButtonImg PlayLevel2 = new ButtonImg(tex1,tex1,tex1);
         PlayLevel2.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel2.setPosition(2*BUTTON_X, game.getvHeight()/2 );
+        PlayLevel2.setPosition(BUTTON_X + DIST, BUTTON_Y);
         PlayLevel2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game,2));
@@ -79,10 +81,10 @@ public class SelectLevelScreen implements Screen {
      * Adds the Play Level 3 Button
      */
     private void addPlayLvL3Button(){
-        Texture tex2 = new Texture(Gdx.files.internal("Relva1.png"));
+        Texture tex2 = new Texture(Gdx.files.internal("Level3.png"));
         ButtonImg PlayLevel3 = new ButtonImg(tex2,tex2,tex2);
-        PlayLevel3.setWidth(Gdx.graphics.getWidth()/3);
-        PlayLevel3.setPosition(3*BUTTON_X, game.getvHeight()/2 );
+        // PlayLevel3.setWidth(Gdx.graphics.getWidth()/3);
+        PlayLevel3.setPosition(BUTTON_X + 2*DIST, BUTTON_Y );
         PlayLevel3.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game,3));
@@ -96,10 +98,10 @@ public class SelectLevelScreen implements Screen {
      * Adds the Play Survival Button
      */
     private void addPlaySurvivalButton(){
-        Texture tex3 = new Texture(Gdx.files.internal("Tree1.png"));
+        Texture tex3 = new Texture(Gdx.files.internal("Survival.png"));
         ButtonImg SurvivalButton = new ButtonImg(tex3,tex3,tex3);
         SurvivalButton.setWidth(Gdx.graphics.getWidth()/3);
-        SurvivalButton.setPosition(4*BUTTON_X,game.getvHeight()/2 );
+        SurvivalButton.setPosition(BUTTON_X + 3*DIST,BUTTON_Y );
         SurvivalButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game,4));
@@ -116,7 +118,7 @@ public class SelectLevelScreen implements Screen {
         Texture tex4 = new Texture(Gdx.files.internal("Tree1.png"));
         ButtonImg ExitButton = new ButtonImg(tex4,tex4,tex4);
         ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(5*BUTTON_X,game.getvHeight()/2 );
+        ExitButton.setPosition(BUTTON_X + 3*DIST + 50, 0);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
@@ -138,12 +140,8 @@ public class SelectLevelScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,1,1);
+        Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.getBatch().begin();
-        game.getBatch().draw(lvlSelector, 0,0, game.getvWidth(), game.getvHeight());
-        game.getBatch().end();
 
         stage.draw();
     }

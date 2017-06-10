@@ -1,5 +1,6 @@
 package com.mygdx.game.Screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -21,7 +22,7 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
-    private int BUTTON_X = 720;
+    private int BUTTON_X = 780;
     private Texture background;
 
     private Music music;
@@ -39,6 +40,8 @@ public class MainMenuScreen implements Screen {
         addPlayButton();
         addOptionsButton();
         addAlmanacButton();
+      //  if(Gdx.app.getType() == Application.ApplicationType.Android)
+            addFbButton();
         addExitButton();
         setMusic();
     }
@@ -93,6 +96,22 @@ public class MainMenuScreen implements Screen {
         stage.addActor(ExitButton);
     }
 
+    /**
+     * Adds the Facebook Button if on Android Device
+     */
+    private void addFbButton(){
+        Texture tex2 = new Texture(Gdx.files.internal("Butter.png"));
+        ButtonImg FBButton = new ButtonImg(tex2,tex2,tex2);
+        FBButton.setWidth(Gdx.graphics.getWidth()/3);
+        FBButton.setPosition(BUTTON_X + 850,game.getvHeight()/3);
+        FBButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                if (!Gdx.net.openURI("fb://page/<page_id>"))
+                    Gdx.net.openURI("https://www.facebook.com/Chicken-Vs-Food-1929917687231434/");
+            }
+        });
+        stage.addActor(FBButton);
+    }
     /**
      * Adds the Exit Button
      */

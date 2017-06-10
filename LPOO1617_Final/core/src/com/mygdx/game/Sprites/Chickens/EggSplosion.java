@@ -75,7 +75,7 @@ public class EggSplosion extends Chicken {
 
         if (currState == State.EXPLOSION) {
             timer++;
-            if (timer % 100 == 0)
+            if (timer % 50 == 0)
                 this.setHealth(0);
         }
     }

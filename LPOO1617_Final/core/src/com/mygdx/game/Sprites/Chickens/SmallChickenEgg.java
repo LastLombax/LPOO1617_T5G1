@@ -77,7 +77,7 @@ public class SmallChickenEgg extends Chicken {
 
         if (currState == State.EXPLODED) {
             timer++;
-            if (timer % 100 == 0) {
+            if (timer % 30 == 0) {
                 this.x = super.getBody().getPosition().x;
                 this.y = super.getBody().getPosition().y;
                 this.screen.getChickens().add(new SmallChicken(this.world, (int) this.x + 15, (int)this.y, this.screen));

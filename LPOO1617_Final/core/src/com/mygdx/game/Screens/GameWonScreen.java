@@ -1,17 +1,14 @@
 package com.mygdx.game.Screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -26,7 +23,6 @@ public class GameWonScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
-    private Label GameOver;
     private Music music;
     private Texture background;
     private int level;
@@ -39,29 +35,35 @@ public class GameWonScreen implements Screen {
         this.game = game;
         this.level = level;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
-
-        background = new Texture(Gdx.files.internal("GameOverScreen.png"));
-
+        if (level < 3)
+            background = new Texture(Gdx.files.internal("Map.png"));
+        else if (level == 3)
+            background = new Texture(Gdx.files.internal("GameWon.png"));
         stage = new Stage(viewport, game.getBatch());
 
-        addGameOverLabel();
-        addNextLvlButton();
+        if(/*Gdx.app.getType() == Application.ApplicationType.Android && */level == 3)
+            addFbButton();
+        if (level < 3)
+            addNextLvlButton();
         addExitButton();
         setMusic();
     }
 
     /**
-     * Adds the Game Over Label
+     * Adds the Facebook Button if on Android Device
      */
-    private void addGameOverLabel(){
-        GameOver = new Label("YOU WON", new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        GameOver.setFontScale(3);
-        Table t = new Table();
-        t.center();
-        t.top();
-        t.setFillParent(true);
-        t.add(GameOver).padTop(180);
-        stage.addActor(t);
+    private void addFbButton() {
+        Texture tex2 = new Texture(Gdx.files.internal("fbButton.png"));
+        ButtonImg FBButton = new ButtonImg(tex2, tex2, tex2);
+        FBButton.setWidth(Gdx.graphics.getWidth() / 3);
+        FBButton.setPosition(300, 100);
+        FBButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                if (!Gdx.net.openURI("fb://page/<page_id>"))
+                    Gdx.net.openURI("https://www.facebook.com/Chicken-Vs-Food-1929917687231434/");
+            }
+        });
+        stage.addActor(FBButton);
     }
 
     /**
@@ -71,17 +73,11 @@ public class GameWonScreen implements Screen {
         Texture tex = new Texture(Gdx.files.internal("butter.png"));
         ButtonImg NextLvL = new ButtonImg(tex,tex,tex);
         NextLvL.setWidth(Gdx.graphics.getWidth()/3);
-        NextLvL.setPosition(600, game.getvHeight()/2 );
+        NextLvL.setPosition(600, 20 );
         NextLvL.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                if(level < 3) {
-                    game.setScreen(new PlayScreen(game, level + 1));
-                    dispose();
-                }
-                else{
-                    game.setScreen(new MainMenuScreen(game));
-                    dispose();
-                }
+                game.setScreen(new PlayScreen(game, level + 1));
+                dispose();
             }
         });
         stage.addActor(NextLvL);
@@ -94,7 +90,11 @@ public class GameWonScreen implements Screen {
         Texture tex1 = new Texture(Gdx.files.internal("Fence.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
         Exit.setWidth(Gdx.graphics.getWidth()/3);
-        Exit.setPosition(900, game.getvHeight()/2 );
+        if (level == 3)
+            Exit.setPosition(1550,50);
+        else
+            Exit.setPosition(850, 20);
+
         Exit.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));
@@ -104,13 +104,11 @@ public class GameWonScreen implements Screen {
         stage.addActor(Exit);
     }
 
-
     /**
      * Sets the music for the Screen
      */
     private void setMusic() {
         music = Gdx.audio.newMusic(Gdx.files.internal("Won.mp3"));
-
         music.setVolume(0.3f);
         music.setLooping(false);
         music.play();
@@ -132,9 +130,9 @@ public class GameWonScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-       /* game.getBatch().begin();
+        game.getBatch().begin();
         game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
-        game.getBatch().end();*/
+        game.getBatch().end();
 
         stage.draw();
     }

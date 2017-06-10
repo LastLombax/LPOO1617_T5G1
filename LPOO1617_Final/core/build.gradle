@@ -1,5 +1,5 @@
 apply plugin: "java"
-
+//apply plugin: 'com.google.gms.google-services'
 sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -14,4 +14,5 @@ dependencies {
     compile 'junit:junit:4.12'
     compile 'junit:junit:4.12'
     compile 'com.badlogicgames.gdx:gdx-backend-headless:1.9.6'
+    //compile 'com.google.android.gms:play-services-auth:9.8.0'
 }
