@@ -106,7 +106,7 @@ public class MainMenuScreen implements Screen {
         Texture tex1 = new Texture(Gdx.files.internal("OptionsButton.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
         //OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
-        OptionsButton.setPosition(BUTTON_X, 270);
+        OptionsButton.setPosition(BUTTON_X + 40, 270);
         OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new OptionsScreen(game));
