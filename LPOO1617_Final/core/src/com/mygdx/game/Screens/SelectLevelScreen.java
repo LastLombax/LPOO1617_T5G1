@@ -49,7 +49,7 @@ public class SelectLevelScreen implements Screen {
     private void addPlayLvL1Button() {
         Texture tex = new Texture(Gdx.files.internal("Level1.png"));
         ButtonImg PlayLevel1 = new ButtonImg(tex,tex,tex);
-        PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
+        //PlayLevel1.setWidth(Gdx.graphics.getWidth()/3);
         PlayLevel1.setPosition(BUTTON_X, BUTTON_Y);
         PlayLevel1.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -66,7 +66,7 @@ public class SelectLevelScreen implements Screen {
     private void addPlayLvL2Button(){
         Texture tex1 = new Texture(Gdx.files.internal("Level2.png"));
         ButtonImg PlayLevel2 = new ButtonImg(tex1,tex1,tex1);
-        PlayLevel2.setWidth(Gdx.graphics.getWidth()/3);
+        //PlayLevel2.setWidth(Gdx.graphics.getWidth()/3);
         PlayLevel2.setPosition(BUTTON_X + DIST, BUTTON_Y);
         PlayLevel2.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -100,7 +100,7 @@ public class SelectLevelScreen implements Screen {
     private void addPlaySurvivalButton(){
         Texture tex3 = new Texture(Gdx.files.internal("Survival.png"));
         ButtonImg SurvivalButton = new ButtonImg(tex3,tex3,tex3);
-        SurvivalButton.setWidth(Gdx.graphics.getWidth()/3);
+        //SurvivalButton.setWidth(Gdx.graphics.getWidth()/3);
         SurvivalButton.setPosition(BUTTON_X + 3*DIST,BUTTON_Y );
         SurvivalButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -117,7 +117,7 @@ public class SelectLevelScreen implements Screen {
     private void addExitButton(){
         Texture tex4 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex4,tex4,tex4);
-        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        //ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(BUTTON_X + 3*DIST + 50, 0);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {

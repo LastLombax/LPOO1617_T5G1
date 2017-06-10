@@ -22,7 +22,7 @@ public class MainMenuScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
-    private int BUTTON_X = 1510;
+    private int BUTTON_X ;
     private Texture background;
     private boolean volume;
     private Music music;
@@ -33,6 +33,7 @@ public class MainMenuScreen implements Screen {
      */
     public MainMenuScreen(final ChickenVsFood game){
         this.game = game.getGame();
+        this.BUTTON_X = game.getvWidth()-250;
         this.volume = true;
         viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
@@ -55,7 +56,7 @@ public class MainMenuScreen implements Screen {
     private void addPlayButton() {
         Texture tex = new Texture("SelectLevelButton.png");
         ButtonImg PlayGameButton = new ButtonImg(tex,tex,tex);
-        PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
+        //PlayGameButton.setWidth(Gdx.graphics.getWidth()/3);
         PlayGameButton.setPosition(BUTTON_X, 700);
         PlayGameButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -72,7 +73,7 @@ public class MainMenuScreen implements Screen {
     private void addChickenAlmanacButton(){
         Texture tex2 = new Texture(Gdx.files.internal("ChickenAlmanac.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        //ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(BUTTON_X, 540);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -88,7 +89,7 @@ public class MainMenuScreen implements Screen {
     private void addFoodAlmanacButton(){
         Texture tex2 = new Texture(Gdx.files.internal("FoodAlmanac.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        //ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(BUTTON_X, 380);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -104,7 +105,7 @@ public class MainMenuScreen implements Screen {
     private void addOptionsButton() {
         Texture tex1 = new Texture(Gdx.files.internal("OptionsButton.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
-        OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
+        //OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
         OptionsButton.setPosition(BUTTON_X, 270);
         OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -120,7 +121,7 @@ public class MainMenuScreen implements Screen {
     private void addExitButton() {
             Texture tex2 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        ExitButton.setWidth(Gdx.graphics.getWidth()/3);
+        //ExitButton.setWidth(Gdx.graphics.getWidth()/3);
         ExitButton.setPosition(BUTTON_X, 150);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -136,7 +137,7 @@ public class MainMenuScreen implements Screen {
     private void addFbButton(){
         Texture tex2 = new Texture(Gdx.files.internal("fbButton.png"));
         ButtonImg FBButton = new ButtonImg(tex2,tex2,tex2);
-        FBButton.setWidth(Gdx.graphics.getWidth()/3);
+        //FBButton.setWidth(Gdx.graphics.getWidth()/3);
         FBButton.setPosition(BUTTON_X ,20);
         FBButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -153,7 +154,7 @@ public class MainMenuScreen implements Screen {
     private void addMusicButton(){
         Texture tex1 = new Texture(Gdx.files.internal("SoundButton.png"));
         ButtonImg OptionsButton = new ButtonImg(tex1,tex1,tex1);
-        OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
+        //OptionsButton.setWidth(Gdx.graphics.getWidth()/3);
         OptionsButton.setPosition(0, 10);
         OptionsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
