@@ -280,8 +280,10 @@ public class PlayScreen implements Screen{
                         hud.setSelected(false);
                     }
                 }
-                else
+                else {
                     System.out.println("You can't put it there");
+                    System.out.println("x = " + x + " ,  y = " + y);
+                }
             }
     }
 
@@ -293,10 +295,10 @@ public class PlayScreen implements Screen{
      */
     public boolean isOccupied(int x, int y){
         for (int i = 0; i < chicken.size(); i++)
-            if (chicken.get(i).getBody().getPosition().x > x - tileSize/2 && chicken.get(i).getBody().getPosition().x < x + tileSize/2 )
+            if (chicken.get(i).getBody().getPosition().x > (x - tileSize/2) && chicken.get(i).getBody().getPosition().x < (x + tileSize/2) && chicken.get(i).getBody().getPosition().y > (y - tileSize/2) && chicken.get(i).getBody().getPosition().y < (y + tileSize/2) )
                 return true;
         for (int i = 0; i < foods.size(); i++)
-            if (foods.get(i).getBody().getPosition().x > x - tileSize/2 && foods.get(i).getBody().getPosition().x < x + tileSize/2 )
+            if (foods.get(i).getBody().getPosition().x > (x - tileSize/2) && foods.get(i).getBody().getPosition().x < (x + tileSize/2)  && foods.get(i).getBody().getPosition().y > (y - tileSize/2) && foods.get(i).getBody().getPosition().y < (y + tileSize/2))
                 return true;
         return false;
     }
