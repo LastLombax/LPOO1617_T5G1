@@ -29,13 +29,32 @@ UML (separados por package para se perceber melhor):
 State Machine
 ![statemachine](https://cloud.githubusercontent.com/assets/22790772/25526284/c675aab8-2c0a-11e7-9327-caddb6d1aba2.png)
 
-Design Patterns:
-Strategy para as personagens Food e Chicken
+Design Patters:
+Singleton
+State
+Flyweight
+Game Loop
+Update Method
+Template Method
+
+Design Decisions: we created our own button with an image, because we only wanted a simple texture to be applied on the button.
+All textures were based on the originals which we do not own
+
+We had some trouble regarding the touch and how the different resolutions would affect the touch
+
+We learned plenty about how much time a developer must use in order to create a simple game. This will help us in the future so we can make, if we want, our own projects, regardless of being games or not
+
+Contribuições:
+
+We started working before the 28th of April of 2017
+
+In sum, we worked around 200 hours on this project
+
+The work distribution is 50%
 
 Dificuldades:
-Da forma como implementamos o código, não foi possivel fazer-mos testes unitários ,pois no nosso código, relacionando com a implementação mvc,temos a view misturada com o controller e o model. Só nos apercebe-mos que, desta forma, não conseguiriamos realizar os testes muito perto da entrega , logo não tivemos tempo para modificar o código para os testes. Também, o facto de a entrega ser no meio da época de exames também não nos ajudou na realização do mesmo.
 
-Contributions:
+Da forma como implementamos o código, não foi possivel fazer-mos testes unitários ,pois no nosso código, relacionando com a implementação mvc,temos a view misturada com o controller e o model. Só nos apercebe-mos que, desta forma, não conseguiriamos realizar os testes muito perto da entrega , logo não tivemos tempo para modificar o código para os testes. Também, o facto de a entrega ser no meio da época de exames também não nos ajudou na realização do mesmo.
 
 
 
