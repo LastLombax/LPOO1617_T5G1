@@ -208,20 +208,25 @@ public class PlayScreen implements Screen{
 
 
         if (getLevel() == 1) {
-            if (chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN)
+            if(MAX_CHICKEN_LVL_1 == nChickenGEN && generate)
+                generate = false;
+            else if (chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN)
                 gameWon = true;
-
             else if (chicken.size() < MAX_CHICKEN_LVL_1 && generate)
                 GenerateChickens(3);
         }
         else if (getLevel() == 2) {
-            if (chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
+            if(MAX_CHICKEN_LVL_2 == nChickenGEN && generate)
+                generate = false;
+            else if (chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
                 gameWon = true;
             else if (chicken.size() < MAX_CHICKEN_LVL_2 && generate)
                 GenerateChickens(4);
         }
         else if (getLevel() == 3) {
-            if (chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
+            if(MAX_CHICKEN_LVL_3 == nChickenGEN && generate)
+                generate = false;
+            else if (chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
                 gameWon = true;
             else if (chicken.size() < MAX_CHICKEN_LVL_3 && generate)
                 GenerateChickens(5);
