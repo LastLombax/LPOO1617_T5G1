@@ -73,7 +73,7 @@ Outros botões:
 
 
 Select Level (2)
-![screenshot_9](https://user-images.githubusercontent.com/22790772/27009742-ced842ba-4e8d-11e7-8a65-20c7aee0c3db.png)
+![screenshot_9](https://user-images.githubusercontent.com/22790772/27014383-7a3cff54-4eef-11e7-9fcb-8eb9d2f02db4.png)
 Tem três niveis que terminam ao fim de algum tempo e o modo survival que é infinito
 
 
@@ -89,10 +89,10 @@ Alguns screenshots tirados durante um jogo:
 ![screenshot_4](https://user-images.githubusercontent.com/22790772/27002217-d83e2e24-4dd3-11e7-9c5d-739d3723a35d.png)
 
 Perdendo o jogo aperece este menu, onde se pode tentar jogar outra vez ou sair.
-![screenshot_10](https://user-images.githubusercontent.com/22790772/27009744-ceda52e4-4e8d-11e7-89e7-9a28ada9f32e.png)
+![screenshot_10](https://user-images.githubusercontent.com/22790772/27014380-7a217482-4eef-11e7-9ca6-8853c3fb271c.png)
 
 No final dos tres niveis, se ganhar, aparecerá este screen (em android)
-![screenshot_12](https://user-images.githubusercontent.com/22790772/27009746-cedbc156-4e8d-11e7-9fad-fa10c3386074.png)
+![screenshot_12](https://user-images.githubusercontent.com/22790772/27014381-7a3b41a0-4eef-11e7-9398-25b8f3a6db50.png)
 
 Chicken Almanac(3)
 ![screenshot_6](https://user-images.githubusercontent.com/22790772/27014235-a7fbd328-4eec-11e7-9360-93925504e398.png)
@@ -106,7 +106,7 @@ Permite ver as "Food" que aparecem ao longo do jogo
 
 O butão Options(4) serve como "Créditos":
 
-![screenshot_6](https://user-images.githubusercontent.com/22790772/27009745-cedbb7c4-4e8d-11e7-8a82-9bf0e6d2e3ad.png)
+![screenshot_8](https://user-images.githubusercontent.com/22790772/27014382-7a3b8660-4eef-11e7-8534-01a1d7c1f4b6.png)
 
 
 
