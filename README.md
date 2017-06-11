@@ -3,7 +3,7 @@ Vicente Fernandes Ramada Caldeira Espinha - up201503764 - up201503764@fe.up.pt
 Vitor Emanuel Fernandes Magalhães - up201503447 -  up201503447@fe.up.pt
 
 Better Code Hub :
-[![BCH compliance](https://bettercodehub.com/edge/badge/BCH-FEUP-OOPLab/LPOO1617_T1G8?branch=master&token=60cfaa03b79c18603b7b8300e60f4c8c967ab639)](https://bettercodehub.com/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/up201503447/LPOO1617_T5G1?branch=master&token=91e0635b5102309d4fe02392baf5be459475e21e)](https://bettercodehub.com/)
 
 Setup/ Instalation:
 
