@@ -55,7 +55,7 @@ Alguns screenshots tirados durante um jogo:
 Perdendo o jogo aperece este menu, onde se pode tentar jogar outra vez ou sair.
 ![screenshot_10](https://user-images.githubusercontent.com/22790772/27009744-ceda52e4-4e8d-11e7-89e7-9a28ada9f32e.png)
 
-No final dos tres niveis, se ganhar, aparecerá este screen
+No final dos tres niveis, se ganhar, aparecerá este screen (em android)
 ![screenshot_12](https://user-images.githubusercontent.com/22790772/27009746-cedbc156-4e8d-11e7-9fad-fa10c3386074.png)
 
 Chicken Almanac(3)

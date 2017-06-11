@@ -134,7 +134,7 @@ public class MainMenuScreen implements Screen {
         FBButton.setPosition(BUTTON_X ,20);
         FBButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                if (!Gdx.net.openURI("fb://page/<page_id>"))
+                if (!Gdx.net.openURI("fb://page/1929917687231434"))
                     Gdx.net.openURI("https://www.facebook.com/Chicken-Vs-Food-1929917687231434/");
             }
         });
