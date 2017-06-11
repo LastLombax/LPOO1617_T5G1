@@ -95,12 +95,12 @@ No final dos tres niveis, se ganhar, aparecerá este screen (em android)
 ![screenshot_12](https://user-images.githubusercontent.com/22790772/27009746-cedbc156-4e8d-11e7-9fad-fa10c3386074.png)
 
 Chicken Almanac(3)
-![screenshot_8](https://user-images.githubusercontent.com/22790772/27009743-ced97b62-4e8d-11e7-8f7d-1c6b8d761b24.png)
+![screenshot_6](https://user-images.githubusercontent.com/22790772/27014235-a7fbd328-4eec-11e7-9360-93925504e398.png)
 
 Permite ver as "Chicken" que aparecem ao longo do jogo
 
 Food Almanac(4)
-![screenshot_7](https://user-images.githubusercontent.com/22790772/27009741-ced48b7a-4e8d-11e7-9f14-9c5ea0d63017.png)
+![screenshot_7](https://user-images.githubusercontent.com/22790772/27014236-a81efe70-4eec-11e7-8956-0a2b2d511214.png)
 Permite ver as "Food" que aparecem ao longo do jogo
 
 
