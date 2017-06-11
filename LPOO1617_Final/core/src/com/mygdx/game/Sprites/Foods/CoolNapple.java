@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
@@ -37,7 +36,7 @@ public class CoolNapple extends Food {
      * @param screen game screen
      */
     public CoolNapple(World world, int x,int y, PlayScreen screen) {
-        super(world, screen);
+        super(world);
         this.timer = 0;
         this.currState = State.NORMAL;
         this.prevState = State.NORMAL;

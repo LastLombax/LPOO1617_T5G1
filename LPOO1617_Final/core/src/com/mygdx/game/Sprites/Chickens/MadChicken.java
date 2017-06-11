@@ -5,10 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
@@ -71,7 +69,6 @@ public class MadChicken extends Chicken {
         setRegion(getFrame(v));
 
         super.getBody().applyLinearImpulse(new Vector2(-this.getVelocity(), 0), super.getBody().getWorldCenter(), true);
-
     }
     /**
      * Returns the current frame/animation of the MadChicken
@@ -80,7 +77,7 @@ public class MadChicken extends Chicken {
 
         TextureRegion region = chickenWalking.getKeyFrame(stateTimer, true);
         currState = getState();
-        if (currState == State.EATING)
+        if (currState == State.EATING && super.getFoodHit())
             region = chickenEating.getKeyFrame(stateTimer, true);
         else if (currState == State.WALKING)
             region = chickenWalking.getKeyFrame(stateTimer, true);

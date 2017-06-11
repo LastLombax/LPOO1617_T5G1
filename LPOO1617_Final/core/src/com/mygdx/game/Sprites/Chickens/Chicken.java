@@ -1,6 +1,5 @@
 package com.mygdx.game.Sprites.Chickens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,6 +19,7 @@ public abstract class Chicken extends Sprite{
     private World world;
     private Body b2body;
     private boolean foodHit;
+    private boolean seedHit;
 
     /**
      * Constructor for a Chicken
@@ -78,6 +78,9 @@ public abstract class Chicken extends Sprite{
      */
     public abstract void setHealth(int health);
 
+    public void setSeedHit(boolean b) {this.seedHit = b;}
+
+    public boolean getSeedHit(){ return this.seedHit;}
     /**
      * Sets the foodHit field with value b
      * @param b boolean

@@ -15,7 +15,7 @@ public class NormalChicken extends Chicken {
     public enum State{WALKING, EATING}
     private State currState;
     private State prevState;
-    private float VELOCITY = 10f;
+    private float VELOCITY = 0.3f;
     private int HEALTH = 5;
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
@@ -23,7 +23,6 @@ public class NormalChicken extends Chicken {
     private float stateTimer = 0;
     private Animation<TextureRegion> chickenWalking;
     private Animation<TextureRegion> chickenEating;
-
 
     /**
      * Constructor for the NormalChicken

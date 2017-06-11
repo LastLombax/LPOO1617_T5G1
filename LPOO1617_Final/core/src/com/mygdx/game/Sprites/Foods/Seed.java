@@ -24,6 +24,8 @@ public class Seed extends Food{
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private int HEALTH = 1;
+    private int initial_x;
+    private int initial_y;
     /**
      * Constructor for a Seed
      * @param w game world
@@ -31,9 +33,11 @@ public class Seed extends Food{
      * @param y y coordinate
      */
     public Seed(World w, int x, int y, PlayScreen screen){
-        super(w, screen);
+        super(w);
         super.setHit(false);
         this.world = w;
+        this.initial_x = x;
+        this.initial_y = y;
         defineFood(x+80,y);
         FoodTexture = new TextureRegion(screen.getSeed().findRegion("Seed"),0,0,SIZE_PIXEL,SIZE_PIXEL);
         setBounds(0,0,WORLD_SIZE,WORLD_SIZE);
@@ -66,6 +70,9 @@ public class Seed extends Food{
     public void update(float dt) {
         setPosition(this.getBody().getPosition().x - getWidth() / 2, this.getBody().getPosition().y - getWidth() / 2);
         this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0), this.getBody().getWorldCenter(), true);
+
+        if (this.getBody().getPosition().x > initial_x + 384)
+            setHealth(0);
     }
 
     @Override

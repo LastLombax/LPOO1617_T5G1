@@ -88,10 +88,14 @@ public class PlayScreen implements Screen{
     private int MAX_CHICKEN_LVL_2 = 15;
     private int MAX_CHICKEN_LVL_3 = 20;
 
+    private int INI_NOR_CHICKEN = 3;
+    private int counter = 0;
     private int CHICKEN_GEN = 500;
     private int INITIAL_CHICKEN_X = 2000;
+    private int INITIAL_TIMER = 2000;
     private int timer = 0;
     private int nChickenGEN = 0;
+    private boolean generate = false;
     private static int nChickenKilled = 0;
     private static int level;
 
@@ -126,6 +130,7 @@ public class PlayScreen implements Screen{
         map = mapLoader.load("Map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1);
         loadAssets();
+
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
         setWorld();
@@ -189,7 +194,7 @@ public class PlayScreen implements Screen{
      * @param dt time interval of the update
      */
     public void update(float dt) {
-        handleInput(dt);
+        handleInput();
 
         //takes 1 step in the physics simulation (60 times per second)
         float frameTime = Math.min(dt, 0.25f);
@@ -198,24 +203,27 @@ public class PlayScreen implements Screen{
             world.step(FPS, 6, 2);
             accumulator -= FPS;
         }
+        if(timer%INITIAL_TIMER == 0)
+            generate = true;
+
 
         if (getLevel() == 1) {
             if (chicken.isEmpty() && MAX_CHICKEN_LVL_1 == nChickenGEN)
                 gameWon = true;
 
-            else if (chicken.size() < MAX_CHICKEN_LVL_1)
+            else if (chicken.size() < MAX_CHICKEN_LVL_1 && generate)
                 GenerateChickens(3);
         }
         else if (getLevel() == 2) {
             if (chicken.isEmpty() && MAX_CHICKEN_LVL_2 == nChickenGEN)
                 gameWon = true;
-            else if (chicken.size() < MAX_CHICKEN_LVL_2)
+            else if (chicken.size() < MAX_CHICKEN_LVL_2 && generate)
                 GenerateChickens(4);
         }
         else if (getLevel() == 3) {
             if (chicken.isEmpty() && MAX_CHICKEN_LVL_3 == nChickenGEN)
                 gameWon = true;
-            else if (chicken.size() < MAX_CHICKEN_LVL_3)
+            else if (chicken.size() < MAX_CHICKEN_LVL_3 && generate)
                 GenerateChickens(5);
         }
         else if (getLevel() == 4)
@@ -230,9 +238,8 @@ public class PlayScreen implements Screen{
 
     /**
      * Handles all input from the player
-     * @param dt time interval
      */
-    public void handleInput(float dt) {
+    public void handleInput() {
 
         if (hud.isSelected()) //puts food in selected location
             if (Gdx.input.isTouched()) {
@@ -280,7 +287,6 @@ public class PlayScreen implements Screen{
                 }
                 else
                     System.out.println("You can't put it there");
-
             }
     }
 
@@ -340,7 +346,7 @@ public class PlayScreen implements Screen{
                 i--;
             }
             else
-                butters.get(i).update(dt);
+                butters.get(i).update();
         }
     }
 
@@ -350,12 +356,21 @@ public class PlayScreen implements Screen{
     private void GenerateChickens(int possible_chickens) {
         timer++;
         if(timer%CHICKEN_GEN == 0){
+            Chicken c = null;
             Random rn = new Random();
             int value = rn.nextInt(Integer.SIZE -1)%5;
             int y = diffY[value];
+            if (counter < INI_NOR_CHICKEN) {
+                c = new NormalChicken(getWorld(), INITIAL_CHICKEN_X, y, this);
+                c.getBody().applyLinearImpulse(new Vector2(-c.getVelocity(), 0), c.getBody().getWorldCenter(), true);
+                chicken.add(c);
+                counter++;
+                return;
+            }
+
             Random chi = new Random();
             int a = chi.nextInt(Integer.SIZE -1)%possible_chickens;
-            Chicken c = null;
+
             switch(a){
                 case 0:
                     c = new NormalChicken(getWorld(),INITIAL_CHICKEN_X, y, this);

@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.ChickenVsFood;
-import com.mygdx.game.Screens.PlayScreen;
 
 /**
  * Created by vitor on 03/06/2017.
@@ -27,8 +26,8 @@ public class InvisibleSeed extends Food{
      * @param x x coordinate
      * @param y y coordinate
      */
-    public InvisibleSeed(World w, int x, int y, PlayScreen screen, boolean left){
-        super(w, screen);
+    public InvisibleSeed(World w, int x, int y, boolean left){
+        super(w);
         super.setHit(false);
         this.world = w;
         if (!left)

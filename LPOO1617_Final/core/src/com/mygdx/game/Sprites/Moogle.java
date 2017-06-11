@@ -1,9 +1,7 @@
 package com.mygdx.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,8 +12,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.GameOverScreen;
-import com.mygdx.game.Screens.PlayScreen;
-import com.mygdx.game.Sprites.Chickens.NormalChicken;
 
 /**
  * Created by vitor on 10/06/2017.
@@ -28,13 +24,14 @@ public class Moogle extends Sprite {
     private int timer;
     private World world;
     private Body b2body;
-    private float VELOCITY = 10f;
+    private float VELOCITY = 5f;
     private TextureRegion ChickenTexture;
     private int SIZE_PIXEL = 30;
-    private int WORLD_SIZE = 90;
+    private int WORLD_SIZE = 150;
     private float stateTimer = 0;
     private Animation<TextureRegion> moogleStanding;
     private Animation<TextureRegion> moogleWalking;
+    private boolean animate = false;
 
     public Moogle(World world, int xInicial, int yInicial, GameOverScreen screen) {
         this.world = world;
@@ -56,6 +53,7 @@ public class Moogle extends Sprite {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(35);
+
         fdef.shape = shape;
         fdef.filter.categoryBits = ChickenVsFood.CHICKEN_BIT;
         fdef.filter.maskBits = ChickenVsFood.BUTTER_BIT | ChickenVsFood.FOOD_BIT |ChickenVsFood.MAP_BIT;
@@ -70,12 +68,12 @@ public class Moogle extends Sprite {
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for (int i = 0; i < 5; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-        moogleStanding = new Animation<TextureRegion>(0.1f, frames);
+        moogleStanding = new Animation<TextureRegion>(0.6f, frames);
         frames.clear();
 
-        for (int i = 6; i < 9; i++)
+        for (int i = 6; i < 8; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-        moogleWalking = new Animation<TextureRegion>(0.5f, frames);
+        moogleWalking = new Animation<TextureRegion>(0.7f, frames);
         frames.clear();
     }
 
@@ -84,12 +82,17 @@ public class Moogle extends Sprite {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getWidth() / 2);
 
         timer++;
-        setRegion(getFrame(dt));
+        if(animate)
+            setRegion(getFrame(dt));
 
-        b2body.applyLinearImpulse(new Vector2(this.getVelocity(), 0), b2body.getWorldCenter(), true);
+        if (currState == State.WALKING)
+            b2body.applyLinearImpulse(new Vector2(this.getVelocity(), 0), b2body.getWorldCenter(), true);
 
-        if (timer%400 == 0)
-        {
+        if (timer%50 == 0)
+            animate = true;
+
+
+        if (animate && timer%200 == 0){
             currState = State.WALKING;
             prevState = State.STANDING;
         }

@@ -134,6 +134,7 @@ public class SelectLevelScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
+
     /**
      * Renders the screen
      * @param delta time interval
@@ -149,6 +150,7 @@ public class SelectLevelScreen implements Screen {
 
         stage.draw();
     }
+
     /**
      * Resizes the screen
      * @param width new witdh

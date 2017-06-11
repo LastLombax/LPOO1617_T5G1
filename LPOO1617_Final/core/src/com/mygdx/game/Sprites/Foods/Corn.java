@@ -30,10 +30,9 @@ public class Corn extends Sprite {
 
     /**
      * Updates the position of the corn
-     * @param dt time interval
      * @return Returns true if has arrived, else continues movement and returns false
      */
-    public boolean update(float dt){
+    public boolean update(){
         if (this.getX() > Hud.getCornLabel().getX() && this.getY() < Hud.getCornLabel().getY()){
             this.setPosition(this.getX() + MULTI*cornMovDir.x, this.getY() + MULTI*cornMovDir.y);
             return false;

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class SeedShooter extends Food {
@@ -18,7 +17,7 @@ public class SeedShooter extends Food {
     private int HEALTH = 5;
     private int timer;
     private int seedTimer;
-    private int SEED_SECONDS = 200;
+    private int SEED_SECONDS = 150;
     private int DMG_SECONDS = 100;
     private int x;
     private int y;
@@ -39,7 +38,7 @@ public class SeedShooter extends Food {
      * @param yInicial y coordinate
      */
     public SeedShooter(World world, int xInicial,int yInicial, PlayScreen screen) {
-        super(world,screen);
+        super(world);
         this.timer = 0;
         this.seedTimer = 0;
         this.world = world;

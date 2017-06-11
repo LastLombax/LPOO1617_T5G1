@@ -71,9 +71,8 @@ public class Butter extends Sprite {
 
     /**
      * Updates the butter's position
-     * @param dt time interval
      */
-    public void update(float dt) {
+    public void update() {
         setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getWidth() / 2);
         if(getHit())
             this.getBody().applyLinearImpulse(new Vector2(this.VELOCITY, 0),this.getBody().getWorldCenter(), true);

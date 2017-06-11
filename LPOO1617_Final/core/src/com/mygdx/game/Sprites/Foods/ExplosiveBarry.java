@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
@@ -24,7 +23,7 @@ public class ExplosiveBarry extends Food {
     private int HEALTH = 2;
     private float stateTimer;
     private PlayScreen screen;
-
+    private int timer = 0;
     private int SIZE_PIXEL = 30;
     private int WORLD_SIZE = 90;
     private Animation<TextureRegion> foodNormal;
@@ -38,7 +37,7 @@ public class ExplosiveBarry extends Food {
      * @param screen game screen
      */
     public ExplosiveBarry(World world, int x,int y, PlayScreen screen) {
-        super(world, screen);
+        super(world);
         this.x = x;
         this.y = y;
         this.world = world;
@@ -64,7 +63,7 @@ public class ExplosiveBarry extends Food {
 
         for (int i = 1; i < 4; i++)
             frames.add(new TextureRegion(super.getTexture(), i*SIZE_PIXEL, 0, SIZE_PIXEL, SIZE_PIXEL));
-        foodExploding = new Animation<TextureRegion>(0.1f, frames);
+        foodExploding = new Animation<TextureRegion>(0.3f, frames);
         frames.clear();
 
     }
@@ -73,12 +72,12 @@ public class ExplosiveBarry extends Food {
     public void update(float v) {
         setPosition(super.getBody().getPosition().x - getWidth() / 2, super.getBody().getPosition().y - getWidth() / 2);
         setRegion(getFrame(v));
-
-        if (currState == State.EXPLOSION) {
+        timer++;
+        if (currState == State.EXPLOSION && timer%100 == 0) {
             this.x = (int) super.getBody().getPosition().x;
             this.y = (int) super.getBody().getPosition().y;
-            this.screen.getFoods().add(new InvisibleSeed(this.world, this.x, this.y, this.screen, true));
-            this.screen.getFoods().add(new InvisibleSeed(this.world, this.x, this.y, this.screen, false));
+            this.screen.getFoods().add(new InvisibleSeed(this.world, this.x, this.y, true));
+            this.screen.getFoods().add(new InvisibleSeed(this.world, this.x, this.y, false));
             this.setHealth(0);
         }
     }

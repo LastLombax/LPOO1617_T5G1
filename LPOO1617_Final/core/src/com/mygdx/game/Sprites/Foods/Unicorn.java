@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Scenes.Hud;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -25,7 +24,7 @@ public class Unicorn extends Food {
     private int HEALTH = 5;
     private int timer;
     private int DMG_SECONDS = 100;
-    private int SPAWN_CORN = 500;
+    private int SPAWN_CORN = 350;
     private boolean animateC = false;
     private Corn corn;
     private Vector2 cornMovDir;
@@ -47,7 +46,7 @@ public class Unicorn extends Food {
      * @param screen game screen
      */
     public Unicorn(World world, int x, int y, PlayScreen screen){
-        super(world, screen);
+        super(world);
         this.timer = 0;
         this.x = x;
         this.y = y;
@@ -93,7 +92,7 @@ public class Unicorn extends Food {
         timer++;
 
         if (animateC)
-            if (corn.update(v)) {
+            if (corn.update()) {
                 corn = null;
                 animateC = false;
                 Hud.addCorn(ADD_CORN);

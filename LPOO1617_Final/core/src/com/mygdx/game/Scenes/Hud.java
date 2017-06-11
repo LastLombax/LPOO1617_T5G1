@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -36,8 +35,8 @@ public class Hud implements Disposable{
 
     private static int FOOD_1 = 10;
     private static int FOOD_2 = 5;
-    private static int FOOD_3 = 1;
-    private static int FOOD_4 = 0;
+    private static int FOOD_3 = 20;
+    private static int FOOD_4 = 15;
 
     private static int cost[] = {FOOD_1,FOOD_2, FOOD_3, FOOD_4};
     private int INITIAL_CORN = 5;

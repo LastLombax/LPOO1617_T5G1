@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ButtonImg;
 import com.mygdx.game.ChickenVsFood;
 import com.mygdx.game.Sprites.Moogle;
-import com.mygdx.game.Tools.WorldContactListener;
 
 /**
  * Created by vitor on 06/06/2017.
@@ -30,6 +29,7 @@ public class GameOverScreen implements Screen {
     private Stage stage;
     private ChickenVsFood game;
     private Viewport viewport;
+    private FitViewport gamePort;
     private Label scoreLabel;
     private Texture background;
     private int level;
@@ -38,6 +38,8 @@ public class GameOverScreen implements Screen {
     private Moogle moogle;
     private World world;
     private OrthographicCamera gameCam;
+    private float accumulator;
+    private float FPS = 1/120f;
 
     /**
      * Constructor for the GameOverScreen
@@ -45,12 +47,11 @@ public class GameOverScreen implements Screen {
      */
     public GameOverScreen(final ChickenVsFood game, final int level){
         this.game = game;
-        world = new World(new Vector2(0,0),true);
         this.level = level;
-        viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
-        world.setContactListener(new WorldContactListener());
+
+        this.world = new World(new Vector2(0,0),true);
         gameCam = new OrthographicCamera();
-        FitViewport gamePort = new FitViewport(game.getvWidth(), game.getvHeight(), gameCam);
+        gamePort = new FitViewport(game.getvWidth(), game.getvHeight(), gameCam);
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
         if (level != 4)
@@ -58,6 +59,7 @@ public class GameOverScreen implements Screen {
         else
             background = new Texture(Gdx.files.internal("SurvivalGameOver.png"));
 
+        viewport = new FitViewport(game.getvWidth(),game.getvHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.getBatch());
 
         if (level == 4)
@@ -67,7 +69,7 @@ public class GameOverScreen implements Screen {
         addExitButton();
         setMusic();
         moogleAtlas = new TextureAtlas("Moogle.pack");
-        moogle = new Moogle(world, 200, 200, this);
+        moogle = new Moogle(this.world, 180, 100, this);
     }
 
     /**
@@ -115,8 +117,7 @@ public class GameOverScreen implements Screen {
      * Sets the music for the Screen
      */
     private void setMusic() {
-        music = Gdx.audio.newMusic(Gdx.files.internal("Won.mp3"));
-
+        music = Gdx.audio.newMusic(Gdx.files.internal("GameOverMusic.mp3"));
         music.setVolume(0.3f);
         music.setLooping(true);
         music.play();
@@ -148,8 +149,9 @@ public class GameOverScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().begin();
-        moogle.draw(game.getBatch());
         game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
+
+        moogle.draw(game.getBatch());
         game.getBatch().end();
 
         stage.draw();
@@ -157,8 +159,14 @@ public class GameOverScreen implements Screen {
 
     private void update(float delta) {
         moogle.update(delta);
-        gameCam.update();
 
+        float frameTime = Math.min(delta, 0.25f);
+        accumulator += frameTime;
+        while (accumulator >= FPS) {
+            world.step(FPS, 6, 2);
+            accumulator -= FPS;
+        }
+        gameCam.update();
     }
 
     /**
