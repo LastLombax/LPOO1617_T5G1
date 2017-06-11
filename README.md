@@ -8,7 +8,24 @@ Utilizamos Android Studio para a realização deste projeto. Para instalar num d
 
 Development documentation:
 
-UML:
+UML (separados por package para se perceber melhor):
+
+![19113349_1540989372600007_577113561_n](https://user-images.githubusercontent.com/22790772/27014096-b3e47634-4ee9-11e7-8fa1-0971c5f13379.png)
+
+![19095789_1540996892599255_2124678298_o](https://user-images.githubusercontent.com/22790772/27014095-b3e36460-4ee9-11e7-921e-2b02a3bad072.png)
+
+![19114343_1540997302599214_1340000154_n](https://user-images.githubusercontent.com/22790772/27014097-b4048320-4ee9-11e7-8491-3542f3c1acb2.png)
+
+![19114819_1541000242598920_1576144548_n](https://user-images.githubusercontent.com/22790772/27014098-b406afd8-4ee9-11e7-8fae-73d1f639496a.png)
+
+![19074958_1541012155931062_439390734_o](https://user-images.githubusercontent.com/22790772/27014099-b40fed8c-4ee9-11e7-8b8f-dbbf862f0fb2.png)
+
+![19096040_1541019872596957_2084270024_o](https://user-images.githubusercontent.com/22790772/27014100-b41f885a-4ee9-11e7-8255-6190918403e4.png)
+
+![19075170_1541028709262740_2092971980_n](https://user-images.githubusercontent.com/22790772/27014101-b4228d34-4ee9-11e7-9790-eab7ea066aa3.png)
+
+
+
 State Machine
 ![statemachine](https://cloud.githubusercontent.com/assets/22790772/25526284/c675aab8-2c0a-11e7-9327-caddb6d1aba2.png)
 
