@@ -2,6 +2,9 @@
 Vicente Fernandes Ramada Caldeira Espinha - up201503764 - up201503764@fe.up.pt
 Vitor Emanuel Fernandes Magalhães - up201503447 -  up201503447@fe.up.pt
 
+Better Code Hub :
+[![BCH compliance](https://bettercodehub.com/edge/badge/up201503447/LPOO1617_T5G1?branch=master&token=91e0635b5102309d4fe02392baf5be459475e21e)](https://bettercodehub.com/)
+
 Setup/ Instalation:
 
 Utilizamos Android Studio para a realização deste projeto. Para instalar num dispositivo android através do Android Studio basta clicar em "Build" e depois "Generate Signed APK". Se utilizar um emulador, de preferência o Galaxy Nexus e correr em "Run"-> "Run Android".
