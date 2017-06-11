@@ -61,7 +61,7 @@ Da forma como implementamos o código, não foi possivel fazer-mos testes unitá
 User Manual:
 
 Main Menu
-![screenshot_1](https://user-images.githubusercontent.com/22790772/27009747-ceef9d20-4e8d-11e7-8e47-7195ef7b35fa.png)
+![screenshot_1](https://user-images.githubusercontent.com/22790772/27014221-61d89c5a-4eec-11e7-9019-716e859752c0.png)
 
 No canto inferior esquerdo, existe um botão para parar ou retomar o som
 Outros botões:
