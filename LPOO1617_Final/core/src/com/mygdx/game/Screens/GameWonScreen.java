@@ -38,7 +38,11 @@ public class GameWonScreen implements Screen {
         if (level < 3)
             background = new Texture(Gdx.files.internal("Map.png"));
         else if (level == 3)
-            background = new Texture(Gdx.files.internal("GameWon.png"));
+            if (Gdx.app.getType() == Application.ApplicationType.Android)
+                background = new Texture(Gdx.files.internal("GameWonAndroid.png"));
+            else
+                background = new Texture(Gdx.files.internal("GameWonDesktop.png"));
+
         stage = new Stage(viewport, game.getBatch());
 
         if(Gdx.app.getType() == Application.ApplicationType.Android && level == 3)
@@ -55,8 +59,7 @@ public class GameWonScreen implements Screen {
     private void addFbButton() {
         Texture tex2 = new Texture(Gdx.files.internal("fbButton.png"));
         ButtonImg FBButton = new ButtonImg(tex2, tex2, tex2);
-        //FBButton.setWidth(Gdx.graphics.getWidth() / 3);
-        FBButton.setPosition(300, 100);
+        FBButton.setPosition(400, 50);
         FBButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (!Gdx.net.openURI("fb://page/<page_id>"))
@@ -72,7 +75,6 @@ public class GameWonScreen implements Screen {
     private void addNextLvlButton(){
         Texture tex = new Texture(Gdx.files.internal("NextLvLButton.png"));
         ButtonImg NextLvL = new ButtonImg(tex,tex,tex);
-        //NextLvL.setWidth(Gdx.graphics.getWidth()/3);
         NextLvL.setPosition(600, 10 );
         NextLvL.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -88,7 +90,6 @@ public class GameWonScreen implements Screen {
     public void addExitButton(){
         Texture tex1 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
-        //Exit.setWidth(Gdx.graphics.getWidth()/3);
         if (level == 3)
             Exit.setPosition(1550,50);
         else

@@ -64,8 +64,7 @@ public class OptionsScreen implements Screen {
     private void addExitButton() {
         Texture tex2 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        //ExitButton.setWidth(Gdx.graphics.getWidth()/3);
-        ExitButton.setPosition(750,game.getvHeight()/4 - 80);
+        ExitButton.setPosition(850,game.getvHeight()/4 - 80);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));

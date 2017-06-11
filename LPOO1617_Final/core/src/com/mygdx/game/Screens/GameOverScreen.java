@@ -86,8 +86,7 @@ public class GameOverScreen implements Screen {
     private void addTryAgainButton(){
         Texture tex = new Texture(Gdx.files.internal("TryAgainButton.png"));
         ButtonImg TryAgain = new ButtonImg(tex, tex, tex);
-        //TryAgain.setWidth(Gdx.graphics.getWidth() / 3);
-        TryAgain.setPosition(550, 200);
+        TryAgain.setPosition(600, 215);
         TryAgain.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new PlayScreen(game, level));
@@ -102,8 +101,7 @@ public class GameOverScreen implements Screen {
     private void addExitButton(){
         Texture tex1 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg Exit = new ButtonImg(tex1,tex1,tex1);
-        //Exit.setWidth(Gdx.graphics.getWidth()/3);
-        Exit.setPosition(950, 200);
+        Exit.setPosition(1100, 215);
         Exit.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new MainMenuScreen(game));

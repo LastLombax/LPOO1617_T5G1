@@ -79,12 +79,11 @@ public class AlmanacScreen implements Screen{
     public void addPreviousButton(){
         Texture tex2 = new Texture(Gdx.files.internal("PreviousButton.png"));
         ButtonImg PrevButton = new ButtonImg(tex2,tex2,tex2);
-        //PrevButton.setWidth(Gdx.graphics.getWidth() / 3);
         PrevButton.setPosition(625, BUTTON_Y);
         PrevButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 if (currCard == 0)
-                    currCard = cards.length-1;
+                    currCard = cards.length -1;
                 else
                     currCard--;
             }
@@ -97,7 +96,6 @@ public class AlmanacScreen implements Screen{
     public void addNextButton(){
         Texture tex2 = new Texture(Gdx.files.internal("NextButton.png"));
         ButtonImg NextButton = new ButtonImg(tex2,tex2,tex2);
-        //NextButton.setWidth(Gdx.graphics.getWidth() / 3);
         NextButton.setPosition(950, BUTTON_Y);
         NextButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -117,7 +115,6 @@ public class AlmanacScreen implements Screen{
     public void addExitButton(){
         Texture tex2 = new Texture(Gdx.files.internal("ExitButton.png"));
         ButtonImg ExitButton = new ButtonImg(tex2,tex2,tex2);
-        //ExitButton.setWidth(Gdx.graphics.getWidth() / 3);
         ExitButton.setPosition(1550, BUTTON_Y);
         ExitButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -151,7 +148,7 @@ public class AlmanacScreen implements Screen{
 
         game.getBatch().begin();
         game.getBatch().draw(background, 0,0, game.getvWidth(), game.getvHeight());
-        game.getBatch().draw(cards[currCard],game.getvWidth()/2-220, 200);
+        game.getBatch().draw(cards[currCard],game.getvWidth()/2-325, 200);
         game.getBatch().end();
 
         stage.act();
