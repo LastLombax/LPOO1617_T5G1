@@ -37,20 +37,15 @@ Game Loop
 Update Method
 Template Method
 
-Design Decisions: we created our own button with an image, because we only wanted a simple texture to be applied on the button.
-All textures were based on the originals which we do not own
-
-We had some trouble regarding the touch and how the different resolutions would affect the touch
-
-We learned plenty about how much time a developer must use in order to create a simple game. This will help us in the future so we can make, if we want, our own projects, regardless of being games or not
+Design Decisions:
+Criamos um botão com imagem, porque apenas queriamos aplicar uma textura simples ao butão.
+Todas as texturas baseiam-se nas originais, que nós não utilizamos.
+Tivemos problemas com a deteção tátil e as diferentes resoluções.
+Apercebemo-nos quanto tempo demora a desenvolver um jogo simples,e, de certeza, que nos vai ajudar no futuro para, se quisermos, criarmos os nossos próprios projetos.
 
 Contribuições:
 
-We started working before the 28th of April of 2017
-
-In sum, we worked around 200 hours on this project
-
-The work distribution is 50%
+Começámos a trabalhar antes de 28 de Abril de 2017 e devemos ter trabalhado cerca de 200 horas neste projeto e ditribuimos de igual forma o trabalho deste projeto
 
 Dificuldades:
 
