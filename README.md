@@ -8,6 +8,9 @@ Utilizamos Android Studio para a realização deste projeto. Para instalar num d
 
 Development documentation:
 
+UML:
+State Machine
+![statemachine](https://cloud.githubusercontent.com/assets/22790772/25526284/c675aab8-2c0a-11e7-9327-caddb6d1aba2.png)
 
 Design Patterns:
 Strategy para as personagens Food e Chicken
